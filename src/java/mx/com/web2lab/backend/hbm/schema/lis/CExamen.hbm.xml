@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.lis.CExamen" 
+    table="c_examen"
+>
+
+    <id
+        name="cexamen"
+        type="int"
+        column="cexamen"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="sexamen"
+        type="java.lang.String"
+        column="sexamen"
+        length="100"
+    />
+    <property
+        name="blistapublico"
+        type="boolean"
+        column="blistapublico"
+        unique="true"
+        length="1"
+    />
+    <property
+        name="uvolumenmaximo"
+        type="short"
+        column="uvolumenmaximo"
+        not-null="true"
+        length="5"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional one-to-many association to EPerfilExamen -->
+    <set
+        name="eperfilexamens"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cexamen" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.EPerfilExamen"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TOrdenExamenSucursal -->
+    <set
+        name="tordenexamensucursals"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cexamen" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TOrdenExamenSucursal"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to EMedicoDetalle -->
+    <set
+        name="emedicodetalles"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cexamen" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.EMedicoDetalle"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to EListaCorporativaDetalle -->
+    <set
+        name="elistacorporativadetalles"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cexamen" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.EListaCorporativaDetalle"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to EConvenioDetalle -->
+    <set
+        name="econveniodetalles"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cexamen" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.EConvenioDetalle"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to EExamenLugarProcesamiento -->
+    <set
+        name="eexamenlugarprocesamientos"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cexamen" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.EExamenLugarProcesamiento"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TOrdenExamenSucursalFac -->
+    <set
+        name="tordenexamensucursalfacs"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cexamen" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TOrdenExamenSucursalFac"
+        />
+    </set>
+    <!-- bi-directional many-to-one association to CTipoComercial -->
+    <many-to-one
+        name="ctipocomercial"
+        class="mx.com.web2lab.backend.hbm.om.ap.CTipoComercial"
+        not-null="true"
+    >
+        <column name="ctipocomercial" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CTipoComercial -->
+    <many-to-one
+        name="cclasificacioncomercial"
+        class="mx.com.web2lab.backend.hbm.om.ap.CClasificacionComercial"
+        not-null="true"
+    >
+        <column name="cclasificacioncomercial" />
+    </many-to-one>
+</class>
+</hibernate-mapping>

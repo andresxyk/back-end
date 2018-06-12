@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.CReferenciaDireccion" 
+    table="c_referencia_direccion"
+>
+
+    <id
+        name="creferenciadireccion"
+        type="int"
+        column="creferenciadireccion"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="sreferenciadireccion"
+        type="java.lang.String"
+        column="sreferenciadireccion"
+        length="70"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional one-to-many association to CDireccionMedico -->
+    <set
+        name="cdireccionmedicos"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="creferenciadireccion" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.CDireccionMedico"
+        />
+    </set>
+
+</class>
+</hibernate-mapping>

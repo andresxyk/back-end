@@ -1,0 +1,28 @@
+<project 
+  xmlns:j="jelly:core"
+  xmlns:u="jelly:util"
+  xmlns:ant="jelly:ant"
+  xmlns:m="maven" >
+  <goal name="init"
+        description="Initialize the application">
+    <attainGoal name="war:webapp"/>
+  </goal>
+  <preGoal name="java:compile">
+    <attainGoal name="xdoclet:ejbdoclet"/>
+  </preGoal>
+  <build>
+    <sourceDirectory>src/java</sourceDirectory>
+  </build>
+  <postGoal name="java:compile">
+    <copy todir="${maven.build.dest}" >
+        <fileset dir="src/java">
+            <include name="**/*.hbm.xml"/>
+            <include name="**/*.properties"/>
+            <include name="**/*.txt"/>
+            <include name="**/*.cfg.xml"/>
+            <exclude name="**/*Hibernate.properties"/>
+            <exclude name="**/*Mappings.txt"/>
+        </fileset>
+    </copy>
+  </postGoal>
+</project>

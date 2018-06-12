@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.medico.puntos.TRegaloMedico" 
+    table="t_regalo_medico"
+>
+
+    <id
+        name="kregalomedico"
+        type="int"
+        column="kregalomedico"
+    >
+        <generator class="sequence">
+             	<param name="sequence">t_regalo_medico_sequence</param>
+        </generator>
+    </id>
+
+    <property
+        name="cclave"
+        type="int"
+        column="cclave"
+        length="8"
+    />
+    <property
+        name="upuntosutilizados"
+        type="int"
+        column="upuntosutilizados"
+        length="8"
+    />
+    <property
+        name="dregistro"
+        type="java.sql.Timestamp"
+        column="dregistro"
+        length="29"
+    />
+    <property
+        name="dentregaregalo"
+        type="java.sql.Timestamp"
+        column="dentregaregalo"
+        length="29"
+    />
+    <property
+        name="cestadoregistro"
+        type="int"
+        column="cestadoregistro"
+        not-null="true"
+        length="10"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional many-to-one association to CRegalo -->
+    <many-to-one
+        name="cregalo"
+        class="mx.com.web2lab.backend.hbm.om.ap.medico.puntos.CRegalo"
+        not-null="true"
+    >
+        <column name="cregalo" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CMedico -->
+    <many-to-one
+        name="cmedico"
+        class="mx.com.web2lab.backend.hbm.om.ap.medico.CMedico"
+        not-null="true"
+    >
+        <column name="cmedico" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

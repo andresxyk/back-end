@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.lis.CLugarProcesamiento" 
+    table="c_lugar_procesamiento"
+    schema="lis"
+>
+
+    <id
+        name="clugarprocesamiento"
+        type="int"
+        column="clugarprocesamiento"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="slugarprocesamiento"
+        type="java.lang.String"
+        column="slugarprocesamiento"
+        length="70"
+    />
+    <property
+        name="sdireccion"
+        type="java.lang.String"
+        column="sdireccion"
+        length="100"
+    />
+    <property
+        name="blaboratorio"
+        type="boolean"
+        column="blaboratorio"
+        length="1"
+    />
+    <property
+        name="bgabinetes"
+        type="boolean"
+        column="bgabinetes"
+        length="1"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional many-to-one association to CCodigoPostal -->
+    <many-to-one
+        name="ccodigopostal"
+        class="mx.com.web2lab.backend.hbm.om.ap.CCodigoPostal"
+        not-null="true"
+    >
+        <column name="ccodigopostal" />
+    </many-to-one>
+    <!-- bi-directional one-to-many association to TOrdenExamenSucursal -->
+    <set
+        name="tordenexamensucursals"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="clugarprocesamiento" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TOrdenExamenSucursal"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to EExamenLugarProcesamiento -->
+    <set
+        name="eexamenlugarprocesamientos"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="clugarprocesamiento" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.EExamenLugarProcesamiento"
+        />
+    </set>
+
+</class>
+</hibernate-mapping>

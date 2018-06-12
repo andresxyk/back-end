@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.sistema.TurbineCalendar" 
+    table="TURBINE_CALENDAR"
+>
+
+    <id
+        name="kcalendar"
+        type="long"
+        column="KCALENDAR"
+    >
+        <generator class="sequence">
+        	<param name="sequence">TURBINE_CALENDAR_SEQUENCE</param>
+        </generator>
+    </id>
+
+    <property
+        name="groupId"
+        type="long"
+        column="GROUP_ID"
+        length="16"
+    />
+    <property
+        name="roleId"
+        type="long"
+        column="ROLE_ID"
+        length="16"
+    />
+    <property
+        name="groupIdNew"
+        type="long"
+        column="GROUP_ID_NEW"
+        length="16"
+    />
+    <property
+        name="roleIdNew"
+        type="long"
+        column="ROLE_ID_NEW"
+        length="16"
+    />
+    <property
+        name="dfirst"
+        type="java.sql.Timestamp"
+        column="DFIRST"
+        length="7"
+    />
+    <property
+        name="dlast"
+        type="java.sql.Timestamp"
+        column="DLAST"
+        length="7"
+    />
+    <property
+        name="cusuariomodi"
+        type="long"
+        column="CUSUARIOMODI"
+        length="16"
+    />
+    <property
+        name="dmodificacion"
+        type="java.sql.Timestamp"
+        column="DMODIFICACION"
+        length="7"
+    />
+    <property
+        name="cestado"
+        type="int"
+        column="CESTADO"
+        length="8"
+    />
+    <property
+        name="userId"
+        type="long"
+        column="USER_ID"
+        length="16"
+    />
+
+    <!-- associations -->
+
+</class>
+</hibernate-mapping>

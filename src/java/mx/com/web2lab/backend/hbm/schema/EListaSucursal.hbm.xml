@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.EListaSucursal" 
+    table="e_lista_sucursal"
+>
+
+    <id
+        name="klistasucursal"
+        type="int"
+        column="klistasucursal"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="dregistro"
+        type="java.sql.Timestamp"
+        column="dregistro"
+        length="29"
+    />
+    <property
+        name="userid"
+        type="java.math.BigDecimal"
+        column="user_id"
+        not-null="true"
+        length="131089"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional many-to-one association to CListaPublico -->
+    <many-to-one
+        name="clistapublico"
+        class="mx.com.web2lab.backend.hbm.om.ap.CListaPublico"
+        not-null="true"
+    >
+        <column name="clistapublico" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CSucursal -->
+    <many-to-one
+        name="csucursal"
+        class="mx.com.web2lab.backend.hbm.om.ap.CSucursal"
+        not-null="true"
+    >
+        <column name="csucursal" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

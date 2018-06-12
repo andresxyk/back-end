@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.CCodigoPostal" 
+    table="c_codigo_postal"
+>
+
+    <id
+        name="ccodigopostal"
+        type="int"
+        column="ccodigopostal"
+    >
+        <generator class="sequence">
+             	<param name="sequence">ccodigopostal_sequence</param>
+        </generator>
+    </id>
+
+    <property
+        name="cpostal"
+        type="java.lang.String"
+        column="cpostal"
+        length="8"
+    />
+    <property
+        name="casentamiento"
+        type="java.lang.String"
+        column="casentamiento"
+        length="8"
+    />
+    <property
+        name="sestado"
+        type="java.lang.String"
+        column="sestado"
+        length="100"
+    />
+    <property
+        name="sciudad"
+        type="java.lang.String"
+        column="sciudad"
+        length="100"
+    />
+    <property
+        name="sdelegacionmunicipio"
+        type="java.lang.String"
+        column="sdelegacionmunicipio"
+        length="100"
+    />
+    <property
+        name="sasentamiento"
+        type="java.lang.String"
+        column="sasentamiento"
+        length="100"
+    />
+    <property
+        name="scolonia"
+        type="java.lang.String"
+        column="scolonia"
+        length="150"
+    />
+    <property
+        name="bregistrosepo"
+        type="boolean"
+        column="bregistrosepo"
+        length="1"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional one-to-many association to CDireccionMedico -->
+    <set
+        name="cdireccionmedicos"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="ccodigopostal" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.CDireccionMedico"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to CSucursal -->
+    <set
+        name="csucursals"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="ccodigopostal" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.CSucursal"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to CLugarProcesamiento -->
+    <set
+        name="clugarprocesamientos"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="ccodigopostal" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.lis.CLugarProcesamiento"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to CCliente -->
+    <set
+        name="cclientes"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="ccodigopostal" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.CCliente"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TPaciente -->
+    <set
+        name="tpacientes"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="ccodigopostal" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TPaciente"
+        />
+    </set>
+
+</class>
+</hibernate-mapping>

@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.TPagoPaciente" 
+    table="t_pago_paciente"
+>
+
+    <id
+        name="kpagopaciente"
+        type="int"
+        column="kpagopaciente"
+    >
+        <generator class="sequence">
+             	<param name="sequence">tpagopaciente_sequence</param>
+        </generator>
+    </id>
+
+    <property
+        name="mpagopacientetotal"
+        type="java.math.BigDecimal"
+        column="mpagopacientetotal"
+        length="8"
+    />
+    <property
+        name="manticipo"
+        type="java.math.BigDecimal"
+        column="manticipo"
+        length="8"
+    />
+    <property
+        name="mpagopacienteparcial"
+        type="java.math.BigDecimal"
+        column="mpagopacienteparcial"
+        length="8"
+    />
+    <property
+        name="mdevolucionpaciente"
+        type="java.math.BigDecimal"
+        column="mdevolucionpaciente"
+        length="8"
+    />
+    <property
+        name="msaldo"
+        type="java.math.BigDecimal"
+        column="msaldo"
+        length="8"
+    />
+    <property
+        name="userid"
+        type="int"
+        column="user_id"
+        length="8"
+    />
+    <property
+        name="dregistro"
+        type="java.sql.Timestamp"
+        column="dregistro"
+        length="29"
+    />
+    <property
+        name="sdigitostarjeta"
+        type="java.lang.String"
+        column="sdigitostarjeta"
+        length="5"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional many-to-one association to CTipoPago -->
+    <many-to-one
+        name="ctipopago"
+        class="mx.com.web2lab.backend.hbm.om.ap.CTipoPago"
+        not-null="true"
+    >
+        <column name="ctipopago" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CEstadoRegistro -->
+    <many-to-one
+        name="cestadoregistro"
+        class="mx.com.web2lab.backend.hbm.om.ap.CEstadoRegistro"
+        not-null="true"
+    >
+        <column name="cestadoregistro" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to TOrdenSucursal -->
+    <many-to-one
+        name="tordensucursal"
+        class="mx.com.web2lab.backend.hbm.om.ap.TOrdenSucursal"
+        not-null="true"
+    >
+        <column name="kordensucursal" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to TCorteCaja -->
+    <many-to-one
+        name="tcortecaja"
+        class="mx.com.web2lab.backend.hbm.om.ap.TCorteCaja"
+        not-null="true"
+    >
+        <column name="kcortecaja" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

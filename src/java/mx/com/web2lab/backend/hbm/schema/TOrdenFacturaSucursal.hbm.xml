@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.TOrdenFacturaSucursal" 
+    table="t_orden_factura_sucursal"
+>
+
+    <id
+        name="kordenfacturasucursal"
+        type="int"
+        column="kordenfacturasucursal"
+    >
+        <generator class="sequence">
+             	<param name="sequence">tordenfacsuc_sequence</param>
+        </generator>
+    </id>
+
+    <property
+        name="kordensucursal"
+        type="int"
+        column="kordensucursal"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="cfactura"
+        type="int"
+        column="cfactura"
+        length="8"
+    />
+    <property
+        name="dregistro"
+        type="java.sql.Timestamp"
+        column="dregistro"
+        length="29"
+    />
+    <property
+        name="userid"
+        type="java.math.BigDecimal"
+        column="user_id"
+        not-null="true"
+        length="131089"
+    />
+    <property
+        name="cestadoregistro"
+        type="int"
+        column="cestadoregistro"
+        not-null="true"
+        length="8"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional many-to-one association to TDatoFactura -->
+    <many-to-one
+        name="tdatofactura"
+        class="mx.com.web2lab.backend.hbm.om.ap.TDatoFactura"
+        not-null="true"
+    >
+        <column name="kdatofactura" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

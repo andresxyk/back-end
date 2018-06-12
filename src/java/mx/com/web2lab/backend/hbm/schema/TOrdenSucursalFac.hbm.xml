@@ -1,0 +1,178 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.TOrdenSucursalFac" 
+    table="t_orden_sucursal_fac"
+>
+
+    <id
+        name="kordensucursalfac"
+        type="int"
+        column="kordensucursalfac"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="uorden"
+        type="int"
+        column="uorden"
+        length="8"
+    />
+    <property
+        name="ssucursal"
+        type="java.lang.String"
+        column="ssucursal"
+        length="3"
+    />
+    <property
+        name="kviajefac"
+        type="int"
+        column="kviajefac"
+        not-null="true"
+        length="8"
+    />    
+	<property
+        name="userId"
+        type="java.math.BigDecimal"
+        column="user_id"
+        not-null="true"
+        length="131089"
+    />
+    <property
+        name="dregistro"
+        type="java.sql.Timestamp"
+        column="dregistro"
+        length="29"
+    />
+    <property
+        name="dcierre"
+        type="java.sql.Timestamp"
+        column="dcierre"
+        length="29"
+    />
+    <property
+        name="msubtotal"
+        type="java.math.BigDecimal"
+        column="msubtotal"
+        length="8"
+    />
+    <property
+        name="mdescuentopromocion"
+        type="java.math.BigDecimal"
+        column="mdescuentopromocion"
+        length="8"
+    />
+    <property
+        name="mdescuentoempresa"
+        type="java.math.BigDecimal"
+        column="mdescuentoempresa"
+        length="8"
+    />
+    <property
+        name="mfacturaempresa"
+        type="java.math.BigDecimal"
+        column="mfacturaempresa"
+        length="8"
+    />
+    <property
+        name="mpagopaciente"
+        type="java.math.BigDecimal"
+        column="mpagopaciente"
+        length="8"
+    />
+    <property
+        name="miva"
+        type="java.math.BigDecimal"
+        column="miva"
+        length="8"
+    />
+    <property
+        name="bestadoactivo"
+        type="boolean"
+        column="bestadoactivo"
+        length="1"
+    />
+    <property
+        name="mdescuentomedico"
+        type="java.math.BigDecimal"
+        column="mdescuentomedico"
+        length="8"
+    />
+    <property
+        name="kordensucursal"
+        type="int"
+        column="kordensucursal"
+        not-null="true"
+        length="8"
+    />
+    
+
+    <!-- associations -->
+    <!-- bi-directional one-to-many association to TOrdenExamenSucursalFac -->
+    <set
+        name="tordenexamensucursalfacs"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="kordensucursalfac" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TOrdenExamenSucursalFac"
+        />
+    </set>
+    <!-- bi-directional many-to-one association to TFactura -->
+    <many-to-one
+        name="tfactura"
+        class="mx.com.web2lab.backend.hbm.om.ap.TFactura"
+        not-null="true"
+    >
+        <column name="kfactura" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CSucursal -->
+    <many-to-one
+        name="csucursal"
+        class="mx.com.web2lab.backend.hbm.om.ap.CSucursal"
+        not-null="true"
+    >
+        <column name="csucursal" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CConvenio -->
+    <many-to-one
+        name="cconvenio"
+        class="mx.com.web2lab.backend.hbm.om.ap.CConvenio"
+        not-null="true"
+    >
+        <column name="cconvenio" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CMarca -->
+    <many-to-one
+        name="cmarca"
+        class="mx.com.web2lab.backend.hbm.om.ap.CMarca"
+        not-null="true"
+    >
+        <column name="cmarca" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CEstadoRegistro -->
+    <many-to-one
+        name="cestadoregistro"
+        class="mx.com.web2lab.backend.hbm.om.ap.CEstadoRegistro"
+        not-null="true"
+    >
+        <column name="cestadoregistro" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

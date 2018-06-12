@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE application PUBLIC "-//Sun Microsystems, Inc.//DTD J2EE Application 1.3//EN" "http://java.sun.com/dtd/application_1_3.dtd">
+
+<application>
+  <display-name>web2lab</display-name>
+  <module>
+    <ejb>web2lab_backend-v2.jar</ejb>
+  </module>
+  <module>
+    <web>
+      <web-uri>web2labportal-v2.war</web-uri>
+      <context-root>/web2labportal</context-root>
+    </web>
+  </module>
+</application>

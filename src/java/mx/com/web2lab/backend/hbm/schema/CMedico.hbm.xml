@@ -1,0 +1,209 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.medico.CMedico" 
+    table="c_medico"
+>
+
+    <id
+        name="cmedico"
+        type="int"
+        column="cmedico"
+    >
+        <generator class="sequence">
+             	<param name="sequence">cmedico_sequence</param>
+        </generator>
+    </id>
+
+    <property
+        name="cclave"
+        type="int"
+        column="cclave"
+        length="8"
+    />
+    <property
+        name="snombre"
+        type="java.lang.String"
+        column="snombre"
+        length="150"
+    />
+    <property
+        name="sapellidopaterno"
+        type="java.lang.String"
+        column="sapellidopaterno"
+        length="70"
+    />
+    <property
+        name="sapellidomaterno"
+        type="java.lang.String"
+        column="sapellidomaterno"
+        length="70"
+    />
+    <property
+        name="srfc"
+        type="java.lang.String"
+        column="srfc"
+        length="30"
+    />
+    <property
+        name="semail"
+        type="java.lang.String"
+        column="semail"
+        length="150"
+    />
+    <property
+        name="dnacimiento"
+        type="java.sql.Timestamp"
+        column="dnacimiento"
+        length="29"
+    />
+    <property
+        name="bregistrado"
+        type="boolean"
+        column="bregistrado"
+        length="1"
+    />
+    <property
+        name="cformapagomedico"
+        type="int"
+        column="cformapagomedico"
+        length="8"
+    />
+    <property
+        name="shorariovisita"
+        type="java.lang.String"
+        column="shorariovisita"
+        length="50"
+    />
+    <property
+        name="scurp"
+        type="java.lang.String"
+        column="scurp"
+        length="80"
+    />
+    <property
+        name="ucategoriamedico"
+        type="int"
+        column="ucategoriamedico"
+        length="8"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional many-to-one association to CEstadoRegistro -->
+    <many-to-one
+        name="cestadoregistro"
+        class="mx.com.web2lab.backend.hbm.om.ap.CEstadoRegistro"
+        not-null="true"
+    >
+        <column name="cestadoregistro" />
+    </many-to-one>
+    <!-- bi-directional one-to-many association to CDireccionMedico -->
+    <set
+        name="cdireccionmedicos"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cmedico" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.CDireccionMedico"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TOrdenSucursal -->
+    <set
+        name="tordensucursals"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cmedico" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TOrdenSucursal"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TOrdenSucursalCotizacion -->
+    <set
+        name="tordensucursalcotizacions"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cmedico" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TOrdenSucursalCotizacion"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to EMedicoPaquete -->
+    <set
+        name="emedicopaquetes"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cmedico" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.EMedicoPaquete"
+        />
+    </set>
+    <!-- bi-directional many-to-one association to CSexo -->
+    <many-to-one
+        name="csexo"
+        class="mx.com.web2lab.backend.hbm.om.ap.CSexo"
+        not-null="true"
+    >
+        <column name="bsexo" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CZonaMedico -->
+    <many-to-one
+        name="czonamedico"
+        class="mx.com.web2lab.backend.hbm.om.ap.CZonaMedico"
+        not-null="true"
+    >
+        <column name="czona" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CEspecialidad -->
+    <many-to-one
+        name="cespecialidad"
+        class="mx.com.web2lab.backend.hbm.om.ap.CEspecialidad"
+        not-null="true"
+    >
+        <column name="cespecialidad" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CMarca -->
+    <many-to-one
+        name="cmarca"
+        class="mx.com.web2lab.backend.hbm.om.ap.CMarca"
+        not-null="true"
+    >
+        <column name="cmarca" />
+    </many-to-one>
+    <!-- bi-directional one-to-many association to TRegaloMedico -->
+    <set
+        name="tregalomedicos"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cmedico" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.medico.puntos.TRegaloMedico"
+        />
+    </set>
+</class>
+</hibernate-mapping>

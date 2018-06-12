@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.sistema.MenuPermission" 
+    table="MENU_PERMISSION"
+>
+
+    <id
+        name="idMenuPermission"
+        type="java.math.BigDecimal"
+        column="ID_MENU_PERMISSION"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="permissionId"
+        type="java.math.BigDecimal"
+        column="PERMISSION_ID"
+        not-null="true"
+        length="22"
+    />
+    <property
+        name="idGrupoMenu"
+        type="java.math.BigDecimal"
+        column="ID_GRUPO_MENU"
+        not-null="true"
+        length="22"
+    />
+    <property
+        name="menuLink"
+        type="java.lang.String"
+        column="MENU_LINK"
+        length="75"
+    />
+
+    <!-- associations -->
+
+</class>
+</hibernate-mapping>

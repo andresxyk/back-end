@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//hibernate/hibernate Configuration DTD 2.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-2.0.dtd">
+<hibernate-configuration>
+    <session-factory>    
+        <!-- Propiedades generales -->
+        <property name="show_sql">true</property>
+        <property name="dialect">net.sf.hibernate.dialect.Oracle9Dialect</property>
+        <property name="hibernate.cglib.use_reflection_optimizer">true</property>
+        <property name="hibernate.jdbc.use_streams_for_binary">true</property>
+        <property name="hibernate.jdbc.batch_size">0</property>
+        <!-- Propiedades de la conexion jndi -->              
+        <property name="hibernate.connection.datasource">java:jdbc/Web2LabProduccion</property>
+        <!-- Mapeos a la base de datos -->
+		<mapping resource="mx/com/web2lab/backend/hbm/schema/GrupoMenu.hbm.xml"/>
+		<mapping resource="mx/com/web2lab/backend/hbm/schema/MenuPermission.hbm.xml"/>
+		<mapping resource="mx/com/web2lab/backend/hbm/schema/TurbineGroup.hbm.xml"/>
+		<mapping resource="mx/com/web2lab/backend/hbm/schema/TurbineCalendar.hbm.xml"/>
+		<mapping resource="mx/com/web2lab/backend/hbm/schema/TurbinePermission.hbm.xml"/>
+		<mapping resource="mx/com/web2lab/backend/hbm/schema/TurbineRole.hbm.xml"/>
+		<mapping resource="mx/com/web2lab/backend/hbm/schema/TurbineRolePermission.hbm.xml"/>
+		<mapping resource="mx/com/web2lab/backend/hbm/schema/TurbineScheduledJob.hbm.xml"/>
+		<mapping resource="mx/com/web2lab/backend/hbm/schema/TurbineUser.hbm.xml"/>
+		<mapping resource="mx/com/web2lab/backend/hbm/schema/TurbineUserGroupRole.hbm.xml"/> 
+		<!-- Nuevas Tablas en EnterpriseDB									-->
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/AIncidenciaFacturacion.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CDepartamento.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CIndicacionPaciente.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CIndicacionTomador.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CInsumo.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CTemperaturaMuestra.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CTiempoProceso.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CTipoMuestra.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CClasificacionComercial.hbm.xml"/>
+		<mapping resource="mx/com/web2lab/backend/hbm/schema/CCliente.hbm.xml"/> 
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CCodigoPostal.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CControlFolio.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CConvenio.hbm.xml"/> 
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CDireccionMedico.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CEspecialidad.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CEstadoRegistro.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CEntidadLegal.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CEstacionTomaTlalpan.hbm.xml"/> 
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CExamenConvenioSinonimo.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CIncidenciaFacturacion.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CListaCorporativa.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CListaPublico.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CMarca.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CMedico.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CNominacion.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CPerfil.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CPromocionMarketing.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CReferenciaDireccion.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CReporteExcelFac.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CRegalo.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CSexo.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CSucursal.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CTipoCliente.hbm.xml"/> 
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CGiroCliente.hbm.xml"/> 
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CTipoComercial.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CTipoConvenio.hbm.xml"/> 
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CTipoPago.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CTipoPagoFactura.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CTipoPersona.hbm.xml"/> 
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CVigencia.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CZonaMedico.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/EConvenio.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/EConvenioClasificacion.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/EConvenioPerfil.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/EConvenioDetalle.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/EExamenLugarProcesamiento.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/EListaCorporativaDetalle.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/EListaPublicoDetalle.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/EListaSucursal.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/EMedicoDetalle.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/EMedicoPaquete.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/EPerfilExamen.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TAntiguedadCxc.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TCorteCaja.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TCorteCajaArqueo.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TCuestionarioPacientePuebla.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TCuestionarioPacienteInterpretacionPuebla.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TFactura.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TFacturaEmpresa.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TFacturaEmpresaDetalle.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TGastoSucursal.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TNotaCredito.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TOrdenExamenSucursal.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TOrdenExamenSucursalCotizacion.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TOrdenExamenSucursalFac.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TOrdenSucursal.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TOrdenSucursalCotizacion.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TOrdenSucursalFac.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TOrdenFacturaSucursal.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TDatoFactura.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TDatoFiscal.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TPaciente.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TPacienteDatosComplemento.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TPacienteMarketing.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TPagoPaciente.hbm.xml"/>  		
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TPagoFactura.hbm.xml"/>  		
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TRecepcionSms.hbm.xml"/>  		
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/TRegaloMedico.hbm.xml"/>  		
+  		<!-- LIS  -->
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/lis/CCondicionPreanalitica.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/lis/CContenedor.hbm.xml"/>  		
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/lis/CExamen.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/lis/CLugarProcesamiento.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/lis/CMotivoRechazo.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/lis/CMuestra.hbm.xml"/>
+  		<!-- Tiempos y Movimientos -->
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/tiemposmovimientos/TTicketSucursal.hbm.xml"/>  		
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/tiemposmovimientos/TTicketCaja.hbm.xml"/>  		
+  		<!--  Tablas de Bibiana  -->
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CDatoAdicional.hbm.xml"/>
+		<mapping resource="mx/com/web2lab/backend/hbm/schema/TDatoAdicional.hbm.xml"/>
+    </session-factory>
+</hibernate-configuration>

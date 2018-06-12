@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.CClasificacionComercial" 
+    table="c_clasificacion_comercial"
+>
+
+    <id
+        name="cclasificacioncomercial"
+        type="int"
+        column="cclasificacioncomercial"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="sclasificacioncomercial"
+        type="java.lang.String"
+        column="sclasificacioncomercial"
+        length="50"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional one-to-many association to CExamen -->
+    <set
+        name="cexamens"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cclasificacioncomercial" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.lis.CExamen"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to EConvenioClasificacion -->
+    <set
+        name="econvenioclasificacions"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cclasificacioncomercial" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.EConvenioClasificacion"
+        />
+    </set>
+</class>
+</hibernate-mapping>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.sistema.GrupoMenu" 
+    table="GRUPO_MENU"
+>
+
+    <id
+        name="idGrupoMenu"
+        type="java.math.BigDecimal"
+        column="ID_GRUPO_MENU"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="descGrupo"
+        type="java.lang.String"
+        column="DESC_GRUPO"
+        length="35"
+    />
+
+    <!-- associations -->
+
+</class>
+</hibernate-mapping>

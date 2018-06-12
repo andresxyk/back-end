@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.TGastoSucursal" 
+    table="t_gasto_sucursal"
+>
+
+    <id
+        name="kgastosucursal"
+        type="int"
+        column="kgastosucursal"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="sgastosucursal"
+        type="java.lang.String"
+        column="sgastosucursal"
+        length="100"
+    />
+    <property
+        name="msubtotalgasto"
+        type="java.math.BigDecimal"
+        column="msubtotalgasto"
+        length="8"
+    />
+    <property
+        name="mivagasto"
+        type="java.math.BigDecimal"
+        column="mivagasto"
+        length="8"
+    />
+    <property
+        name="mtotalgasto"
+        type="java.math.BigDecimal"
+        column="mtotalgasto"
+        length="8"
+    />
+    <property
+        name="userid"
+        type="java.math.BigDecimal"
+        column="user_id"
+        not-null="true"
+        length="131089"
+    />
+    <property
+        name="dregistro"
+        type="java.sql.Timestamp"
+        column="dregistro"
+        length="29"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional many-to-one association to CEstadoRegistro -->
+    <many-to-one
+        name="cestadoregistro"
+        class="mx.com.web2lab.backend.hbm.om.ap.CEstadoRegistro"
+        not-null="true"
+    >
+        <column name="cestadoregistro" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CSucursal -->
+    <many-to-one
+        name="csucursal"
+        class="mx.com.web2lab.backend.hbm.om.ap.CSucursal"
+        not-null="true"
+    >
+        <column name="csucursal" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to TCorteCaja -->
+    <many-to-one
+        name="tcortecaja"
+        class="mx.com.web2lab.backend.hbm.om.ap.TCorteCaja"
+        not-null="true"
+    >
+        <column name="kcortecaja" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

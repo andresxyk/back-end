@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.EListaPublicoDetalle" 
+    table="e_lista_publico_detalle"
+>
+
+    <id
+        name="klispublicodetalle"
+        type="int"
+        column="klispublicodetalle"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="pprecio"
+        type="java.math.BigDecimal"
+        column="pprecio"
+        length="7"
+    />
+    <property
+        name="dregistro"
+        type="java.sql.Timestamp"
+        column="dregistro"
+        length="29"
+    />
+    <property
+        name="userid"
+        type="java.math.BigDecimal"
+        column="user_id"
+        not-null="true"
+        length="131089"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional many-to-one association to CListaPublico -->
+    <many-to-one
+        name="clistapublico"
+        class="mx.com.web2lab.backend.hbm.om.ap.CListaPublico"
+        not-null="true"
+    >
+        <column name="clistapublico" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to EListaCorporativaDetalle -->
+    <many-to-one
+        name="elistacorporativadetalle"
+        class="mx.com.web2lab.backend.hbm.om.ap.EListaCorporativaDetalle"
+        not-null="true"
+    >
+        <column name="kliscorpdetalle" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

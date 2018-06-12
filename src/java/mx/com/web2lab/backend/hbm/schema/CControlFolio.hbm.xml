@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.CControlFolio" 
+    table="c_control_folio"
+>
+
+    <id
+        name="ccontrolfolio"
+        type="int"
+        column="ccontrolfolio"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="csucursal"
+        type="int"
+        column="csucursal"
+        length="8"
+    />
+    <property
+        name="ufolioactual"
+        type="int"
+        column="ufolioactual"
+        length="8"
+    />
+    <property
+        name="naprobacion"
+        type="int"
+        column="naprobacion"
+        length="10"
+    />
+    <property
+        name="nanoprobacion"
+        type="int"
+        column="nanoprobacion"
+        length="4"
+    />
+    <property
+        name="sserie"
+        type="java.lang.String"
+        column="sserie"
+        length="70"
+    />
+    <property
+        name="cestadoregistro"
+        type="int"
+        column="cestadoregistro"
+        not-null="true"
+        length="8"
+    />
+</class>
+</hibernate-mapping>

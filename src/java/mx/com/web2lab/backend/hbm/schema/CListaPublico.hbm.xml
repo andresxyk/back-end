@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.CListaPublico" 
+    table="c_lista_publico"
+>
+
+    <id
+        name="clistapublico"
+        type="int"
+        column="clistapublico"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="sdescripcionpaquete"
+        type="java.lang.String"
+        column="sdescripcionpaquete"
+        length="99"
+    />
+    <property
+        name="dregistro"
+        type="java.sql.Timestamp"
+        column="dregistro"
+        length="29"
+    />
+    <property
+        name="userid"
+        type="java.math.BigDecimal"
+        column="user_id"
+        not-null="true"
+        length="131089"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional one-to-many association to EListaSucursal -->
+    <set
+        name="elistasucursals"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="clistapublico" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.EListaSucursal"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to EListaPublicoDetalle -->
+    <set
+        name="elistapublicodetalles"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="clistapublico" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.EListaPublicoDetalle"
+        />
+    </set>
+    <!-- bi-directional many-to-one association to CListaCorporativa -->
+    <many-to-one
+        name="clistacorporativa"
+        class="mx.com.web2lab.backend.hbm.om.ap.CListaCorporativa"
+        not-null="true"
+    >
+        <column name="clistacorporativa" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

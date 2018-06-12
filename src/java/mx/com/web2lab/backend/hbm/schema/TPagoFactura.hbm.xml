@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.TPagoFactura" 
+    table="t_pago_factura"
+>
+
+    <id
+        name="kpagofactura"
+        type="int"
+        column="kpagofactura"
+    >
+        <generator class="sequence">
+             	<param name="sequence">t_pago_factura_sequence</param>
+        </generator>
+    </id>
+
+    <property
+        name="mtotalfactura"
+        type="java.math.BigDecimal"
+        column="mtotalfactura"
+        length="8"
+    />
+    <property
+        name="manticipo"
+        type="java.math.BigDecimal"
+        column="manticipo"
+        length="8"
+    />
+    <property
+        name="mpago"
+        type="java.math.BigDecimal"
+        column="mpago"
+        length="8"
+    />
+    <property
+        name="msaldo"
+        type="java.math.BigDecimal"
+        column="msaldo"
+        length="8"
+    />
+    <property
+        name="dfechapago"
+        type="java.sql.Timestamp"
+        column="dfechapago"
+        length="29"
+    />
+    <property
+        name="userId"
+        type="int"
+        column="user_id"
+        length="8"
+    />
+    <property
+        name="cestadoregistro"
+        type="int"
+        column="cestadoregistro"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="dregistro"
+        type="java.sql.Timestamp"
+        column="dregistro"
+        length="29"
+    />
+    <property
+        name="ugrupopago"
+        type="int"
+        column="ugrupopago"
+        length="8"
+    />
+    <property
+        name="knotacredito"
+        type="int"
+        column="knotacredito"
+        length="8"
+    />
+    
+
+    <!-- associations -->
+    <!-- bi-directional many-to-one association to TFactura -->
+    <many-to-one
+        name="tfactura"
+        class="mx.com.web2lab.backend.hbm.om.ap.TFactura"
+        not-null="true"
+    >
+        <column name="kfactura" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CTipoPago -->
+    <many-to-one
+        name="ctipopago"
+        class="mx.com.web2lab.backend.hbm.om.ap.CTipoPagoFactura"
+        not-null="true"
+    >
+        <column name="ctipopago" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

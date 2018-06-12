@@ -1,0 +1,15 @@
+<project 
+  xmlns:j="jelly:core"
+  xmlns:u="jelly:util"
+  xmlns:ant="jelly:ant"
+  xmlns:m="maven" >
+  
+  <postGoal name="ear">
+    <copy todir="C:/jboss/server/default/deploy" >
+        <fileset dir="target">
+            <include name="*.ear"/>
+        </fileset>
+    </copy>        
+  </postGoal> 
+  
+</project>

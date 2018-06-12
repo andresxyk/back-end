@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.reportes.TAntiguedadCxc" 
+    table="t_antiguedad_cxc"
+    schema="reportes"
+>
+
+    <composite-id>
+        <key-property 
+            name="kfactura" 
+            column="kfactura" 
+            type="int"
+            length="8"
+        />
+        <key-property 
+            name="sserie" 
+            column="sserie" 
+            type="java.lang.String"
+            length="2147483647"
+        />
+        <key-property 
+            name="ccliente" 
+            column="ccliente" 
+            type="int"
+            length="8"
+        />
+        <key-property 
+            name="cconvenio" 
+            column="cconvenio" 
+            type="int"
+            length="8"
+        />
+        <key-property 
+            name="dregistro" 
+            column="dregistro" 
+            type="java.sql.Timestamp"
+            length="29"
+        />
+        <key-property 
+            name="dvencido" 
+            column="dvencido" 
+            type="java.sql.Timestamp"
+            length="29"
+        />
+        <key-property 
+            name="mtotalfactura" 
+            column="mtotalfactura" 
+            type="java.math.BigDecimal"
+            length="10"
+        />
+        <key-property 
+            name="mpagado" 
+            column="mpagado" 
+            type="java.math.BigDecimal"
+            length="131089"
+        />
+        <key-property 
+            name="msaldo" 
+            column="msaldo" 
+            type="java.math.BigDecimal"
+            length="131089"
+        />
+        <key-property 
+            name="mdentroplazo" 
+            column="mdentroplazo" 
+            type="java.math.BigDecimal"
+            length="131089"
+        />
+        <key-property 
+            name="m01a30" 
+            column="m01a30" 
+            type="java.math.BigDecimal"
+            length="131089"
+        />
+        <key-property 
+            name="m31a60" 
+            column="m31a60" 
+            type="java.math.BigDecimal"
+            length="131089"
+        />
+        <key-property 
+            name="m61a90" 
+            column="m61a90" 
+            type="java.math.BigDecimal"
+            length="131089"
+        />
+        <key-property 
+            name="m91a120" 
+            column="m91a120" 
+            type="java.math.BigDecimal"
+            length="131089"
+        />
+        <key-property 
+            name="m121a180" 
+            column="m121a180" 
+            type="java.math.BigDecimal"
+            length="131089"
+        />
+        <key-property 
+            name="m181a360" 
+            column="m181a360" 
+            type="java.math.BigDecimal"
+            length="131089"
+        />
+        <key-property 
+            name="mmas361" 
+            column="mmas361" 
+            type="java.math.BigDecimal"
+            length="131089"
+        />
+        <key-property 
+            name="udiasvencido" 
+            column="udiasvencido" 
+            type="double"
+            length="17"
+        />
+        <key-property 
+            name="sestadoregistro" 
+            column="sestadoregistro" 
+            type="java.lang.String"
+            length="2147483647"
+        />
+    </composite-id>    
+
+
+    <!-- associations -->
+
+</class>
+</hibernate-mapping>

@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.EConvenio" 
+    table="e_convenio"
+>
+
+    <id
+        name="kconvenio"
+        type="int"
+        column="kconvenio"
+    >
+        <generator class="sequence">
+             	<param name="sequence">econvenio_sequence</param>
+        </generator>
+    </id>
+    <property
+        name="dinicio"
+        type="java.sql.Timestamp"
+        column="dinicio"
+        length="29"
+    />
+    <property
+        name="dtermino"
+        type="java.sql.Timestamp"
+        column="dtermino"
+        length="29"
+    />
+    <property
+        name="pcopago"
+        type="java.math.BigDecimal"
+        column="pcopago"
+        length="8"
+    />
+    <property
+        name="mcopago"
+        type="java.math.BigDecimal"
+        column="mcopago"
+        length="8"
+    />
+    <property
+        name="bcopagopaciente"
+        type="boolean"
+        column="bcopagopaciente"
+        unique="true"
+        length="1"
+    />
+
+
+    <!-- associations -->
+    <!-- bi-directional one-to-many association to TFacturaEmpresa -->
+    <set
+        name="tfacturaempresas"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="kconvenio" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TFacturaEmpresa"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TFacturaEmpresaDetalle -->
+    <set
+        name="tfacturaempresadetalles"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="kconvenio" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TFacturaEmpresaDetalle"
+        />
+    </set>
+    <!-- bi-directional many-to-one association to CEstadoRegistro -->
+    <many-to-one
+        name="cestadoregistro"
+        class="mx.com.web2lab.backend.hbm.om.ap.CEstadoRegistro"
+        not-null="true"
+    >
+        <column name="cestadoregistro" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CVigencia -->
+    <many-to-one
+        name="cvigencia"
+        class="mx.com.web2lab.backend.hbm.om.ap.CVigencia"
+        not-null="true"
+    >
+        <column name="cvigencia" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CListaCorporativa -->
+    <many-to-one
+        name="clistacorporativa"
+        class="mx.com.web2lab.backend.hbm.om.ap.CListaCorporativa"
+        not-null="true"
+    >
+        <column name="clistacorporativa" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CConvenio -->
+    <many-to-one
+        name="cconvenio"
+        class="mx.com.web2lab.backend.hbm.om.ap.CConvenio"
+        not-null="true"
+    >
+        <column name="cconvenio" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CMarca -->
+    <many-to-one
+        name="cmarca"
+        class="mx.com.web2lab.backend.hbm.om.ap.CMarca"
+        not-null="true"
+    >
+        <column name="cmarca" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

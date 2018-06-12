@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.sistema.TurbineUserGroupRole" 
+    table="TURBINE_USER_GROUP_ROLE"
+>
+
+    <composite-id name="comp_id" class="mx.com.web2lab.backend.hbm.om.sistema.TurbineUserGroupRolePK">
+        <!-- bi-directional many-to-one association to sistema.TurbineRole -->
+        <key-many-to-one
+        	name="turbineRole"
+	        class="mx.com.web2lab.backend.hbm.om.sistema.TurbineRole"
+	    >
+    	    <column name="ROLE_ID" />
+	    </key-many-to-one>
+        <!-- bi-directional many-to-one association to sistema.TurbineUser -->
+        <key-many-to-one
+        	name="turbineUser"
+	        class="mx.com.web2lab.backend.hbm.om.sistema.TurbineUser"
+	    >
+    	    <column name="USER_ID" />
+	    </key-many-to-one>
+        <!-- bi-directional many-to-one association to sistema.TurbineGroup -->
+        <key-many-to-one
+        	name="turbineGroup"
+	        class="mx.com.web2lab.backend.hbm.om.sistema.TurbineGroup"
+	    >
+    	    <column name="GROUP_ID" />
+	    </key-many-to-one>
+    </composite-id>    
+
+
+    <!-- associations -->
+
+</class>
+</hibernate-mapping>

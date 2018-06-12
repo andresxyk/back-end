@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.CTipoComercial" 
+    table="c_tipo_comercial"
+>
+
+    <id
+        name="ctipocomercial"
+        type="int"
+        column="ctipocomercial"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="sdescripcioncomercial"
+        type="java.lang.String"
+        column="sdescripcioncomercial"
+        length="50"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional one-to-many association to CExamen -->
+    <set
+        name="cexamens"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="ctipocomercial" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.lis.CExamen"
+        />
+    </set>
+</class>
+</hibernate-mapping>

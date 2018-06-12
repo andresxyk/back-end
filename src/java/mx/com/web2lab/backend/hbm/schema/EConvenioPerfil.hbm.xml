@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.EConvenioPerfil" 
+    table="e_convenio_perfil"
+>
+
+    <id
+        name="kconvenioperfil"
+        type="int"
+        column="kconvenioperfil"
+    >
+        <generator class="assigned" />
+    </id>
+
+
+    <!-- associations -->
+    <!-- bi-directional many-to-one association to CPerfil -->
+    <many-to-one
+        name="cperfil"
+        class="mx.com.web2lab.backend.hbm.om.ap.CPerfil"
+        not-null="true"
+    >
+        <column name="cperfil" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CConvenio -->
+    <many-to-one
+        name="cconvenio"
+        class="mx.com.web2lab.backend.hbm.om.ap.CConvenio"
+        not-null="true"
+    >
+        <column name="cconvenio" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

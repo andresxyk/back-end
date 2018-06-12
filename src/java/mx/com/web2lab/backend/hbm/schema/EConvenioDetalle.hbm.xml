@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.EConvenioDetalle" 
+    table="e_convenio_detalle"
+>
+
+    <id
+        name="kconveniodetalle"
+        type="int"
+        column="kconveniodetalle"
+    >
+        <generator class="sequence">
+             	<param name="sequence">econveniodetalle_sequence</param>
+        </generator>
+    </id>
+
+    <property
+        name="pdescuento"
+        type="java.math.BigDecimal"
+        column="pdescuento"
+        length="8"
+    />
+    <property
+        name="mpreciofacturarsiniva"
+        type="java.math.BigDecimal"
+        column="mpreciofacturarsiniva"
+        length="8"
+    />
+    <property
+        name="mpreciofacturarconiva"
+        type="java.math.BigDecimal"
+        column="mpreciofacturarconiva"
+        length="8"
+    />
+    <property
+        name="ctipodescuento"
+        type="int"
+        column="ctipodescuento"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="cestadoregistro"
+        type="int"
+        column="cestadoregistro"
+        length="8"
+    />
+    
+
+    <!-- associations -->
+    <!-- bi-directional many-to-one association to CExamen -->
+    <many-to-one
+        name="cexamen"
+        class="mx.com.web2lab.backend.hbm.om.lis.CExamen"
+        not-null="true"
+    >
+        <column name="cexamen" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CConvenio -->
+    <many-to-one
+        name="cconvenio"
+        class="mx.com.web2lab.backend.hbm.om.ap.CConvenio"
+        not-null="true"
+    >
+        <column name="cconvenio" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.CEntidadLegal" 
+    table="c_entidad_legal"
+>
+
+    <id
+        name="centidadlegal"
+        type="int"
+        column="centidadlegal"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="srazonsocial"
+        type="java.lang.String"
+        column="srazonsocial"
+        not-null="true"
+        length="100"
+    />
+    <property
+        name="srfc"
+        type="java.lang.String"
+        column="srfc"
+        not-null="true"
+        length="15"
+    />
+    <property
+        name="ccodigopostal"
+        type="int"
+        column="ccodigopostal"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="nexterior"
+        type="java.lang.String"
+        column="nexterior"
+        length="8"
+    />
+    <property
+        name="ninterior"
+        type="java.lang.String"
+        column="ninterior"
+        length="8"
+    />
+    <property
+        name="spais"
+        type="java.lang.String"
+        column="spais"
+        length="10"
+    />
+    <property
+        name="cmarca"
+        type="int"
+        column="cmarca"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="catributofiscal"
+        type="int"
+        column="catributofiscal"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="dregistro"
+        type="java.sql.Timestamp"
+        column="dregistro"
+        not-null="true"
+        length="29"
+    />
+    <property
+        name="sdireccionfiscal"
+        type="java.lang.String"
+        column="sdireccionfiscal"
+        length="100"
+    />
+
+    <!-- associations -->
+
+</class>
+</hibernate-mapping>

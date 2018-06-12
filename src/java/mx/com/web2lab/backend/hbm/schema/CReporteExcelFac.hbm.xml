@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.CReporteExcelFac" 
+    table="c_reporte_excel_fac"
+>
+
+    <id
+        name="creporteexcelfac"
+        type="int"
+        column="creporteexcelfac"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="sdescripcion"
+        type="java.lang.String"
+        column="sdescripcion"
+        length="90"
+    />
+    <property
+        name="sreporteexcelfac"
+        type="java.lang.String"
+        column="sreporteexcelfac"
+        length="300"
+    />
+    <property
+        name="svariables"
+        type="java.lang.String"
+        column="svariables"
+        length="300"
+    />
+
+    <!-- associations -->
+
+</class>
+</hibernate-mapping>

@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.sistema.TurbineScheduledJob" 
+    table="TURBINE_SCHEDULED_JOB"
+>
+
+    <id
+        name="jobId"
+        type="java.math.BigDecimal"
+        column="JOB_ID"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="second"
+        type="java.math.BigDecimal"
+        column="SECOND"
+        not-null="true"
+        length="22"
+    />
+    <property
+        name="minute"
+        type="java.math.BigDecimal"
+        column="MINUTE"
+        not-null="true"
+        length="22"
+    />
+    <property
+        name="hour"
+        type="java.math.BigDecimal"
+        column="HOUR"
+        not-null="true"
+        length="22"
+    />
+    <property
+        name="weekDay"
+        type="java.math.BigDecimal"
+        column="WEEK_DAY"
+        not-null="true"
+        length="22"
+    />
+    <property
+        name="dayOfMonth"
+        type="java.math.BigDecimal"
+        column="DAY_OF_MONTH"
+        not-null="true"
+        length="22"
+    />
+    <property
+        name="task"
+        type="java.lang.String"
+        column="TASK"
+        not-null="true"
+        length="99"
+    />
+    <property
+        name="email"
+        type="java.lang.String"
+        column="EMAIL"
+        length="99"
+    />
+
+
+    <!-- associations -->
+
+</class>
+</hibernate-mapping>

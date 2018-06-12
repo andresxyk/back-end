@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.CPromocionMarketing" 
+    table="c_promocion_marketing"
+>
+
+    <id
+        name="cpromocionenviomarketing"
+        type="int"
+        column="cpromocionenviomarketing"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="ssubject"
+        type="java.lang.String"
+        column="ssubject"
+        length="150"
+    />
+    <property
+        name="shtmlpromocion"
+        type="java.lang.String"
+        column="shtmlpromocion"
+        length="2147483647"
+    />
+    <property
+        name="dregistro"
+        type="java.sql.Timestamp"
+        column="dregistro"
+        length="29"
+    />
+    <property
+        name="dregistromodi"
+        type="java.sql.Timestamp"
+        column="dregistromodi"
+        length="29"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional one-to-many association to TPacienteMarketing -->
+    <set
+        name="tpacientemarketings"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cpromocionenviomarketing" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TPacienteMarketing"
+        />
+    </set>
+    <!-- bi-directional many-to-one association to CConvenio -->
+    <many-to-one
+        name="cconvenio"
+        class="mx.com.web2lab.backend.hbm.om.ap.CConvenio"
+        not-null="true"
+    >
+        <column name="cconvenio" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CEstadoRegistro -->
+    <many-to-one
+        name="cestadoregistro"
+        class="mx.com.web2lab.backend.hbm.om.ap.CEstadoRegistro"
+        not-null="true"
+    >
+        <column name="cestadoregistro" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

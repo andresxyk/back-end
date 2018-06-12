@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.CMarca" 
+    table="c_marca"
+>
+
+    <id
+        name="cmarca"
+        type="int"
+        column="cmarca"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="smarca"
+        type="java.lang.String"
+        column="smarca"
+        length="60"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional one-to-many association to CMedico -->
+    <set
+        name="cmedicos"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cmarca" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.medico.CMedico"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to CPerfil -->
+    <set
+        name="cperfils"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cmarca" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.CPerfil"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to CSucursal -->
+    <set
+        name="csucursals"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cmarca" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.CSucursal"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TOrdenSucursal -->
+    <set
+        name="tordensucursals"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cmarca" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TOrdenSucursal"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TOrdenSucursalCotizacion -->
+    <set
+        name="tordensucursalcotizacions"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cmarca" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TOrdenSucursalCotizacion"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to CListaCorporativa -->
+    <set
+        name="clistacorporativas"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cmarca" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.CListaCorporativa"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TPaciente -->
+    <set
+        name="tpacientes"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cmarca" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TPaciente"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TPaciente -->
+    <set
+        name="econvenios"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cmarca" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.EConvenio"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TOrdenSucursalFac -->
+    <set
+        name="tordensucursalfacs"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cmarca" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TOrdenSucursalFac"
+        />
+    </set>
+
+</class>
+</hibernate-mapping>

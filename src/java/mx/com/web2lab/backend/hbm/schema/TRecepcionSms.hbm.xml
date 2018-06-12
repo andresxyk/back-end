@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.TRecepcionSms" 
+    table="t_recepcion_sms"
+>
+
+    <id
+        name="ktrecepcionsms"
+        type="int"
+        column="ktrecepcionsms"
+    >
+        <generator class="sequence">
+             	<param name="sequence">trecepcionsms_sequence</param>
+        </generator>
+    </id>
+
+    <property
+        name="utelefono"
+        type="long"
+        column="utelefono"
+        not-null="true"
+        length="10"
+    />
+    <property
+        name="smensaje"
+        type="java.lang.String"
+        column="smensaje"
+        length="200"
+    />
+
+    <!-- associations -->
+
+</class>
+</hibernate-mapping>

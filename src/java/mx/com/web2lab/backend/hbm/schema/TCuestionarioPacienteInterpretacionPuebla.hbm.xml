@@ -1,0 +1,416 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.puebla.TCuestionarioPacienteInterpretacionPuebla" 
+    table="t_cuestionario_paciente_interpretacion_puebla"
+>
+
+	<id
+        name="kcuestionariopacienteinterpretacionpuebla"
+        type="int"
+        column="kcuestionariopacienteinterpretacionpuebla"
+    >
+        <generator class="sequence">
+             	<param name="sequence">t_cuestionario_paciente_interpretacion_puebla_sequence</param>
+        </generator>
+    </id>
+    
+     <property
+        name="kordensucursal"
+        type="int"
+        column="kordensucursal"
+        not-null="true" 
+        length="8"    
+    />
+    
+    
+    <property
+        name="sinstitucion"
+        type="java.lang.String"
+        column="sinstitucion"
+        not-null="true"
+        length="60"
+    />
+    
+    <property
+        name="sentidad"
+        type="java.lang.String"
+        column="sentidad"
+        not-null="true"
+        length="60"
+    />
+    
+    <property
+        name="sclues"
+        type="java.lang.String"
+        column="sclues"
+        not-null="true"
+        length="60"
+    />
+    
+    <property
+        name="ujurisdiccion"
+        type="int"
+        column="ujurisdiccion"
+        not-null="true"
+        length="2"
+    />
+    
+    <property
+        name="smunicipio"
+        type="java.lang.String"
+        column="smunicipio"
+        not-null="true"
+        length="60"
+    />
+    
+    <property
+        name="sunidadmedica"
+        type="java.lang.String"
+        column="sunidadmedica"
+        not-null="true"
+        length="60"
+    />
+     <property
+        name="sclaveinstitucional"
+        type="java.lang.String"
+        column="sclaveinstitucional"
+        not-null="false"
+        length="60"
+    />
+    <property
+        name="scurp"
+        type="java.lang.String"
+        column="scurp"
+        not-null="true"
+        length="60"
+    />
+    <property
+        name="slugarnacimiento"
+        type="java.lang.String"
+        column="slugarnacimiento"
+        not-null="true"
+        length="60"
+    />
+    
+     <property
+        name="uderechohabiencia"
+        type="int"
+        column="uderechohabiencia"
+        not-null="true"
+        length="2"
+    />
+    
+    <property
+        name="uantescedentedemastografia"
+        type="int"
+        column="uantescedentedemastografia"
+        not-null="true"
+        length="2"
+    />
+    
+    <property
+        name="dfechaultimamastografia"
+        type="java.sql.Timestamp"
+        column="dfechaultimamastografia"
+        not-null="false"
+        length="29"
+    />
+    <property
+        name="uresultadobiradsmastografia"
+        type="int"
+        column="uresultadobiradsmastografia"
+        not-null="false"
+        length="2"
+    />
+     <property
+        name="umodalidadmastografiatamizaje"
+        type="int"
+        column="umodalidadmastografiatamizaje"
+        not-null="false"
+        length="2"
+    />
+     <property
+        name="umodalidadmastografiadiagnostica"
+        type="int"
+        column="umodalidadmastografiadiagnostica"
+        not-null="false"
+        length="2"
+    />
+    
+    <property
+        name="dfechatomamastografia"
+        type="java.sql.Timestamp"
+        column="dfechatomamastografia"
+        not-null="false"
+        length="29"
+    />
+    
+    <property
+        name="umastografiaadecuada"
+        type="int"
+        column="umastografiaadecuada"
+        not-null="false"
+        length="2"
+    />
+    
+     <property
+        name="bolimagenincompleta"
+        type="boolean"
+        column="bolimagenincompleta"
+        not-null="false"
+        length="1"
+    />
+    
+    <property
+        name="bolbajocontraste"
+        type="boolean"
+        column="bolbajocontraste"
+        not-null="false"
+        length="1"
+    />
+    
+     <property
+        name="bolbajaresolucion"
+        type="boolean"
+        column="bolbajaresolucion"
+        not-null="false"
+        length="1"
+    />
+    
+    <property
+        name="bolartefactos"
+        type="boolean"
+        column="bolartefactos"
+        not-null="false"
+        length="1"
+    />
+    
+    <property
+        name="bolmalposicionamiento"
+        type="boolean"
+        column="bolmalposicionamiento"
+        not-null="false"
+        length="1"
+    />
+    
+     <property
+        name="bolotros"
+        type="boolean"
+        column="bolotros"
+        not-null="false"
+        length="1"
+    />
+    
+    <property
+        name="dfechainterpretacionmastografia"
+        type="java.sql.Timestamp"
+        column="dfechainterpretacionmastografia"
+        not-null="false"
+        length="29"
+    />
+    
+    <property
+        name="boltumorderecho"
+        type="boolean"
+        column="boltumorderecho"
+        not-null="false"
+        length="1"
+    />
+    <property
+        name="boltumorizquierdo"
+        type="boolean"
+        column="boltumorizquierdo"
+        not-null="false"
+        length="1"
+    />
+     <property
+        name="bolasimetriaderecho"
+        type="boolean"
+        column="bolasimetriaderecho"
+        not-null="false"
+        length="1"
+    />
+    <property
+        name="bolasimetriaizquierdo"
+        type="boolean"
+        column="bolasimetriaizquierdo"
+        not-null="false"
+        length="1"
+    />
+    <property
+        name="boldeformidadderecho"
+        type="boolean"
+        column="boldeformidadderecho"
+        not-null="false"
+        length="1"
+    />
+    <property
+        name="boldeformidadizquierdo"
+        type="boolean"
+        column="boldeformidadizquierdo"
+        not-null="false"
+        length="1"
+    />
+    <property
+        name="bolcalcificacionderecho"
+        type="boolean"
+        column="bolcalcificacionderecho"
+        not-null="false"
+        length="1"
+    />
+    <property
+        name="bolcalcificacionizquierdo"
+        type="boolean"
+        column="bolcalcificacionizquierdo"
+        not-null="false"
+        length="1"
+    />
+    <property
+        name="boldensidadasimetricaderecho"
+        type="boolean"
+        column="boldensidadasimetricaderecho"
+        not-null="false"
+        length="1"
+    />
+    <property
+        name="boldensidadasimetricaizquierdo"
+        type="boolean"
+        column="boldensidadasimetricaizquierdo"
+        not-null="false"
+        length="1"
+    />
+    <property
+        name="bolotrosderecho"
+        type="boolean"
+        column="bolotrosderecho"
+        not-null="false"
+        length="1"
+    />
+    <property
+        name="bolotrosizquierdo"
+        type="boolean"
+        column="bolotrosizquierdo"
+        not-null="false"
+        length="1"
+    />
+    <property
+        name="uresultadobiradsuno"
+        type="int"
+        column="uresultadobiradsuno"
+        not-null="false"
+        length="2"
+    />
+     <property
+        name="uresultadobiradsdos"
+        type="int"
+        column="uresultadobiradsdos"
+        not-null="false"
+        length="2"
+    />
+     <property
+        name="uresultadobiradstres"
+        type="int"
+        column="uresultadobiradstres"
+        not-null="false"
+        length="2"
+    />
+    <property
+        name="srfcresultadobiradsuno"
+        type="java.lang.String"
+        column="srfcresultadobiradsuno"
+        not-null="false"
+        length="60"
+    />
+     <property
+        name="srfcresultadobiradsdos"
+        type="java.lang.String"
+        column="srfcresultadobiradsdos"
+        not-null="false"
+        length="60"
+    />
+     <property
+        name="srfcresultadobiradstres"
+        type="java.lang.String"
+        column="srfcresultadobiradstres"
+        not-null="false"
+        length="60"
+    />
+     <property
+        name="sobservaciones"
+        type="java.lang.String"
+        column="sobservaciones"
+        not-null="false"
+        length="60"
+    />
+     <property
+        name="dfechainformeresultado"
+        type="java.sql.Timestamp"
+        column="dfechainformeresultado"
+        not-null="false"
+        length="29"
+    />
+    <property
+        name="bolrepeticionestudio"
+        type="boolean"
+        column="bolrepeticionestudio"
+        not-null="false"
+        length="1"
+    />
+    <property
+        name="bolproximadeteccion"
+        type="boolean"
+        column="bolproximadeteccion"
+        not-null="false"
+        length="1"
+    />
+     <property
+        name="bolreferenciaginecologia"
+        type="boolean"
+        column="bolreferenciaginecologia"
+        not-null="false"
+        length="1"
+    />
+    <property
+        name="sreferenciaevaluacion"
+        type="java.lang.String"
+        column="sreferenciaevaluacion"
+        not-null="false"
+        length="60"
+    />
+   <property
+        name="dfechareferencia"
+        type="java.sql.Timestamp"
+        column="dfechareferencia"
+        not-null="false"
+        length="29"
+    />
+    <property
+        name="snombreradiologo"
+        type="java.lang.String"
+        column="snombreradiologo"
+        not-null="false"
+        length="60"
+    />
+    <property
+        name="srfcradiologo"
+        type="java.lang.String"
+        column="srfcradiologo"
+        not-null="false"
+        length="60"
+    />
+       
+
+</class>
+</hibernate-mapping>

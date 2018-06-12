@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.tiemposmovimientos.TTicketCaja" 
+    table="t_ticket_caja"
+>
+
+    <id
+        name="kticketcaja"
+        type="int"
+        column="kticketcaja"
+    >
+        <generator class="sequence">
+             	<param name="sequence">t_ticket_caja_sequence</param>
+        </generator>
+    </id>
+
+    <property
+        name="csucursal"
+        type="int"
+        column="csucursal"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="uconsecutivoticketsucursal"
+        type="int"
+        column="uconsecutivoticketsucursal"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="dinicio"
+        type="java.sql.Timestamp"
+        column="dinicio"
+        length="29"
+    />
+    <property
+        name="dtermino"
+        type="java.sql.Timestamp"
+        column="dtermino"
+        length="29"
+    />
+    <property
+        name="kordensucursal"
+        type="int"
+        column="kordensucursal"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="userId"
+        type="int"
+        column="user_id"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="cestadoregistro"
+        type="int"
+        column="cestadoregistro"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="smodulo"
+        type="java.lang.String"
+        column="smodulo"
+        not-null="true"
+        length="2"
+    />
+    <property
+        name="snemonicoconsecutivo"
+        type="java.lang.String"
+        column="snemonicoconsecutivo"
+        not-null="true"
+        length="2"
+    />
+
+    <!-- associations -->
+
+</class>
+</hibernate-mapping>

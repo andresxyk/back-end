@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.sistema.TurbineUser" 
+    table="TURBINE_USER"
+>
+
+    <id
+        name="userId"
+        type="java.math.BigDecimal"
+        column="USER_ID"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="loginName"
+        type="java.lang.String"
+        column="LOGIN_NAME"
+        not-null="true"
+        length="32"
+    />
+    <property
+        name="passwordValue"
+        type="java.lang.String"
+        column="PASSWORD_VALUE"
+        not-null="true"
+        length="32"
+    />
+    <property
+        name="firstName"
+        type="java.lang.String"
+        column="FIRST_NAME"
+        not-null="true"
+        length="99"
+    />
+    <property
+        name="lastName"
+        type="java.lang.String"
+        column="LAST_NAME"
+        not-null="true"
+        length="99"
+    />
+    <property
+        name="email"
+        type="java.lang.String"
+        column="EMAIL"
+        length="99"
+    />
+    <property
+        name="confirmValue"
+        type="java.lang.String"
+        column="CONFIRM_VALUE"
+        length="99"
+    />
+    <property
+        name="modified"
+        type="java.sql.Timestamp"
+        column="MODIFIED"
+        length="7"
+    />
+    <property
+        name="created"
+        type="java.sql.Timestamp"
+        column="CREATED"
+        length="7"
+    />
+    <property
+        name="lastLogin"
+        type="java.sql.Timestamp"
+        column="LAST_LOGIN"
+        length="7"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional one-to-many association to sistema.sistema.TurbineUserGroupRole -->
+    <set
+        name="turbineUserGroupRoles"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="USER_ID" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.sistema.TurbineUserGroupRole"
+        />
+    </set>
+
+</class>
+</hibernate-mapping>

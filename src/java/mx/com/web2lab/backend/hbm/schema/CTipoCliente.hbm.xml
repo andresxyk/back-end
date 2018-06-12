@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.CTipoCliente" 
+    table="c_tipo_cliente"
+>
+
+    <id
+        name="ctipocliente"
+        type="int"
+        column="ctipocliente"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="stipocliente"
+        type="java.lang.String"
+        column="stipocliente"
+        length="30"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional one-to-many association to CCliente -->
+    <set
+        name="cclientes"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="ctipocliente" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.CCliente"
+        />
+    </set>
+
+</class>
+</hibernate-mapping>

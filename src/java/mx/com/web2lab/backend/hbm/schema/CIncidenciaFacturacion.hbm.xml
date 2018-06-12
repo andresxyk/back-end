@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.CIncidenciaFacturacion" 
+    table="c_incidencia_facturacion"
+>
+
+    <id
+        name="cincidenciafacturacion" 
+        column="cincidenciafacturacion" 
+        type="int"
+        length="8"
+    >
+        <generator class="assigned" />
+    </id>
+    
+    <property
+	    name="sincidenciafacturacion" 
+	    column="sincidenciafacturacion" 
+	    type="java.lang.String"
+	    length="100"
+    />
+    <property
+        name="bincidenciaorden" 
+        column="bincidenciaorden" 
+        type="boolean"
+        length="1"
+    />
+    <property
+        name="uproceso" 
+        column="uproceso" 
+        type="int"
+        length="8"
+     />
+
+
+    <!-- associations -->
+    <!-- bi-directional one-to-many association to AIncidenciaFacturacion -->
+    <set
+        name="aincidenciafacturacions"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cincidenciafacturacion" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.AIncidenciaFacturacion"
+        />
+    </set> 
+</class>
+</hibernate-mapping>

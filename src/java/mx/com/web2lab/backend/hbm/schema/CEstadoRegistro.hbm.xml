@@ -1,0 +1,251 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.CEstadoRegistro" 
+    table="c_estado_registro"
+>
+
+    <id
+        name="cestadoregistro"
+        type="int"
+        column="cestadoregistro"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="sestadoregistro"
+        type="java.lang.String"
+        column="sestadoregistro"
+        length="15"
+    />
+    <property
+        name="snombretabla"
+        type="java.lang.String"
+        column="snombretabla"
+        length="50"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional one-to-many association to CDireccionMedico -->
+    <set
+        name="cdireccionmedicos"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cestadoregistro" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.CDireccionMedico"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to EPerfilExamen -->
+    <set
+        name="eperfilexamens"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cestadoregistro" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.EPerfilExamen"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TOrdenExamenSucursal -->
+    <set
+        name="tordenexamensucursals"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cestadoregistro" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TOrdenExamenSucursal"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TOrdenSucursal -->
+    <set
+        name="tordensucursals"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cestadoregistro" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TOrdenSucursal"
+        />
+    </set>
+        <!-- bi-directional one-to-many association to TOrdenSucursalCotizacion -->
+    <set
+        name="tordensucursalcotizacions"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cestadoregistro" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TOrdenSucursalCotizacion"
+        />
+    </set>    
+    <!-- bi-directional one-to-many association to EMedicoPaquete -->
+    <set
+        name="emedicopaquetes"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cestadoregistro" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.EMedicoPaquete"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TPagoPaciente -->
+    <set
+        name="tpagopacientes"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cestadoregistro" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TPagoPaciente"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TGastoSucursal -->
+    <set
+        name="tgastosucursals"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cestadoregistro" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TGastoSucursal"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to CCliente -->
+    <set
+        name="cclientes"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cestadoregistro" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.CCliente"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TPaciente -->
+    <set
+        name="tpacientes"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cestadoregistro" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TPaciente"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TFacturaEmpresa -->
+    <set
+        name="tfacturaempresas"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cestadoregistro" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TFacturaEmpresa"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to EConvenio -->
+    <set
+        name="econvenios"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cestadoregistro" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.EConvenio"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TFacturaEmpresaDetalle -->
+    <set
+        name="tfacturaempresadetalles"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cestadoregistro" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TFacturaEmpresaDetalle"
+        />
+    </set>
+    <!-- associations -->
+    <!-- bi-directional one-to-many association to CPromocionMarketing -->
+    <set
+        name="cpromocionmarketings"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cestadoregistro" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.CPromocionMarketing"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TOrdenExamenSucursalFac -->
+    <set
+        name="tordenexamensucursalfacs"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cestadoregistro" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TOrdenExamenSucursalFac"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TOrdenSucursalFac -->
+    <set
+        name="tordensucursalfacs"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cestadoregistro" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TOrdenSucursalFac"
+        />
+    </set>
+</class>
+</hibernate-mapping>

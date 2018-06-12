@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.CExamenConvenioSinonimo" 
+    table="c_examen_convenio_sinonimo"
+>
+
+    <id
+        name="cexamenconveniosinonimo"
+        type="int"
+        column="cexamenconveniosinonimo"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="cexamen"
+        type="int"
+        column="cexamen"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="sclavesinonimo"
+        type="java.lang.String"
+        column="sclavesinonimo"
+        length="75"
+    />
+    <property
+        name="snombresinonimo"
+        type="java.lang.String"
+        column="snombresinonimo"
+        length="100"
+    />
+    <property
+        name="cconvenio"
+        type="int"
+        column="cconvenio"
+        not-null="true"
+        length="8"
+    />
+
+    <!-- associations -->
+
+</class>
+</hibernate-mapping>

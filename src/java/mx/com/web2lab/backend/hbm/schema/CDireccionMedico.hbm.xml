@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.CDireccionMedico" 
+    table="c_direccion_medico"
+>
+
+    <id
+        name="cdireccionmedico"
+        type="int"
+        column="cdireccionmedico"
+    >
+        <generator class="sequence">
+             	<param name="sequence">cdireccionmedico_sequence</param>
+        </generator>
+    </id>
+
+    <property
+        name="sdireccion"
+        type="java.lang.String"
+        column="sdireccion"
+        length="150"
+    />
+    <property
+        name="stelefono"
+        type="java.lang.String"
+        column="stelefono"
+        length="150"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional many-to-one association to CCodigoPostal -->
+    <many-to-one
+        name="ccodigopostal"
+        class="mx.com.web2lab.backend.hbm.om.ap.CCodigoPostal"
+        not-null="true"
+    >
+        <column name="ccodigopostal" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CReferenciaDireccion -->
+    <many-to-one
+        name="creferenciadireccion"
+        class="mx.com.web2lab.backend.hbm.om.ap.CReferenciaDireccion"
+        not-null="true"
+    >
+        <column name="creferenciadireccion" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CEstadoRegistro -->
+    <many-to-one
+        name="cestadoregistro"
+        class="mx.com.web2lab.backend.hbm.om.ap.CEstadoRegistro"
+        not-null="true"
+    >
+        <column name="cestadoregistro" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CMedico -->
+    <many-to-one
+        name="cmedico"
+        class="mx.com.web2lab.backend.hbm.om.ap.medico.CMedico"
+        not-null="true"
+    >
+        <column name="cmedico" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

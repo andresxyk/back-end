@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.CZonaMedico" 
+    table="c_zona_medico"
+>
+
+    <id
+        name="czona"
+        type="int"
+        column="czona"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="zona"
+        type="int"
+        column="zona"
+        length="8"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional one-to-many association to CMedico -->
+    <set
+        name="cmedicos"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="czona" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.medico.CMedico"
+        />
+    </set>
+
+</class>
+</hibernate-mapping>

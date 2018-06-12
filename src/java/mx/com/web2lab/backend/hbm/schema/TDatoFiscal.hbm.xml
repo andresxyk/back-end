@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.TDatoFiscal" 
+    table="t_dato_fiscal"
+>
+
+    <id
+        name="kdatofiscal"
+        type="int"
+        column="kdatofiscal"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="srazonsocial"
+        type="java.lang.String"
+        column="srazonsocial"
+        unique="true"
+        length="150"
+    />
+    <property
+        name="srfc"
+        type="java.lang.String"
+        column="srfc"
+        unique="true"
+        length="20"
+    />
+    <property
+        name="sdireccion"
+        type="java.lang.String"
+        column="sdireccion"
+        unique="true"
+        length="100"
+    />
+    <property
+        name="ccodigopostal"
+        type="int"
+        column="ccodigopostal"
+        unique="true"
+        length="8"
+    />
+    <property
+        name="spais"
+        type="java.lang.String"
+        column="spais"
+        length="10"
+    />
+    <property
+        name="userId"
+        type="int"
+        column="user_id"
+        length="8"
+    />
+    <property
+        name="userIdChange"
+        type="int"
+        column="user_id_change"
+        length="8"
+    />
+    <property
+        name="dregistro"
+        type="java.sql.Timestamp"
+        column="dregistro"
+        length="29"
+    />
+    <property
+        name="dregistromodificacion"
+        type="java.sql.Timestamp"
+        column="dregistromodificacion"
+        length="29"
+    />
+
+    <!-- associations -->
+
+</class>
+</hibernate-mapping>

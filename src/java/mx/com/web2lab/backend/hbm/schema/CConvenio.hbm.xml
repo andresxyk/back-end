@@ -1,0 +1,191 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.CConvenio" 
+    table="c_convenio"
+>
+
+    <id
+        name="cconvenio"
+        type="int"
+        column="cconvenio"
+    >
+        <generator class="sequence">
+             	<param name="sequence">cconvenio_sequence</param>
+        </generator>
+    </id>
+
+    <property
+        name="sconvenio"
+        type="java.lang.String"
+        column="sconvenio"
+        length="50"
+    />
+    <property
+        name="dregistro"
+        type="java.sql.Timestamp"
+        column="dregistro"
+        length="29"
+    />
+    <property
+        name="userid"
+        type="java.math.BigDecimal"
+        column="user_id"
+        not-null="true"
+        length="131089"
+    />
+    <property
+        name="useridchange"
+        type="java.math.BigDecimal"
+        column="user_id_change"
+        length="131089"
+    />
+    <property
+        name="spassword"
+        type="java.lang.String"
+        column="spassword"
+        length="10"
+    />
+    <property
+        name="spasswordconsulta"
+        type="java.lang.String"
+        column="spasswordconsulta"
+        length="10"
+    />
+    <property
+        name="scorreoelectronico"
+        type="java.lang.String"
+        column="scorreoelectronico"
+        length="70"
+    />
+<!--  
+    <property
+        name="snemonico"
+        type="java.lang.String"
+        column="snemonico"
+        length="30"
+    />
+    -->
+    <!-- associations -->
+    <!-- bi-directional many-to-one association to CTipoConvenio -->
+    <many-to-one
+        name="ctipoconvenio"
+        class="mx.com.web2lab.backend.hbm.om.ap.CTipoConvenio"
+        not-null="true"
+    >
+        <column name="ctipoconvenio" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CCliente -->
+    <many-to-one
+        name="ccliente"
+        class="mx.com.web2lab.backend.hbm.om.ap.CCliente"
+        not-null="true"
+    >
+        <column name="ccliente" />
+    </many-to-one>
+    <!-- bi-directional one-to-many association to TOrdenExamenSucursal -->
+    <set
+        name="tordenexamensucursals"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cconvenio" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TOrdenExamenSucursal"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to EConvenioPerfil -->
+    <set
+        name="econvenioperfils"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cconvenio" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.EConvenioPerfil"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to EConvenioDetalle -->
+    <set
+        name="econveniodetalles"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cconvenio" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.EConvenioDetalle"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to EConvenioClasificacion -->
+    <set
+        name="econvenioclasificacions"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cconvenio" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.EConvenioClasificacion"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to EConvenio -->
+    <set
+        name="econvenios"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cconvenio" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.EConvenio"
+        />
+    </set>
+    <!-- associations -->
+    <!-- bi-directional one-to-many association to CPromocionMarketing -->
+    <set
+        name="cpromocionmarketings"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cconvenio" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.CPromocionMarketing"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TOrdenSucursalFac -->
+    <set
+        name="tordensucursalfacs"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cconvenio" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TOrdenSucursalFac"
+        />
+    </set>
+
+</class>
+</hibernate-mapping>

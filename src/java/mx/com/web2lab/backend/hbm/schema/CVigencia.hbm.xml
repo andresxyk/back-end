@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.CVigencia" 
+    table="c_vigencia"
+>
+
+    <id
+        name="cvigencia"
+        type="int"
+        column="cvigencia"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="dinicio"
+        type="java.sql.Timestamp"
+        column="dinicio"
+        length="29"
+    />
+    <property
+        name="dtermino"
+        type="java.sql.Timestamp"
+        column="dtermino"
+        length="29"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional one-to-many association to EConvenio -->
+    <set
+        name="econvenios"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cvigencia" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.EConvenio"
+        />
+    </set>
+
+</class>
+</hibernate-mapping>

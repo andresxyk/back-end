@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.sistema.TurbinePermission" 
+    table="TURBINE_PERMISSION"
+>
+
+    <id
+        name="permissionId"
+        type="java.math.BigDecimal"
+        column="PERMISSION_ID"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="permissionName"
+        type="java.lang.String"
+        column="PERMISSION_NAME"
+        not-null="true"
+        length="99"
+    />
+
+
+    <!-- associations -->
+    <!-- bi-directional one-to-many association to sistema.sistema.TurbineRolePermission -->
+    <set
+        name="turbineRolePermissions"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="PERMISSION_ID" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.sistema.TurbineRolePermission"
+        />
+    </set>
+
+</class>
+</hibernate-mapping>

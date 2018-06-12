@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.EPerfilExamen" 
+    table="e_perfil_examen"
+>
+
+    <id
+        name="kperfilexamen"
+        type="int"
+        column="kperfilexamen"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="pdescuento"
+        type="java.math.BigDecimal"
+        column="pdescuento"
+        length="7"
+    />
+    <property
+        name="userid"
+        type="java.math.BigDecimal"
+        column="user_id"
+        not-null="true"
+        length="131089"
+    />
+    <property
+        name="dregistro"
+        type="java.sql.Timestamp"
+        column="dregistro"
+        length="29"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional many-to-one association to CExamen -->
+    <many-to-one
+        name="cexamen"
+        class="mx.com.web2lab.backend.hbm.om.lis.CExamen"
+        not-null="true"
+    >
+        <column name="cexamen" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CEstadoRegistro -->
+    <many-to-one
+        name="cestadoregistro"
+        class="mx.com.web2lab.backend.hbm.om.ap.CEstadoRegistro"
+        not-null="true"
+    >
+        <column name="cestadoregistro" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CPerfil -->
+    <many-to-one
+        name="cperfil"
+        class="mx.com.web2lab.backend.hbm.om.ap.CPerfil"
+        not-null="true"
+    >
+        <column name="cperfil" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

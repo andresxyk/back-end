@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.lis.CMuestra" 
+    table="c_muestra"
+    schema="lis"
+>
+
+    <id
+        name="cmuestra"
+        type="int"
+        column="cmuestra"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="smuestra"
+        type="java.lang.String"
+        column="smuestra"
+        length="150"
+    />
+
+    <!-- associations -->
+
+</class>
+</hibernate-mapping>

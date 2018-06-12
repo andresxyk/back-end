@@ -1,0 +1,202 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.TNotaCredito" 
+    table="t_nota_credito"
+>
+
+    <id
+        name="knotacredito"
+        type="int"
+        column="knotacredito"
+    >
+         <generator class="sequence">
+             	<param name="sequence">t_nota_credito_sequence</param>
+        </generator>
+    </id>
+
+    <property
+        name="kdatofiscal"
+        type="int"
+        column="kdatofiscal"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="ssucursal"
+        type="java.lang.String"
+        column="ssucursal"
+        not-null="true"
+        length="30"
+    />
+    <property
+        name="ufoliofactura"
+        type="int"
+        column="ufoliofactura"
+        not-null="true"
+        unique="true"
+        length="8"
+    />
+    <property
+        name="ccliente"
+        type="int"
+        column="ccliente"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="csucursal"
+        type="int"
+        column="csucursal"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="cformapago"
+        type="int"
+        column="cformapago"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="msubtotal"
+        type="java.math.BigDecimal"
+        column="msubtotal"
+        not-null="true"
+        length="10"
+    />
+    <property
+        name="mdescuento"
+        type="java.math.BigDecimal"
+        column="mdescuento"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="mcopago"
+        type="java.math.BigDecimal"
+        column="mcopago"
+        length="8"
+    />
+    <property
+        name="miva"
+        type="java.math.BigDecimal"
+        column="miva"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="mtotal"
+        type="java.math.BigDecimal"
+        column="mtotal"
+        not-null="true"
+        length="10"
+    />
+    <property
+        name="ctipoimpuesto"
+        type="int"
+        column="ctipoimpuesto"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="cconvenio"
+        type="int"
+        column="cconvenio"
+        length="8"
+    />
+    <property
+        name="scadenaoriginal"
+        type="java.lang.String"
+        column="scadenaoriginal"
+        length="4000"
+    />
+    <property
+        name="ssellodigital"
+        type="java.lang.String"
+        column="ssellodigital"
+        not-null="true"
+        length="500"
+    />
+    <property
+        name="centidadlegal"
+        type="int"
+        column="centidadlegal"
+        not-null="true"
+        unique="true"
+        length="8"
+    />
+    <property
+        name="dregistro"
+        type="java.sql.Timestamp"
+        column="dregistro"
+        not-null="true"
+        length="29"
+    />
+    <property
+        name="cestadoregistro"
+        type="int"
+        column="cestadoregistro"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="dcancelacionfactura"
+        type="java.sql.Timestamp"
+        column="dcancelacionfactura"
+        length="29"
+    />
+    <property
+        name="userIdChange"
+        type="int"
+        column="user_id_change"
+        length="8"
+    />
+    <property
+        name="userId"
+        type="int"
+        column="user_id"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="sobservacion"
+        type="java.lang.String"
+        column="sobservacion"
+        length="150"
+    />
+    <property
+        name="sxml"
+        type="java.lang.String"
+        column="sxml"
+        length="2147483647"
+    />
+    <property
+        name="sxmlsello"
+        type="java.lang.String"
+        column="sxmlsello"
+        length="2147483647"
+    />
+    <property
+        name="sserie"
+        type="java.lang.String"
+        column="sserie"
+        unique="true"
+        length="5"
+    />
+
+    <!-- associations -->
+
+</class>
+</hibernate-mapping>

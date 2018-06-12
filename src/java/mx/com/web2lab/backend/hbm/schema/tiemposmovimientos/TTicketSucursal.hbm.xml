@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.tiemposmovimientos.TTicketSucursal" 
+    table="t_ticket_sucursal"
+>
+
+    <id
+        name="kticketsucursal"
+        type="int"
+        column="kticketsucursal"
+    >
+        <generator class="sequence">
+             	<param name="sequence">t_ticket_sucursal_sequence</param>
+        </generator>
+    </id>
+
+    <property
+        name="csucursal"
+        type="int"
+        column="csucursal"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="uconsecutivoticketsucursal"
+        type="int"
+        column="uconsecutivoticketsucursal"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="dinicio"
+        type="java.sql.Timestamp"
+        column="dinicio"
+        length="29"
+    />
+    <property
+        name="dtermino"
+        type="java.sql.Timestamp"
+        column="dtermino"
+        length="29"
+    />
+    <property
+        name="dterminorecepcion"
+        type="java.sql.Timestamp"
+        column="dterminorecepcion"
+        length="29"
+    />
+    <property
+        name="kordensucursal"
+        type="int"
+        column="kordensucursal"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="kordensucursalcotizacion"
+        type="int"
+        column="kordensucursalcotizacion"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="userId"
+        type="int"
+        column="user_id"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="cestadoregistro"
+        type="int"
+        column="cestadoregistro"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="smodulo"
+        type="java.lang.String"
+        column="smodulo"
+        not-null="true"
+        length="2"
+    />
+    <property
+        name="snemonicoconsecutivo"
+        type="java.lang.String"
+        column="snemonicoconsecutivo"
+        not-null="true"
+        length="2"
+    />
+    <property
+        name="dcierreticket"
+        type="java.sql.Timestamp"
+        column="dcierreticket"
+        length="29"
+    />
+    <property
+        name="kticketsucursalinicial"
+        type="int"
+        column="kticketsucursalinicial"
+        not-null="true"
+        length="8"
+    />
+
+    <!-- associations -->
+
+</class>
+</hibernate-mapping>

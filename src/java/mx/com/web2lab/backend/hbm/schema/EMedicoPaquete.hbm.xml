@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.EMedicoPaquete" 
+    table="e_medico_paquete"
+>
+
+    <id
+        name="kmedicopaquete"
+        type="int"
+        column="kmedicopaquete"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="smedicopaquete"
+        type="java.lang.String"
+        column="smedicopaquete"
+        length="50"
+    />
+    <property
+        name="userid"
+        type="java.math.BigDecimal"
+        column="user_id"
+        not-null="true"
+        length="131089"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional one-to-many association to EMedicoDetalle -->
+    <set
+        name="emedicodetalles"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="kmedicopaquete" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.EMedicoDetalle"
+        />
+    </set>
+    <!-- bi-directional many-to-one association to CEstadoRegistro -->
+    <many-to-one
+        name="cestadoregistro"
+        class="mx.com.web2lab.backend.hbm.om.ap.CEstadoRegistro"
+        not-null="true"
+    >
+        <column name="cestadoregistro" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CMedico -->
+    <many-to-one
+        name="cmedico"
+        class="mx.com.web2lab.backend.hbm.om.ap.medico.CMedico"
+        not-null="true"
+    >
+        <column name="cmedico" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

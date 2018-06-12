@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.TCorteCajaArqueo" 
+    table="t_corte_caja_arqueo"
+>
+
+    <id
+        name="kcortecajaarqueo"
+        type="int"
+        column="kcortecajaarqueo"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="uvolumencantidad"
+        type="int"
+        column="uvolumencantidad"
+        length="5"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional many-to-one association to TCorteCaja -->
+    <many-to-one
+        name="tcortecaja"
+        class="mx.com.web2lab.backend.hbm.om.ap.TCorteCaja"
+        not-null="true"
+    >
+        <column name="kcortecaja" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CNominacion -->
+    <many-to-one
+        name="cnominacion"
+        class="mx.com.web2lab.backend.hbm.om.ap.CNominacion"
+        not-null="true"
+    >
+        <column name="knominacion" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

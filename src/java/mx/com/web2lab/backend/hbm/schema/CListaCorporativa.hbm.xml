@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.CListaCorporativa" 
+    table="c_lista_corporativa"
+>
+
+    <id
+        name="clistacorporativa"
+        type="int"
+        column="clistacorporativa"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="sdescripcionlista"
+        type="java.lang.String"
+        column="sdescripcionlista"
+        length="30"
+    />
+    <property
+        name="dregistro"
+        type="java.sql.Timestamp"
+        column="dregistro"
+        length="29"
+    />
+    <property
+        name="userid"
+        type="java.math.BigDecimal"
+        column="user_id"
+        not-null="true"
+        length="131089"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional one-to-many association to EListaCorporativaDetalle -->
+    <set
+        name="elistacorporativadetalles"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="clistacorporativa" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.EListaCorporativaDetalle"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to CListaPublico -->
+    <set
+        name="clistapublicos"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="clistacorporativa" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.CListaPublico"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to EConvenio -->
+    <set
+        name="econvenios"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="clistacorporativa" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.EConvenio"
+        />
+    </set>
+    <!-- bi-directional many-to-one association to CMarca -->
+    <many-to-one
+        name="cmarca"
+        class="mx.com.web2lab.backend.hbm.om.ap.CMarca"
+        not-null="true"
+    >
+        <column name="cmarca" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

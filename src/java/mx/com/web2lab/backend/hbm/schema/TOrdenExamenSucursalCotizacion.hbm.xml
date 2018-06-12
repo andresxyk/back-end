@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.TOrdenExamenSucursalCotizacion" 
+    table="t_orden_examen_sucursal_cotizacion"
+>
+
+    <id
+        name="kordenexamensucursalcotizacion"
+        type="int"
+        column="kordenexamensucursalcotizacion"
+    >
+        <generator class="sequence">
+             	<param name="sequence">tordenexamensucursalcotizacion_sequence</param>
+        </generator>
+    </id>
+
+    <property
+        name="cexamen"
+        type="int"
+        column="cexamen"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="sexamen"
+        type="java.lang.String"
+        column="sexamen"
+        length="100"
+    />
+    <property
+        name="msubtotal"
+        type="java.math.BigDecimal"
+        column="msubtotal"
+        length="8"
+    />
+    <property
+        name="mdescuentopromocion"
+        type="java.math.BigDecimal"
+        column="mdescuentopromocion"
+        length="8"
+    />
+    <property
+        name="mdescuentoempresa"
+        type="java.math.BigDecimal"
+        column="mdescuentoempresa"
+        length="8"
+    />
+    <property
+        name="mdescuentomedico"
+        type="java.math.BigDecimal"
+        column="mdescuentomedico"
+        length="8"
+    />
+    <property
+        name="mfacturaempresa"
+        type="java.math.BigDecimal"
+        column="mfacturaempresa"
+        length="8"
+    />
+    <property
+        name="mpagopaciente"
+        type="java.math.BigDecimal"
+        column="mpagopaciente"
+        length="8"
+    />
+    <property
+        name="miva"
+        type="java.math.BigDecimal"
+        column="miva"
+        length="8"
+    />
+    <property
+        name="mtotal"
+        type="java.math.BigDecimal"
+        column="mtotal"
+        length="8"
+    />
+    <property
+        name="userId"
+        type="java.math.BigDecimal"
+        column="user_id"
+        not-null="true"
+        length="131089"
+    />
+    <property
+        name="cestadoregistro"
+        type="int"
+        column="cestadoregistro"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="dregistro"
+        type="java.sql.Timestamp"
+        column="dregistro"
+        length="29"
+    />
+    <property
+        name="cconvenio"
+        type="int"
+        column="cconvenio"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="smotivocancelacion"
+        type="java.lang.String"
+        column="smotivocancelacion"
+        length="35"
+    />
+    <property
+        name="cperfil"
+        type="int"
+        column="cperfil"
+        length="8"
+    />
+    <property
+        name="uvolumenexamen"
+        type="short"
+        column="uvolumenexamen"
+        not-null="true"
+        length="5"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional many-to-one association to TOrdenSucursalCotizacion -->
+    <many-to-one
+        name="tordensucursalcotizacion"
+        class="mx.com.web2lab.backend.hbm.om.ap.TOrdenSucursalCotizacion"
+        not-null="true"
+    >
+        <column name="kordensucursalcotizacion" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

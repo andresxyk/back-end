@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project>
+  <pomVersion>1</pomVersion>
+  <id>web2lab_backend</id>
+  <name>Portal Web2Lab</name>
+  <currentVersion>v2</currentVersion>
+  <package>web2lab</package>
+  <dependencies>
+    <dependency>
+        <id>web2lab_backend</id>
+		<type>ejb</type>
+        <version>v2</version>
+        <url></url>
+        <properties>
+            <ear.bundle>true</ear.bundle>
+        </properties>
+    </dependency>
+    <dependency>
+        <id>web2labportal</id>
+		<type>war</type>
+        <version>v2</version>
+        <url></url>
+        <properties>
+            <ear.bundle>true</ear.bundle>
+            <ear.appxml.war.context-root>/web2labportal</ear.appxml.war.context-root>
+        </properties>
+    </dependency>         
+    <dependency>
+        <id>hibernate</id>
+		<type>jar</type>
+        <version>2.1.3</version>
+        <url>http://hibernate.bluemars.net/</url>
+        <properties>
+            <ear.bundle>true</ear.bundle>
+        </properties>
+    </dependency>
+    <dependency>
+        <id>log4j</id>
+        <version>1.2.6</version>
+        <url>http://jakarta.apache.org/log4j/</url>
+        <properties>
+            <ear.bundle>true</ear.bundle>
+        </properties>
+    </dependency>
+    <dependency>
+        <id>commons-logging</id>
+        <version>1.0.3</version>
+        <url>http://jakarta.apache.org/commons/</url>
+        <properties>
+            <ear.bundle>true</ear.bundle>
+        </properties>
+    </dependency>
+    <dependency>
+        <id>dom4j</id>
+        <version>1.3</version>
+        <properties>
+            <ear.bundle>true</ear.bundle>
+        </properties>
+    </dependency>
+    <dependency>
+      <id>cglib</id>
+      <version>2</version>
+      <properties>
+            <ear.bundle>true</ear.bundle>
+      </properties>
+    </dependency>    
+    <dependency>
+        <id>commons-collections</id>
+        <version>2.1</version>
+        <url>http://jakarta.apache.org/commons/collections.html</url>
+        <properties>
+            <ear.bundle>true</ear.bundle>
+        </properties>
+    </dependency>
+    <dependency>
+        <id>commons-logging</id>
+        <version>1.0.2</version>
+        <url>http://jakarta.apache.org/commons/</url>
+        <properties>
+            <ear.bundle>true</ear.bundle>
+        </properties>
+    </dependency>
+    <dependency>
+        <id>odmg</id>
+        <version>3.0</version>
+        <properties>
+            <ear.bundle>true</ear.bundle>
+        </properties>
+    </dependency>
+    <dependency>
+      <id>itext</id>
+      <version>1.3.1</version>
+      <properties>
+            <ear.bundle>true</ear.bundle>
+      </properties>
+    </dependency>    
+    <dependency>
+      <id>ehcache</id>
+      <version>1.0</version>
+      <properties>
+            <ear.bundle>true</ear.bundle>
+      </properties>
+    </dependency>    
+    <dependency>
+      <id>oracle</id>
+      <version>14</version>
+      <properties>
+            <ear.bundle>true</ear.bundle>
+      </properties>
+    </dependency>  
+    <dependency>
+        <id>commons-lang</id>
+        <version>2.0</version>
+      <properties>
+            <ear.bundle>true</ear.bundle>
+      </properties>
+    </dependency>              
+    <dependency>
+        <id>jakarta-regexp</id>
+        <version>1.3</version>
+      <properties>
+            <ear.bundle>true</ear.bundle>
+      </properties>
+    </dependency>        
+    <dependency>
+      <id>commons-fileupload</id>
+      <version>1.0</version>
+      <url>http://jakarta.apache.org/commons/fileupload/index.html</url>
+      <properties>
+            <ear.bundle>true</ear.bundle>
+      </properties>
+    </dependency>
+</dependencies>
+
+  <build>
+
+    <nagEmailAddress>anonimo@itweb.com.mx</nagEmailAddress>
+
+    <sourceDirectory>src/java</sourceDirectory>
+
+    <unitTestSourceDirectory>src/proa/carpermor</unitTestSourceDirectory>
+
+    <integrationUnitTestSourceDirectory/>
+
+    <aspectSourceDirectory/>
+
+    <!-- Unit test classes -->
+    <unitTest>
+      <includes>
+        <include>**/*Test.java</include>
+      </includes>
+      <excludes>
+        <exclude>**/RepositoryTest.java</exclude>
+      </excludes>
+    </unitTest>
+
+    <!-- J A R  R E S O U R C E S -->
+    <!-- Resources that are packaged up inside the JAR file -->
+
+    <resources>
+      <includes>
+        <include>*.xsd</include>
+        <include>log4j.properties</include>
+      </includes>
+    </resources>
+
+    <jars>
+    </jars>
+  </build>
+
+  <properties>
+    <testName>testValue</testName>
+  </properties>
+
+</project>

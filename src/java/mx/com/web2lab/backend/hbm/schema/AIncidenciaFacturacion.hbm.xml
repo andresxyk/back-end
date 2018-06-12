@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.AIncidenciaFacturacion" 
+    table="a_incidencia_facturacion"
+>
+
+
+    <id
+        name="kincidenciafacturacion"
+        type="int"
+        column="kincidenciafacturacion"
+    >
+        <generator class="sequence">
+             	<param name="sequence">a_incidencia_facturacion_sequence</param>
+        </generator>
+    </id>
+
+    <property
+        name="kllaveincidencia"
+        type="int"
+        column="kllaveincidencia"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="stabla"
+        type="java.lang.String"
+        column="stabla"
+        length="50"
+    />
+    <property
+        name="scampo"
+        type="java.lang.String"
+        column="scampo"
+        length="50"
+    />
+    <property
+        name="userid"
+        type="int"
+        column="user_id"
+        not-null="true"
+        length="8"
+    />
+    <property
+        name="dregistro"
+        type="java.sql.Timestamp"
+        column="dregistro"
+        length="29"
+    />
+    <property
+        name="sobservacion"
+        type="java.lang.String"
+        column="sobservacion"
+        length="75"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional many-to-one association to CIncidenciaFacturacion -->
+    <many-to-one
+        name="cincidenciafacturacion"
+        class="mx.com.web2lab.backend.hbm.om.ap.CIncidenciaFacturacion"
+        not-null="true"
+    >
+        <column name="cincidenciafacturacion" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.CPerfil" 
+    table="c_perfil"
+>
+
+    <id
+        name="cperfil"
+        type="int"
+        column="cperfil"
+    >
+        <generator class="assigned" />
+    </id>
+    <property
+        name="sperfil"
+        type="java.lang.String"
+        column="sperfil"
+        length="50"
+    />
+    <property
+        name="blistapublico"
+        type="boolean"
+        column="blistapublico"
+        unique="true"
+        length="1"
+    />
+<!--      
+    <property
+        name="ctipoperfil"
+        type="int"
+        column="ctipoperfil"
+        not-null="true"
+        length="8"
+    />
+-->
+    <!-- associations -->
+    <!-- bi-directional one-to-many association to EPerfilExamen -->
+    <set
+        name="eperfilexamens"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cperfil" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.EPerfilExamen"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TOrdenExamenSucursal -->
+    <set
+        name="tordenexamensucursals"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="cperfil" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TOrdenExamenSucursal"
+        />
+    </set>
+    <!-- bi-directional many-to-one association to CMarca -->
+    <many-to-one
+        name="cmarca"
+        class="mx.com.web2lab.backend.hbm.om.ap.CMarca"
+        not-null="true"
+    >
+        <column name="cmarca" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

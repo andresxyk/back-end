@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.CTipoConvenio" 
+    table="c_tipo_convenio"
+>
+
+    <id
+        name="ctipoconvenio"
+        type="int"
+        column="ctipoconvenio"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="cdescripciontipoconvenio"
+        type="java.lang.String"
+        column="cdescripciontipoconvenio"
+        length="30"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional one-to-many association to CConvenio -->
+    <set
+        name="cconvenios"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="ctipoconvenio" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.CConvenio"
+        />
+    </set>
+
+</class>
+</hibernate-mapping>

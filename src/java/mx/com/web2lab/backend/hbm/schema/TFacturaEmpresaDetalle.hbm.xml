@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.TFacturaEmpresaDetalle" 
+    table="t_factura_empresa_detalle"
+>
+
+    <id
+        name="kfacturaempresadetalle"
+        type="int"
+        column="kfacturaempresadetalle"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="mfacturar"
+        type="java.math.BigDecimal"
+        column="mfacturar"
+        length="8"
+    />
+    <property
+        name="sexamencliente"
+        type="java.lang.String"
+        column="sexamencliente"
+        length="10"
+    />
+    <property
+        name="bregistroactivo"
+        type="boolean"
+        column="bregistroactivo"
+        unique="true"
+        length="1"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional many-to-one association to EConvenio -->
+    <many-to-one
+        name="econvenio"
+        class="mx.com.web2lab.backend.hbm.om.ap.EConvenio"
+        not-null="true"
+    >
+        <column name="kconvenio" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CExamen -->
+    <many-to-one
+        name="cexamen"
+        class="mx.com.web2lab.backend.hbm.om.lis.CExamen"
+        not-null="true"
+    >
+        <column name="cexamenfacturar" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CEstadoRegistro -->
+    <many-to-one
+        name="cestadoregistro"
+        class="mx.com.web2lab.backend.hbm.om.ap.CEstadoRegistro"
+        not-null="true"
+    >
+        <column name="cestadoregistro" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to TFacturaEmpresa -->
+    <many-to-one
+        name="tfacturaempresa"
+        class="mx.com.web2lab.backend.hbm.om.ap.TFacturaEmpresa"
+        not-null="true"
+    >
+        <column name="kfactura" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to TOrdenExamenSucursal -->
+    <many-to-one
+        name="tordenexamensucursal"
+        class="mx.com.web2lab.backend.hbm.om.ap.TOrdenExamenSucursal"
+        not-null="true"
+    >
+        <column name="kordenexamensucursal" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

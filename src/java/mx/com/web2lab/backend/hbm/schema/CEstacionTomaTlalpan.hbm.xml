@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.CEstacionTomaTlalpan" 
+    table="c_estacion_toma_tlalpan"
+>
+
+    <composite-id>
+        <key-property 
+            name="cestaciontomatlalpan" 
+            column="cestaciontomatlalpan" 
+            type="int"
+            length="8"
+        />
+        <key-property 
+            name="csucursal" 
+            column="csucursal" 
+            type="int"
+            length="8"
+        />
+        <key-property 
+            name="sestacion" 
+            column="sestacion" 
+            type="java.lang.String"
+            length="2"
+        />
+        <key-property 
+            name="sestaciontomatlalpan" 
+            column="sestaciontomatlalpan" 
+            type="java.lang.String"
+            length="50"
+        />
+    </composite-id>    
+
+
+    <!-- associations -->
+
+</class>
+</hibernate-mapping>

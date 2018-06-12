@@ -1,0 +1,210 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.TPaciente" 
+    table="t_paciente"
+>
+
+    <id
+        name="kpaciente"
+        type="int"
+        column="kpaciente"
+    >
+        <generator class="sequence">
+             	<param name="sequence">tpaciente_sequence</param>
+        </generator>
+    </id>
+
+    <property
+        name="snombre"
+        type="java.lang.String"
+        column="snombre"
+        length="60"
+    />
+    <property
+        name="sapellidopaterno"
+        type="java.lang.String"
+        column="sapellidopaterno"
+        length="60"
+    />
+    <property
+        name="sapellidomaterno"
+        type="java.lang.String"
+        column="sapellidomaterno"
+        length="60"
+    />
+    <property
+        name="bsexo"
+        type="int"
+        column="bsexo"
+        length="1"
+    />
+    <property
+        name="dnacimiento"
+        type="java.sql.Timestamp"
+        column="dnacimiento"
+        length="29"
+    />
+    <property
+        name="sdireccion"
+        type="java.lang.String"
+        column="sdireccion"
+        length="100"
+    />
+    <property
+        name="scorreoelectronico"
+        type="java.lang.String"
+        column="scorreoelectronico"
+        length="70"
+    />
+    <property
+        name="stelefono"
+        type="java.lang.String"
+        column="stelefono"
+        length="15"
+    />
+    <property
+        name="scelular"
+        type="java.lang.String"
+        column="scelular"
+        length="15"
+    />
+    <property
+        name="userid"
+        type="java.math.BigDecimal"
+        column="user_id"
+        not-null="true"
+        length="131089"
+    />
+    <property
+        name="dregistro"
+        type="java.sql.Timestamp"
+        column="dregistro"
+        length="29"
+    />
+    <property
+        name="useridchange"
+        type="java.math.BigDecimal"
+        column="user_id_change"
+        length="131089"
+    />
+    <property
+        name="uopcionenviocorreo"
+        type="int"
+        column="uopcionenviocorreo"
+        length="2"
+    />
+    <property
+        name="spassword"
+        type="java.lang.String"
+        column="spassword"
+        length="10"
+    />
+    <property
+        name="uvisitaece"
+        type="int"
+        column="uvisitaece"
+        length="1"
+    />
+    <property
+        name="spasswordenvio"
+        type="java.lang.String"
+        column="spasswordenvio"
+        length="10"
+    />
+    <property
+        name="utipopaciente"
+        type="int"
+        column="utipopaciente"
+        length="3"
+    />
+    <!-- associations -->
+    <!-- bi-directional many-to-one association to CCodigoPostal -->
+    <many-to-one
+        name="ccodigopostal"
+        class="mx.com.web2lab.backend.hbm.om.ap.CCodigoPostal"
+        not-null="true"
+    >
+        <column name="ccodigopostal" />
+    </many-to-one>
+    <!-- bi-directional many-to-one association to CEstadoRegistro -->
+    <many-to-one
+        name="cestadoregistro"
+        class="mx.com.web2lab.backend.hbm.om.ap.CEstadoRegistro"
+        not-null="true"
+    >
+        <column name="cestadoregistro" />
+    </many-to-one>
+    <!-- bi-directional one-to-many association to TPacienteDatosComplemento -->
+    <set
+        name="tpacientedatoscomplementos"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="kpaciente" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TPacienteDatosComplemento"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TOrdenSucursal -->
+    <set
+        name="tordensucursals"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="kpaciente" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TOrdenSucursal"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TOrdenSucursalCotizacion -->
+    <set
+        name="tordensucursalcotizacions"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="kpaciente" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TOrdenSucursalCotizacion"
+        />
+    </set>
+    <!-- bi-directional many-to-one association to CMarca -->
+    <many-to-one
+        name="cmarca"
+        class="mx.com.web2lab.backend.hbm.om.ap.CMarca"
+        not-null="true"
+    >
+        <column name="cmarca" />
+    </many-to-one>
+    <!-- bi-directional one-to-many association to TOrdenSucursal -->
+    <set
+        name="tpacientemarketings"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="kpaciente" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TPacienteMarketing"
+        />
+    </set>
+</class>
+</hibernate-mapping>

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.sistema.TurbineRolePermission" 
+    table="TURBINE_ROLE_PERMISSION"
+>
+
+    <composite-id name="comp_id" class="mx.com.web2lab.backend.hbm.om.sistema.TurbineRolePermissionPK">
+        <!-- bi-directional many-to-one association to sistema.TurbineRole -->
+        <key-many-to-one
+        	name="turbineRole"
+	        class="mx.com.web2lab.backend.hbm.om.sistema.TurbineRole"
+	    >
+    	    <column name="ROLE_ID" />
+	    </key-many-to-one>
+        <!-- bi-directional many-to-one association to sistema.TurbinePermission -->
+        <key-many-to-one
+        	name="turbinePermission"
+	        class="mx.com.web2lab.backend.hbm.om.sistema.TurbinePermission"
+	    >
+    	    <column name="PERMISSION_ID" />
+	    </key-many-to-one>
+    </composite-id>    
+
+
+    <!-- associations -->
+
+</class>
+</hibernate-mapping>

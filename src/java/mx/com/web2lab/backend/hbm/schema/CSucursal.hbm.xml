@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+<!-- 
+    Created by the Middlegen Hibernate plugin
+
+    http://boss.bekk.no/boss/middlegen/
+    http://hibernate.sourceforge.net/
+-->
+
+<class 
+    name="mx.com.web2lab.backend.hbm.om.ap.CSucursal" 
+    table="c_sucursal"
+>
+
+    <id
+        name="csucursal"
+        type="int"
+        column="csucursal"
+    >
+        <generator class="assigned" />
+    </id>
+
+    <property
+        name="ssucursal"
+        type="java.lang.String"
+        column="ssucursal"
+        length="70"
+    />
+    <property
+        name="snombresucursal"
+        type="java.lang.String"
+        column="snombresucursal"
+        length="99"
+    />
+    <property
+        name="sdireccion"
+        type="java.lang.String"
+        column="sdireccion"
+        length="100"
+    />
+
+    <!-- associations -->
+    <!-- bi-directional many-to-one association to CCodigoPostal -->
+    <many-to-one
+        name="ccodigopostal"
+        class="mx.com.web2lab.backend.hbm.om.ap.CCodigoPostal"
+        not-null="true"
+    >
+        <column name="ccodigopostal" />
+    </many-to-one>
+    <!-- bi-directional one-to-many association to EListaSucursal -->
+    <set
+        name="elistasucursals"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="csucursal" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.EListaSucursal"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TOrdenSucursal -->
+    <set
+        name="tordensucursalsbycsucursalentrega"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="csucursalentrega" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TOrdenSucursal"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TOrdenSucursal -->
+    <set
+        name="tordensucursalsbycsucursal"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="csucursal" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TOrdenSucursal"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TOrdenSucursalCotizacion -->
+    <set
+        name="tordensucursalcotizacions"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="csucursal" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TOrdenSucursalCotizacion"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TGastoSucursal -->
+    <set
+        name="tgastosucursals"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="csucursal" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TGastoSucursal"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TCorteCaja -->
+    <set
+        name="tcortecajas"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="csucursal" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TCorteCaja"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to TOrdenSucursalFac -->
+    <set
+        name="tordensucursalfacs"
+        lazy="true"
+        inverse="true"
+    >
+        <key>
+            <column name="csucursal" />
+        </key>
+        <one-to-many 
+            class="mx.com.web2lab.backend.hbm.om.ap.TOrdenSucursalFac"
+        />
+    </set>
+    <!-- bi-directional many-to-one association to CMarca -->
+    <many-to-one
+        name="cmarca"
+        class="mx.com.web2lab.backend.hbm.om.ap.CMarca"
+        not-null="true"
+    >
+        <column name="cmarca" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>
