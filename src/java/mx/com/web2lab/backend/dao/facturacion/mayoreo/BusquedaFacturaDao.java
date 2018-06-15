@@ -251,7 +251,7 @@ public class BusquedaFacturaDao {
 
 	**/
 	//MODIFICACION BY 02/09/2013
-	public String getBusquedaFacturaAjuste(String strfoliosFacturas) throws Exception {
+	public String getBusquedaFacturaAjuste(String strfoliosFacturas, Integer idMarca) throws Exception {
 		 iObjLog.debug("Entrando BusquedaFacturaDao.getBusquedaFacturaAjuste:" + strfoliosFacturas);
 			iObjSesion = HibernateUtil.getSession();
 			String strQuery = "";
@@ -260,6 +260,7 @@ public class BusquedaFacturaDao {
 			String strTipoCuenta = "";
 			String strIva = "";
 			String strMetodoPago ="";
+			int csucursal = 0;
 			java.sql.Connection objConn = null;
 			java.sql.ResultSet objRst = null;
 			java.sql.Statement objStmt = null;
@@ -268,12 +269,19 @@ public class BusquedaFacturaDao {
 	            objConn = iObjSesion.connection();
 	            objStmt = objConn.createStatement();
 	            if (strfoliosFacturas.length() > 0) {
+	            	if (idMarca.equals(new Integer(1))) {
+	            		csucursal = 1003;
+	            	} else if (idMarca.equals(new Integer(4))) {
+	            		csucursal = 1012;
+	            	} else if (idMarca.equals(new Integer(5))) {
+	            		csucursal = 1013;
+	            	}
 	        		strQuery =  "select tf.msubtotal,tf.miva,tf.mtotal,ccdf.cconvenio,ccdf.sdigitoscuenta,ccdf.stipopago,cc.cmarca " +					
 								" from t_factura tf,c_convenio_dato_fiscal ccdf,t_dato_fiscal tdf,c_cliente cc " +	
 								" where tf.cconvenio=ccdf.cconvenio " +
 								" and tdf.kdatofiscal=ccdf.kdatofiscal " +
 								" and cc.ccliente=tf.ccliente " +
-								" and tf.ufoliofactura=" +  strfoliosFacturas +" and tf.csucursal=1003 and tf.cestadoregistro=33 and scadenaoriginal=' ' ";
+								" and tf.ufoliofactura=" +  strfoliosFacturas +" and tf.csucursal=" + csucursal + " and tf.cestadoregistro=33 and scadenaoriginal=' ' ";
 	            }
 	            
 				
