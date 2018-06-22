@@ -136,11 +136,16 @@ public class SucursalDao {
 		Query objQuery = null;
 		try {			
             HibernateUtil.beginTrans();
-            	if (objSucursalBean.getCsucursal().intValue() == 1003 && cMarca == 4) {
+            	if (objSucursalBean.getCsucursal().intValue() == 1012 && cMarca == 4) {
             		strQuery =  "select cS " +					
     							" from CControlFolio cS " + 
     							" where cS.csucursal = 1012"  +
     							" and cS.cestadoregistro = 31 ";
+            	} else if (objSucursalBean.getCsucursal().intValue() == 1013 && cMarca == 5){
+            		strQuery =  "select cS " +					
+							" from CControlFolio cS " + 
+							" where cS.csucursal = 1013"  +
+							" and cS.cestadoregistro = 31 ";
             	} else {
             		strQuery =  "select cS " +					
     							" from CControlFolio cS " + 

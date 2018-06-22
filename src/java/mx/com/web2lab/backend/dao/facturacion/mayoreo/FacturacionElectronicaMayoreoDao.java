@@ -63,18 +63,26 @@ public class FacturacionElectronicaMayoreoDao {
     	return objTfactura;
 	}		
 
-	public TFactura buscarFacturaFolio(String strfolioFactura) throws Exception {
+	public TFactura buscarFacturaFolio(String strfolioFactura, int marca) throws Exception {
 		Query objQuery = null;
 		String strQuery = "";
 		List objListaFacturas = new ArrayList();
 		TFactura objTFactura= new TFactura();
+		String csucursal="";
 		
+		if(marca==1){
+			 csucursal="1003";
+		}else if (marca==4){
+			csucursal="1012";
+		}else if (marca==5){
+			csucursal="1013";
+		}
     	try{
 			iObjLog.debug("Entrando FacturacionElectronicaMayoreoDao.buscarFacturaFolio:Entrando...  " + strfolioFactura);
 			HibernateUtil.beginTrans();
 			strQuery =  " select Tf"+
 					" from TFactura Tf " +					
-					" where Tf.ufoliofactura="+strfolioFactura+" and Tf.csucursal=1003";
+					" where Tf.ufoliofactura="+strfolioFactura+" and Tf.csucursal="+csucursal;
 		
 			objQuery = iObjSesion.createQuery(strQuery);
 			objListaFacturas = objQuery.list();

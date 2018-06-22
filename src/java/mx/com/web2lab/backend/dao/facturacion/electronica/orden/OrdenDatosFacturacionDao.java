@@ -213,7 +213,7 @@ public class OrdenDatosFacturacionDao {
     		objCon = iObjSesion.connection();
             objSta = null;
 	        objSta = objCon.createStatement();
-	        if (objFacturaBean.getcSucursal() != 1003) {
+	        if (objFacturaBean.getcSucursal() != 1003 || objFacturaBean.getcSucursal() != 1012 || objFacturaBean.getcSucursal() != 1013) {
 		        strQuery = "begin																			\n" + 
 						   "	fact_detalle (" + kAdmision + "," + objFacturaBean.getKfactura() + ",0,37);	\n" +
 						   " end;																			\n";
