@@ -244,9 +244,18 @@ public class OrdenDatosFacturacionDao {
 		Statement objSta = null;
 		String strReturn = "";
     	try{
-			iObjLog.debug("Entrando OrdenDatosFacturacionDao.cancelarOrdenesFactura:Entrando...  " + objfilexmlbean.getKfactura());
+			iObjLog.debug("Entrando OrdenDatosFacturacionDao.cancelarOrdenesFactura:Entrando...  " + objfilexmlbean.getKfactura()+" ---- "+intCopiarInformacion+" ---- "+cmarca);
 				objFactura = this.buscarFacturaHB(objfilexmlbean, cmarca);
 				if (objFactura.getCestadoregistro() != 34) {
+					int csucursal = 0;
+					if(cmarca==1){
+						csucursal=1003;
+					} else if(cmarca==4){
+						csucursal=1012;
+					} else if(cmarca==5){
+						csucursal=1013;
+					}
+					
 					this.initConnectionDB();
 					objFactura.setCestadoregistro(34);
 					objFactura.setDcancelacionfactura(new Date());
@@ -257,11 +266,11 @@ public class OrdenDatosFacturacionDao {
 			        objSta = objCon.createStatement();
 			        if (intCopiarInformacion == 0) {
 				        strQuery = "begin																			\n" + 
-								   "	olab_inserta_orden_refacturacion_suc (" + objFactura.getKfactura() + " );	\n" +
+								   "	inserta_orden_refacturacion_suc (" + objFactura.getKfactura()+","+csucursal+ " );	\n" +
 								   " end;																			\n";
 			        } else {
 				        strQuery = "begin																			\n" + 
-						   			"	olab_inserta_orden_refacturacion_fac (" + objFactura.getKfactura() + " );	\n" +
+						   			"	inserta_orden_refacturacion_fac (" + objFactura.getKfactura() +","+csucursal+ " );	\n" +
 						   			" end;																			\n";		        	
 			        }
 					iObjLog.debug("Consulta OrdenDatosFacturacionDao.cancelarOrdenesFactura:...  " + strQuery);
@@ -783,7 +792,7 @@ public class OrdenDatosFacturacionDao {
 						"INNER JOIN c_sucursal cs       ON tos.csucursal      = cs.csucursal													\n"+
 						"INNER JOIN c_convenio cc       ON tos.cconvenio      = cc.cconvenio and cc.ctipoconvenio = 24							\n"+
 						"INNER JOIN turbine_user tu     ON tos.user_id        = tu.user_id														\n"+
-						"where (tos.dregistro between to_date('01-01-2015 00:00:00', 'dd-mm-yyyy hh24:mi:ss') 									\n"+
+						"where (tos.dregistro between (sysdate)-60     										 									\n"+
 						"				and to_date('" + objFormatos.getFechaActual() + " 23:59:59', 'dd-mm-yyyy hh24:mi:ss')) 					\n"+
 						"				and tos.cestadoregistro<>17 																			\n"+
 						"				and tpp.kordensucursal is null																			\n"+

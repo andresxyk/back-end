@@ -92,8 +92,8 @@ public class TomaMuestrasDao {
 							"SET dtomamuestrainicio=sysdate,slogin_name='" + strUsuario  + "' 				\n" +
 							"WHERE kordensucursal in (" + kOrdenSucursal +") 													AND \n" +
 							"	   extract(epoch from dtomamuestratermino-dtomamuestrainicio)/60 < 1 							AND	\n" +	
-							"	   (dtomamuestratermino not between to_date('01-01-2015 00:00:00', 'dd-mm-yyyy hh24:mi:ss') 		\n" +
-						"										and to_date('01-01-2015 23:59:59', 'dd-mm-yyyy hh24:mi:ss')) 	AND	\n" +
+							"	   (dtomamuestratermino not between (sysdate)-60											 		\n" +
+						"										and (sysdate)-60											 	AND	\n" +
 							"	   length(trim(slogin_name)) < 2 " + strExamen + strLaboratorio;
 				iObjLog.debug("Consulta TomaMuestrasDao.inicioTomaMuestra:...  " + strQuery);				
 				objSta.execute(strQuery);
@@ -275,8 +275,8 @@ public class TomaMuestrasDao {
 						"SET dtomamuestratermino=sysdate,slogin_name='" + strUsuario  + "'										\n" +
 						"WHERE kordensucursal in (" + kOrdenSucursal +")	AND													\n" +
 						"	   length(trim(slogin_name)) > 0				AND													\n" +
-						"	   (dtomamuestratermino not between to_date('01-01-2015 00:00:00', 'dd-mm-yyyy hh24:mi:ss') 		\n" +
-						"									and to_date('01-01-2015 23:59:59', 'dd-mm-yyyy hh24:mi:ss')) 	AND	\n" +
+						"	   (dtomamuestratermino not between (sysdate)-60											 		\n" +
+						"									and (sysdate)-60											 	AND	\n" +
 						"	   extract(epoch from dtomamuestratermino-dtomamuestrainicio)/60 < 1 	\n" + strLaboratorio;	
 			iObjLog.debug("Consulta TomaMuestrasDao.terminoTomaMuestra:...  " + strQuery);
 			objSta.execute(strQuery);
@@ -289,8 +289,8 @@ public class TomaMuestrasDao {
 			strQuery =	"UPDATE T_ORDEN_EXAMEN_SUCURSAL																			\n" +
 						"SET dtomamuestrainicio=sysdate,dtomamuestratermino=sysdate												\n" +
 						"WHERE kordensucursal in (" + kOrdenSucursal +")													AND	\n" +
-						"	   (dtomamuestratermino not between to_date('01-01-2015 00:00:00', 'dd-mm-yyyy hh24:mi:ss') 		\n" +
-						"									and to_date('01-01-2015 23:59:59', 'dd-mm-yyyy hh24:mi:ss')) 	AND	\n" +
+						"	   (dtomamuestratermino not between (sysdate)-60											 		\n" +
+						"									and (sysdate)-60											 	AND	\n" +
 						"	   length(trim(slogin_name)) = 0				AND						\n" + strLaboratorio;
 //						"	   extract(epoch from dtomamuestratermino-dtomamuestrainicio)/60 < 1 	\n" + strLaboratorio;	
 			iObjLog.debug("Consulta TomaMuestrasDao.terminoTomaMuestra:...  " + strQuery);
