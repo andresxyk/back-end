@@ -3,7 +3,7 @@
 #custom target facturacion#
 /construccion_ear/target
 
-### STS ###
+### STS ### 
 .apt_generated
 .classpath
 .factorypath
@@ -27,3 +27,4 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+/bin/
