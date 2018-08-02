@@ -300,7 +300,7 @@ public class ViajeFacturacionDao {
 						"INNER JOIN c_sucursal cs       ON tos.csucursal      = cs.csucursal													\n"+
 						"INNER JOIN c_convenio cc       ON tos.cconvenio      = cc.cconvenio and cc.ctipoconvenio = 22							\n"+
 						"INNER JOIN turbine_user tu     ON tos.user_id        = tu.user_id														\n"+
-						"where (tos.dregistro between to_date('01-01-2015 00:00:00', 'dd-mm-yyyy hh24:mi:ss') 									\n"+
+						"where (tos.dregistro between (sysdate)-60											 									\n"+
 						"				and to_date('" + objFormatos.getFechaActual() + " 23:59:59', 'dd-mm-yyyy hh24:mi:ss')) 					\n"+
 						"				and tos.cestadoregistro<>17 																			\n"+
 						"				and tpp.kordensucursal is null																			\n"+
@@ -352,7 +352,7 @@ public class ViajeFacturacionDao {
 						"INNER JOIN c_sucursal cs       ON tos.csucursal      = cs.csucursal													\n"+
 						"INNER JOIN c_convenio cc       ON tos.cconvenio      = cc.cconvenio and cc.ctipoconvenio = 22							\n"+
 						"INNER JOIN turbine_user tu     ON tos.user_id        = tu.user_id														\n"+
-						"where (tos.dregistro between to_date('01-01-2015 00:00:00', 'dd-mm-yyyy hh24:mi:ss') 									\n"+
+						"where (tos.dregistro between (sysdate)-60											 									\n"+
 						"				and to_date('" + objFormatos.getFechaActual() + " 23:59:59', 'dd-mm-yyyy hh24:mi:ss')) 					\n"+
 						"				and tos.cestadoregistro<>17 																			\n"+
 						"				and tos.mpagopaciente = 0 																				\n"+
@@ -364,7 +364,7 @@ public class ViajeFacturacionDao {
 						"											      kordensucursal in (SELECT tos.kordensucursal                                   																\n"+
 						"											                                FROM t_orden_sucursal tos INNER JOIN t_orden_sucursal_fac tosf ON tos.kordensucursal=tosf.kordensucursal and tosf.cestadoregistro IN (28)     \n"+    	                           
 						"											                                WHERE (tos.DREGISTRO                                   																\n"+
-						"											                                                 between to_date('01-01-2015 00:00:00', 'dd-mm-yyyy hh24:mi:ss')                                    \n"+	
+						"											                                                 between (sysdate)-60											                                    \n"+	
 						"											                                                 and to_date('" + objFormatos.getFechaActual() + " 23:59:59', 'dd-mm-yyyy hh24:mi:ss'))             \n"+
 						"											                                                               AND tos.CESTADOREGISTRO NOT IN (17) 							  						\n"+
 						"											                          )    																														\n"+

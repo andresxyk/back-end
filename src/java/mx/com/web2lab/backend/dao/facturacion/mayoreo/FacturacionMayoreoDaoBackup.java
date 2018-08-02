@@ -649,7 +649,7 @@ public class FacturacionMayoreoDaoBackup {
 			    		"				tosf.cconvenio IN (" +  cConvenios + ")			    and 						\n" +
 			    		"				tosf.cestadoregistro not in (35,48,39)   										\n" +
 			    		"			 WHERE tos.cestadoregistro not in (17) and 											\n" +
-			    		"				(tos.dregistro between to_date('01-01-2015 00:00:00', 'dd-mm-yyyy hh24:mi:ss') 	\n" +
+			    		"				(tos.dregistro between (sysdate)-60											 	\n" +
 			    		"				 and sysdate))		  															\n";
 				iObjLog.debug("Consulta PagoFacturaDao.getMontoNOFacturado...  " + strQuery);
 				objRst = objStmt.executeQuery(strQuery);

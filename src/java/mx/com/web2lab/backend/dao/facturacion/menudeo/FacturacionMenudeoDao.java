@@ -49,7 +49,7 @@ public class FacturacionMenudeoDao {
 	        objSta = objCon.createStatement();
 	        strQuery = "SELECT (nvl(trim(SSERIE),'') || trim(to_char(nvl(UFOLIOFACTURA,0),'0000000'))) factura	\n"+
 	        		   "FROM t_factura																			\n"+		
-     		           "WHERE CSUCURSAL <>1003 AND USER_ID >1 AND kfactura in (SELECT max(kfactura)				\n"+
+     		           "WHERE CSUCURSAL <>1003 AND CSUCURSAL <>1012 AND CSUCURSAL <>1013 AND USER_ID >1 AND kfactura in (SELECT max(kfactura)				\n"+
      		           "FROM t_orden_sucursal_fac																\n"+
      		           "WHERE kordensucursal in (" + kOrdenSucursal + "))										\n";
 	        iObjLog.debug("Consulta FacturacionMenudeoDao.getFolioFacturaOrden:...  " + strQuery);
