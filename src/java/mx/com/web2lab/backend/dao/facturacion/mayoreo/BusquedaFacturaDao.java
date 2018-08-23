@@ -67,6 +67,40 @@ public class BusquedaFacturaDao {
 		iObjSesion = HibernateUtil.getSession();
 	}
 	
+	public int getMarca(int cconvenio) throws Exception{
+		iObjLog.debug("Entrando BusquedaFActuraDao.getMarca:" + cconvenio);
+		int marca = 0;
+		iObjSesion = HibernateUtil.getSession();
+		String strQuery = "";
+		
+		java.sql.Connection objConn = null;
+		java.sql.ResultSet objRst = null;
+		java.sql.Statement objStmt = null;
+		
+		try{
+			HibernateUtil.beginTrans();
+            objConn = iObjSesion.connection();
+            objStmt = objConn.createStatement();
+			strQuery = "select cmarca from e_convenio where cconvenio = "+cconvenio;
+			
+			objRst = objStmt.executeQuery(strQuery);
+			while (objRst.next()) {
+				marca=objRst.getInt("cmarca");
+			}
+               		
+	        iObjLog.debug("Saliendo BusquedaFacturaDao.getMarca...  " + marca);
+			return marca;
+		} catch (Exception aObjExcepcion) { 
+			iObjLog.error("ERROR BusquedaFacturaDao.getMarca...: ", aObjExcepcion);
+			throw aObjExcepcion;
+	    } finally{
+				HibernateUtil.closeSession();	
+				objRst = null;
+	    		objStmt = null;
+		}	
+		
+	}
+	
 	public String getBusquedaFactura(String strfoliosFacturas) throws Exception {
 		iObjLog.debug("Entrando BusquedaFActuraDao.getBusquedaFactura:" + strfoliosFacturas);
 		iObjSesion = HibernateUtil.getSession();
@@ -260,6 +294,7 @@ public class BusquedaFacturaDao {
 			String strTipoCuenta = "";
 			String strIva = "";
 			String strMetodoPago ="";
+			String strRazonSocial="";
 			int csucursal = 0;
 			java.sql.Connection objConn = null;
 			java.sql.ResultSet objRst = null;
@@ -275,7 +310,13 @@ public class BusquedaFacturaDao {
 	            		csucursal = 1012;
 	            	} else if (idMarca.equals(new Integer(5))) {
 	            		csucursal = 1013;
+	            	} else if (idMarca.equals(new Integer(7))) {
+	            		csucursal = 1014;
+	            	} else if (idMarca.equals(new Integer(8))) {
+	            		csucursal = 1015;
 	            	}
+	            	
+	            	
 	        		strQuery =  "select tf.msubtotal,tf.miva,tf.mtotal,ccdf.cconvenio,ccdf.sdigitoscuenta,ccdf.stipopago,cc.cmarca " +					
 								" from t_factura tf,c_convenio_dato_fiscal ccdf,t_dato_fiscal tdf,c_cliente cc " +	
 								" where tf.cconvenio=ccdf.cconvenio " +
@@ -290,6 +331,7 @@ public class BusquedaFacturaDao {
 	            if (strQuery != "") {
 	            	objRst = objStmt.executeQuery(strQuery);
 	            	while (objRst.next()) {
+	            		
 	            		
 	            		strcta = objRst.getString("sdigitoscuenta");
 						strReturn = "<table border='0' align='center' style='width: 883px' class='tabla'>" +

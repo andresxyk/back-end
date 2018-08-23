@@ -16,6 +16,7 @@ import mx.com.web2lab.backend.beans.comer.ConvenioBean;
 import mx.com.web2lab.backend.beans.comer.ExamenConvenioBean;
 import mx.com.web2lab.backend.beans.comer.MetricasClieConBean;
 import mx.com.web2lab.backend.dao.ap.GeneracionPasswordDao;
+import mx.com.web2lab.backend.dao.catalogos.CatalogosPKGCatalogosDao;
 import mx.com.web2lab.backend.dao.facturacion.mayoreo.FacturacionMayoreoDao;
 import mx.com.web2lab.backend.dao.mail.MailDao;
 import mx.com.web2lab.backend.dao.tools.AdministracionFOP_PDF;
@@ -32,6 +33,7 @@ import mx.com.web2lab.backend.hbm.om.ap.CListaCorporativa;
 import mx.com.web2lab.backend.hbm.om.ap.CMarca;
 import mx.com.web2lab.backend.hbm.om.ap.CTipoCliente;
 import mx.com.web2lab.backend.hbm.om.ap.CTipoConvenio;
+import mx.com.web2lab.backend.hbm.om.ap.CTipoPagoFactura;
 import mx.com.web2lab.backend.hbm.om.ap.CTipoPersona;
 import mx.com.web2lab.backend.hbm.om.ap.CVigencia;
 import mx.com.web2lab.backend.hbm.om.ap.EConvenio;
@@ -1835,8 +1837,117 @@ public class ClientesNewDao {
 	private String showFooterConvenioFacturas() throws Exception
 	{		
 		iObjLog.debug("Entrando a ClientesDao.showFooterConvenioFacturas:Entrando... ");
+		String strFormaPago = "";
+		CatalogosPKGCatalogosDao objCatalogosPKGCatalogosDao = new CatalogosPKGCatalogosDao(iObjSesion);
+		List retorno = objCatalogosPKGCatalogosDao.obtenAll("TipoPagoFactura",0);
+		for( int inti = 0;inti < retorno.size(); inti++) {
+        	CTipoPagoFactura objCTipoPagoFactura = (CTipoPagoFactura)retorno.get(inti);
+        	strFormaPago  += "<option value='" + objCTipoPagoFactura.getCtipopago() + "'>" + objCTipoPagoFactura.getStipopago() + "</option>";
+        }
+		
 		try {
-			return  ("</table></div>");
+			String strcomple="<div id='gridPagoGlobal'>" +                							
+					"<table border='0' align='center' style='width: 100%' class='tabla'>" +	
+					"<tr>"+
+						"<td>"+
+							"<br><br><br>"+
+						"</td>"+
+					"</tr>"+
+					"<tr>"+
+						"<td>"+
+					  		"<b>Monto global a pagar:</b>"+ 				
+					  	"</td>"+
+					  	"<td>"+
+					  		"<input type='text' id='txtMontoAPagarTotal' style='background:#E6E6FA' size='6' value='0'>"+ 				
+					  	"</td>"+					  		
+					"</tr>"+
+					"<tr>"+
+					  "<td>"+
+					  	"<b>Fecha Deposito:</b>"+ 				
+					  "</td>"+
+					  "<td>"+
+						  "<input type='text' id='txtFechaDepositoGlobal' size='12' value='' style='background:#E6E6FA' onKeyup='javascript:agregaDiag(this);' onChange='javascript:this.value=validaFormatoFecha(this.value);validafechafrm(document.frmAdminClientes.txtFechaDepositoGlobal);' onFocus='javascript:validafechafrm(document.frmAdminClientes.txtFechaDepositoGlobal);'/>"+		
+						  "<a href='javascript:doNothing()' onclick='javascript:setDateField(document.frmAdminClientes.txtFechaDepositoGlobal); top.newWin =  ventanaNormal('/web2labportal/javascript/calendar.html','cal','WIDTH=230,HEIGHT=230')>"+
+						  	"<img alt='Seleccione una fecha' id='imgFechaDeposito' border='0' src='/web2labportal/images/icono_calend.gif' />"+						  
+						  "</a>"+	
+					  "</td>"+			
+				  "</tr>"+
+					  
+					"<tr>"+
+						"<td>"+
+							  "<b>Hora Deposito:</b>"+ 				
+						"</td>"+
+						"<td>"+
+							  	"<select id='selhora' style='background:#E6E6FA'></select>"+
+								"<b>:</b>"+
+								"<select id='selminutos' style='background:#E6E6FA'></select>"+
+								"<b>:</b>"+
+								"<select id='selsegundos' style='background:#E6E6FA'></select>"+
+						"</td>"+			
+					"</tr>"+
+				  
+				  "<tr>"+
+					  "<td>"+
+						  "<b>Institucion Deposito:</b>"+ 				
+					  "</td>"+
+					  "<td>"+
+						  "<select id='selTipoPago' style='background:#E6E6FA' >"+	strFormaPago +						  
+						  "</select>"+	
+					  "</td>"+			
+				  "</tr>"+
+					  
+					"<tr>"+
+					"<td>"+
+						"<b>Forma de Pago:</b>"+
+					"</td>"+
+					"<td>"+
+						"<select id='selFormaPago' style='width: 120px' style='background:#E6E6FA' align='up'>"+
+									"<option value='0'>Seleccionar</option>"+
+								    "<option value='1'>01 - Efectivo</option>"+
+								    "<option value='2'>02 - Cheque nominativo</option>"+
+								   	"<option value='3'>03 - Transferencia electrónica de fondos</option>"+
+								   	"<option value='4'>04 - Tarjeta de crédito</option>"+
+								   	"<option value='5'>05 - Monedero electrónico</option>"+ 
+								   	"<option value='6'>06 - Dinero electrónico</option>"+
+								    "<option value='8'>08 - Vales de despensa</option>"+
+								   	"<option value='12'>12 - Dación en pago</option>"+
+								   	"<option value='13'>13 - Pago por subrogación</option>"+
+								   	"<option value='14'>14 - Pago por consignación</option>"+ 
+								   	"<option value='15'>15 - Condonación</option>"+
+								    "<option value='17'>17 - Compensación</option>"+
+								   	"<option value='23'>23 - Novación</option>"+
+								   	"<option value='24'>24 - Confusión</option>"+
+								   	"<option value='25'>25 - Remisión de deuda</option>"+
+								   	"<option value='26'>26 - Prescripción o caducidad</option>"+
+								   	"<option value='27'>27 - A satisfacción del acreedor</option>"+
+								   	"<option value='28'>28 - Tarjeta de débito</option>"+
+								   	"<option value='29'>29 - Tarjeta de servicios</option>"+
+								   	"<option value='30'>30 - Aplicación de anticipos</option>"+
+								   	"<option value='31'>31 - Intermediario pagos</option>"+
+								   	"<option value='99'>99 - Por definir</option>"+
+					     "</select>"+
+					"</td>"+
+					"</tr>"+
+					
+					"<tr>"+
+						"<td>"+
+						"</td>"+
+						"<td>"+
+							"<input type='checkbox' id='chkCrearComplento' checked>Crear Complemento de Pago"+
+						"</td>"+
+					"</tr>"+
+				  "<tr>"+
+					  "<td>"+
+					  "</td>"+
+					  "<td>"+
+						  "<input type=\"button\" value=\"Registrar Pago\" name=\"Registrar Pago\" class=\"boton\" onclick=\"pagosFacturas();\">"+
+					  "</td>"+			
+				  "</tr>"+
+				"</table>" +	
+			"</div>";
+			
+			
+			return  ("</table>"+strcomple+"</div>");
 		}catch (Exception aObjException){
     	    iObjLog.error("ClientesDao.showFooterConvenioFacturas:Exception....", aObjException);
     	    throw aObjException;

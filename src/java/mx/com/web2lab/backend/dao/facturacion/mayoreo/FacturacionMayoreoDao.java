@@ -636,7 +636,8 @@ public class FacturacionMayoreoDao {
 											 "		<input type=\"hidden\" name=\"hdnAnticipoSaldo\" value=\"" + objTAntiguedadCxcHB.getMpagado().doubleValue() + "\">" + 
 											 "		<input type=\"hidden\" name=\"hdnSaldoFactura\"  value=\"" + objTAntiguedadCxcHB.getMsaldo().doubleValue() + "\">" +
 											 "		<input type=\"hidden\" name=\"hdnkFacturaSaldo\" value=\"" + objTAntiguedadCxcHB.getKfactura() + "\">" + 
-											 "		<input type=\"hidden\" name=\"hdnsFacturaSaldo\" value=\"" + objTAntiguedadCxcHB.getSserie() + "\">" + 
+											 "		<input type=\"hidden\" name=\"hdnsFacturaSaldo\" value=\"" + objTAntiguedadCxcHB.getSserie() + "\">" +
+											 "		<input type=\"hidden\" name=\"hdnsConvenio\" value=\"" + objConvenioBean.getCconvenio() + "\">" +
 											 "</td>";
 						strReadOnlyNOPago =  "<td align='center' style='font-weight: normal; font-size: xx-small; color: " + strColor +"; font-style: normal; font-variant: normal;'>" + 
 												objTAntiguedadCxcHB.getSserie()  +
@@ -648,7 +649,8 @@ public class FacturacionMayoreoDao {
 											 "		<input type=\"hidden\" name=\"hdnAnticipoSaldo\" value=\"" + objTAntiguedadCxcHB.getMpagado().doubleValue() + "\">" + 
 											 "		<input type=\"hidden\" name=\"hdnSaldoFactura\"  value=\"" + objTAntiguedadCxcHB.getMsaldo().doubleValue() + "\">" +
 											 "		<input type=\"hidden\" name=\"hdnkFacturaSaldo\" value=\"" + objTAntiguedadCxcHB.getKfactura() + "\">" + 
-											 "		<input type=\"hidden\" name=\"hdnsFacturaSaldo\" value=\"" + objTAntiguedadCxcHB.getSserie() + "\">" + 
+											 "		<input type=\"hidden\" name=\"hdnsFacturaSaldo\" value=\"" + objTAntiguedadCxcHB.getSserie() + "\">" +
+											 "		<input type=\"hidden\" name=\"hdnsConvenio\" value=\"" + objConvenioBean.getCconvenio() + "\">" +
 											 "</td>";
 						strReadOnlyNOPago =  "<td align='center' style='font-weight: normal; font-size: xx-small; color: " + strColor +"; font-style: normal; font-variant: normal;'> <a href='javascript:doNothing()' onClick=\"javascript:showSubModalPago(" + objTAntiguedadCxcHB.getKfactura() + ",'" + objTAntiguedadCxcHB.getSserie() +"');\" align='bottom' style='font-weight: normal; font-size: x-small; color: " + strColor +"; font-style: normal; font-variant: normal;'>" + 
 												objTAntiguedadCxcHB.getSserie()  +
@@ -794,6 +796,20 @@ public class FacturacionMayoreoDao {
 									  "</a>"+	
 								  "</td>"+			
 							  "</tr>"+
+								  
+								"<tr>"+
+									"<td>"+
+										  "<b>Hora Deposito:</b>"+ 				
+									"</td>"+
+									"<td>"+
+										  	"<select id='selhora" + objConvenioBean.getCconvenio() + "' style='background:#E6E6FA'></select>"+
+											"<b>:</b>"+
+											"<select id='selminutos" + objConvenioBean.getCconvenio() + "' style='background:#E6E6FA'></select>"+
+											"<b>:</b>"+
+											"<select id='selsegundos" + objConvenioBean.getCconvenio() + "' style='background:#E6E6FA'></select>"+
+									"</td>"+			
+								"</tr>"+
+							  
 							  "<tr>"+
 								  "<td>"+
 									  "<b>Institucion Deposito:</b>"+ 				
@@ -803,6 +819,47 @@ public class FacturacionMayoreoDao {
 									  "</select>"+	
 								  "</td>"+			
 							  "</tr>"+
+								  
+								"<tr>"+
+								"<td>"+
+									"<b>Forma de Pago:</b>"+
+								"</td>"+
+								"<td>"+
+									"<select id='selFormaPago" + objConvenioBean.getCconvenio() + "' style='width: 120px' style='background:#E6E6FA' align='up'>"+
+												"<option value='0'>Seleccionar</option>"+
+											    "<option value='1'>01 - Efectivo</option>"+
+											    "<option value='2'>02 - Cheque nominativo</option>"+
+											   	"<option value='3'>03 - Transferencia electrónica de fondos</option>"+
+											   	"<option value='4'>04 - Tarjeta de crédito</option>"+
+											   	"<option value='5'>05 - Monedero electrónico</option>"+ 
+											   	"<option value='6'>06 - Dinero electrónico</option>"+
+											    "<option value='8'>08 - Vales de despensa</option>"+
+											   	"<option value='12'>12 - Dación en pago</option>"+
+											   	"<option value='13'>13 - Pago por subrogación</option>"+
+											   	"<option value='14'>14 - Pago por consignación</option>"+ 
+											   	"<option value='15'>15 - Condonación</option>"+
+											    "<option value='17'>17 - Compensación</option>"+
+											   	"<option value='23'>23 - Novación</option>"+
+											   	"<option value='24'>24 - Confusión</option>"+
+											   	"<option value='25'>25 - Remisión de deuda</option>"+
+											   	"<option value='26'>26 - Prescripción o caducidad</option>"+
+											   	"<option value='27'>27 - A satisfacción del acreedor</option>"+
+											   	"<option value='28'>28 - Tarjeta de débito</option>"+
+											   	"<option value='29'>29 - Tarjeta de servicios</option>"+
+											   	"<option value='30'>30 - Aplicación de anticipos</option>"+
+											   	"<option value='31'>31 - Intermediario pagos</option>"+
+											   	"<option value='99'>99 - Por definir</option>"+
+								     "</select>"+
+								"</td>"+
+								"</tr>"+
+								
+								"<tr>"+
+									"<td>"+
+									"</td>"+
+									"<td>"+
+										"<input type='checkbox' id='chkCrearComplento" + objConvenioBean.getCconvenio() + "' checked>Crear Complemento de Pago"+
+									"</td>"+
+								"</tr>"+
 							  "<tr>"+
 								  "<td>"+
 								  "</td>"+
@@ -1039,6 +1096,18 @@ public class FacturacionMayoreoDao {
 									  	"<img alt='Seleccione una fecha' id='imgFechaDeposito' border='0' src='/web2labportal/images/icono_calend.gif' />"+
 									  "</a>"+	
 								  "</td>"+			
+								"</tr>"+
+								"<tr>"+
+								  "<td>"+
+									  "<b>Hora Deposito:</b>"+ 				
+								  "</td>"+
+								  "<td>"+
+									  	"<select id='selhora" + objConvenioBean.getCconvenio() + "' style='background:#E6E6FA'></select>"+
+										"<b>:</b>"+
+										"<select id='selminutos" + objConvenioBean.getCconvenio() + "' style='background:#E6E6FA'></select>"+
+										"<b>:</b>"+
+										"<select id='selsegundos" + objConvenioBean.getCconvenio() + "' style='background:#E6E6FA'></select>"+
+								  "</td>"+			
 							  "</tr>"+
 							  "<tr>"+
 								  "<td>"+
@@ -1048,7 +1117,46 @@ public class FacturacionMayoreoDao {
 									  "<select id='selTipoPago" + objConvenioBean.getCconvenio() + "' style='background:#E6E6FA' >"+	strFormaPago +						  
 									  "</select>"+	
 								  "</td>"+			
-							  "</tr>"+
+							  "</tr>"+								
+							"<tr>"+
+								"<td>"+
+									"<b>Forma de Pago:</b>"+
+								"</td>"+
+								"<td>"+
+									"<select id='selFormaPago" + objConvenioBean.getCconvenio() + "' style='width: 120px' style='background:#E6E6FA' align='up'>"+
+										"<option value='1'>01 - Efectivo</option>"+
+									    "<option value='2'>02 - Cheque nominativo</option>"+
+									   	"<option value='3'>03 - Transferencia electrónica de fondos</option>"+
+									   	"<option value='4'>04 - Tarjeta de crédito</option>"+
+									   	"<option value='5'>05 - Monedero electrónico</option>"+ 
+									   	"<option value='6'>06 - Dinero electrónico</option>"+
+									    "<option value='8'>08 - Vales de despensa</option>"+
+									   	"<option value='12'>12 - Dación en pago</option>"+
+									   	"<option value='13'>13 - Pago por subrogación</option>"+
+									   	"<option value='14'>14 - Pago por consignación</option>"+ 
+									   	"<option value='15'>15 - Condonación</option>"+
+									    "<option value='17'>17 - Compensación</option>"+
+									   	"<option value='23'>23 - Novación</option>"+
+									   	"<option value='24'>24 - Confusión</option>"+
+									   	"<option value='25'>25 - Remisión de deuda</option>"+
+									   	"<option value='26'>26 - Prescripción o caducidad</option>"+
+									   	"<option value='27'>27 - A satisfacción del acreedor</option>"+
+									   	"<option value='28'>28 - Tarjeta de débito</option>"+
+									   	"<option value='29'>29 - Tarjeta de servicios</option>"+
+									   	"<option value='30'>30 - Aplicación de anticipos</option>"+
+									   	"<option value='31'>31 - Intermediario pagos</option>"+
+									   	"<option value='99'>99 - Por definir</option>"+
+								     "</select>"+
+								"</td>"+
+							"</tr>"+								
+							"<tr>"+
+								"<td>"+
+								"</td>"+
+								"<td>"+
+									"<input type='checkbox' id='chkCrearComplento" + objConvenioBean.getCconvenio() + "' checked>Crear Complemento de Pago"+
+								"</td>"+
+							"</tr>"+
+							  
 							  "<tr>"+
 								  "<td>"+
 								  "</td>"+

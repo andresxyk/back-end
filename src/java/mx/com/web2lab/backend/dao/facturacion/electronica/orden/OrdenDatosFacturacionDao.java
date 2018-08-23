@@ -38,7 +38,7 @@ public class OrdenDatosFacturacionDao {
 		HibernateUtil.beginTrans();
 	}
 	
-	public TFactura buscarFacturaHB(FacturaElectronicaBean objfilexmlbean, int cmarca) throws Exception {
+	public TFactura buscarFacturaHB(FacturaElectronicaBean objfilexmlbean, int cmarca, String serie) throws Exception {
 		iObjSesion = HibernateUtil.getSession();
 		List objListaFactura = new ArrayList();
 		TFactura objFactura = null;
@@ -59,7 +59,14 @@ public class OrdenDatosFacturacionDao {
 					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS AZTECA' " ;
 				}else if (cmarca == 5){
 					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS SWISSLAB' " ;
+				}else if (cmarca == 7){
+					if(serie.equals("AJP")){
+						strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS JENNER PRADO' " ;						
+					}else if(serie.equals("AJL")){
+						strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS JENNER LEAN' " ;
+					}
 				}
+				
 			}			
 			iObjLog.debug("Entrando OrdenDatosFacturacionDao.buscarFacturaHB:Entrando...  " + strQuery);
 			objQuery = iObjSesion.createQuery(strQuery);
@@ -237,7 +244,7 @@ public class OrdenDatosFacturacionDao {
         }
 	}		
 		
-	public String cancelarOrdenesFactura(FacturaElectronicaBean objfilexmlbean,int intCopiarInformacion, int cmarca) throws Exception {
+	public String cancelarOrdenesFactura(FacturaElectronicaBean objfilexmlbean,int intCopiarInformacion, int cmarca, String serie) throws Exception {
 		TFactura objFactura = null;
 		String strQuery = "";
 		Connection objCon = null;
@@ -245,7 +252,7 @@ public class OrdenDatosFacturacionDao {
 		String strReturn = "";
     	try{
 			iObjLog.debug("Entrando OrdenDatosFacturacionDao.cancelarOrdenesFactura:Entrando...  " + objfilexmlbean.getKfactura()+" ---- "+intCopiarInformacion+" ---- "+cmarca);
-				objFactura = this.buscarFacturaHB(objfilexmlbean, cmarca);
+				objFactura = this.buscarFacturaHB(objfilexmlbean, cmarca, serie);
 				if (objFactura.getCestadoregistro() != 34) {
 					int csucursal = 0;
 					if(cmarca==1){
@@ -254,6 +261,12 @@ public class OrdenDatosFacturacionDao {
 						csucursal=1012;
 					} else if(cmarca==5){
 						csucursal=1013;
+					} else if(cmarca==7){
+						if(serie.equals("AJP")){
+							csucursal=1014;							
+						}else if(serie.equals("AJL")){
+							csucursal=1015;	
+						}
 					}
 					
 					this.initConnectionDB();
@@ -296,11 +309,11 @@ public class OrdenDatosFacturacionDao {
     	return strReturn;
 	}		
 	
-	public void actualizarFacturaXML(FacturaElectronicaBean objfilexmlbean, int marca) throws Exception {
+	public void actualizarFacturaXML(FacturaElectronicaBean objfilexmlbean, int marca, String serie) throws Exception {
 		TFactura objFactura = null;
     	try{
 			iObjLog.debug("Entrando OrdenDatosFacturacionDao.actualizarFacturaXML:Entrando...  " + objfilexmlbean.getKfactura());
-				objFactura = this.buscarFacturaHB(objfilexmlbean,marca);
+				objFactura = this.buscarFacturaHB(objfilexmlbean,marca,serie);
 				this.initConnectionDB();
 				objFactura.setSxmlsello(objfilexmlbean.getSxml());
 				objFactura.setSsellodigital(objfilexmlbean.getSsellodigital());

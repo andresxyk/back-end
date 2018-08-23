@@ -1,8 +1,15 @@
 package mx.com.web2lab.backend.dao.comer;
 
 import java.math.BigDecimal;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import mx.com.web2lab.backend.beans.comer.PagoFacturaBean;
@@ -11,6 +18,7 @@ import mx.com.web2lab.backend.hbm.HibernateUtil;
 import mx.com.web2lab.backend.hbm.om.ap.CTipoPagoFactura;
 import mx.com.web2lab.backend.hbm.om.ap.TFactura;
 import mx.com.web2lab.backend.hbm.om.ap.TPagoFactura;
+import mx.com.web2lab.backend.util.Consumo;
 import mx.com.web2lab.backend.util.Formatos;
 import net.sf.hibernate.Query;
 import net.sf.hibernate.Session;
@@ -29,26 +37,254 @@ public class PagoFacturaDao {
 	public PagoFacturaDao(){
 		iObjSesion = HibernateUtil.getSession();
 	}
+	
+	
+	public int pago(PagoFacturaBean objPagoFacturaBean,double monto, String formaPago, int marca) throws Exception{
+
+		iObjLog.debug("Entrando PagoFacturaDao.pago:Entrando...  " + objPagoFacturaBean.getKfactura()+"  "+marca+"   "+formaPago);
+		int kpago=0;
+		Connection objConn 	   = null;
+		Statement objStatement = null;
+		ResultSet rst = null;
+		Query objQuery = null;
+		String strQuery = "";
+		String strSQL = "";
+		int keycontrolfolio=0;
+		if(marca==1){
+			keycontrolfolio=161;
+		}else if(marca==4){
+			keycontrolfolio=161;
+		}else if(marca==5){
+			keycontrolfolio=161;
+		}else if(marca==7){
+			keycontrolfolio=161;
+		}else if(marca==8){
+			keycontrolfolio=161;
+		}
+		String forPago="";
+		if(formaPago.length()==1){
+			forPago="0"+formaPago;
+		}else{
+			forPago=formaPago;
+		}
+		
+		Date date = new Date();
+		DateFormat hourFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+		String fechaActual= hourFormat.format(date);
+			
+		strQuery="insert into t_pago(mmonto, cformapago, dfechapago, smoneda, ccontrolfolio, dfecharegistro) "
+				+ "VALUES ("+monto+",'"+forPago+"','"+objPagoFacturaBean.getDfechapago()+"', 'MXN',"+keycontrolfolio+",'"+fechaActual+"')";	
+		
+		strSQL="select kpago from t_pago where mmonto="+monto+" and dfechapago ='"+objPagoFacturaBean.getDfechapago()+"' and dfecharegistro ='"+fechaActual+"'";
+		try{
+			iObjLog.debug("Entrando PagoFacturaDao.pago:Entrando...  " + strQuery);
+			
+			objConn = iObjSesion.connection();				
+			objStatement = objConn.createStatement();
+			objStatement.execute(strQuery);	
+			
+			
+			rst = objStatement.executeQuery(strSQL);
+			strSQL = "";
+			if(rst != null) {
+				while(rst.next()) {
+					kpago=rst.getInt("kpago");
+					break;
+				}				
+				rst.close();
+			}
+			
+		}catch (Exception aObjExcepcion) { 
+			iObjLog.error("ERROR PagoFacturaDao.pago: ", aObjExcepcion);
+			throw aObjExcepcion;			
+    	}finally{
+    		if (objStatement != null) {
+				objStatement.close();
+				objStatement = null;
+			}
+    	}
+		return kpago;
+			
+	}
+	
+	public int pagoMulti(Date fechaPago,double monto, String formaPago, int convenio, String kfactura) throws Exception{
+
+		iObjLog.debug("Entrando PagoFacturaDao.pago:Entrando...  " + kfactura+"  "+convenio+"   "+formaPago);
+		iObjSesion = HibernateUtil.getSession();
+		int kpago=0;
+		Connection objConn 	   = null;
+		Statement objStatement = null;
+		ResultSet rst = null;
+		ResultSet rstcons = null;
+		Query objQuery = null;
+		String strQuery = "";
+		String strQueryCons = "";
+		String strSQL = "";
+		int cantiRegis=0;
+		
+		String forPago="";
+		if(formaPago.length()==1){
+			forPago="0"+formaPago;
+		}else{
+			forPago=formaPago;
+		}
+		
+		int keycontrolfolio=0;
+		
+		int marca =convenio;
+		//marca = getMarcarConvenio(convenio);
+		if(marca==1){
+			keycontrolfolio=161;
+		}else if(marca==4){
+			keycontrolfolio=161;
+		}else if(marca==5){
+			keycontrolfolio=161;
+		}else if(marca==7){
+			keycontrolfolio=161;
+		}else if(marca==8){
+			keycontrolfolio=161;
+		}
+		
+		Date date = new Date();
+		DateFormat hourFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+		String fechaActual= hourFormat.format(date);
+		strQueryCons="select * from t_pago_factura where kfactura in ("+kfactura+") and cestadoregistro = 52";
+		
+		strQuery="insert into t_pago(mmonto, cformapago, dfechapago, smoneda, ccontrolfolio, dfecharegistro) "
+				+ "VALUES ("+monto+",'"+forPago+"','"+fechaPago+"', 'MXN',"+keycontrolfolio+",'"+fechaActual+"')";	
+		
+		strSQL="select kpago from t_pago where mmonto="+monto+" and dfechapago ='"+fechaPago+"' and dfecharegistro ='"+fechaActual+"'";		
+		
+		try{
+			objConn = iObjSesion.connection();				
+			objStatement = objConn.createStatement();
+			iObjLog.debug("Entrando PagoFacturaDao.pago:Query...  " + strQueryCons);
+			rstcons = objStatement.executeQuery(strQueryCons);
+			if(rstcons != null) {
+				while(rstcons.next()) {
+					cantiRegis++;
+				}
+				rstcons.close();
+			}
+			
+			String [] cantFac = kfactura.split(",");
+			if(cantiRegis<cantFac.length){
+				
+				iObjLog.debug("Entrando PagoFacturaDao.pago:Query...  " + strQuery);
+				objStatement.execute(strQuery);					
+				iObjLog.debug("Entrando PagoFacturaDao.pago:Query...  " + strSQL);
+				rst = objStatement.executeQuery(strSQL);
+				strSQL = "";
+				if(rst != null) {
+					while(rst.next()) {
+						kpago=rst.getInt("kpago");
+						break;
+					}				
+					rst.close();
+				}
+			}
+		}catch (Exception aObjExcepcion) { 
+			iObjLog.error("ERROR PagoFacturaDao.pago: ", aObjExcepcion);
+			throw aObjExcepcion;			
+    	}finally{    		
+			    		
+    		if (objStatement != null) {
+				objStatement.close();
+				objStatement = null;
+			}
+			if (rst != null) {
+				rst.close();
+				rst = null;
+			}
+	    	HibernateUtil.closeSession();
+    	}
+		return kpago;			
+	}
+	
+	
+	public int getMarcarConvenio(int convenio) throws Exception{
+		int marca=0;
+		String strSQL = "";
+		Connection objConn 	   = null;
+		Statement objStatement = null;
+		ResultSet rst = null;		
+		strSQL="select cmarca from e_convenio where cconvenio ="+convenio;
+		try{
+			iObjLog.debug("Entrando PagoFacturaDao.getMarcarConvenio:Entrando...  " + strSQL);			
+			objConn = iObjSesion.connection();				
+			objStatement = objConn.createStatement();	
+			rst = objStatement.executeQuery(strSQL);
+			strSQL = "";
+			if(rst != null) {
+				while(rst.next()) {
+					marca=rst.getInt("cmarca");
+					break;
+				}				
+				rst.close();
+			}			
+		}catch (Exception aObjExcepcion) { 
+			iObjLog.error("ERROR PagoFacturaDao.getMarcarConvenio: ", aObjExcepcion);
+			throw aObjExcepcion;			
+    	}finally{
+    		if (objStatement != null) {
+				objStatement.close();
+				objStatement = null;
+			}
+    	}		
+		return marca;
+	}
+	
+	public void updatePagoFactura(int keypago , int kfactura) throws Exception{
+		iObjLog.debug("Entrando PagoFacturaDao.updatePagoFactura:Entrando...  " + keypago+"  "+kfactura);
+		
+		Connection objConn 	   = null;
+		Statement objStatement = null;
+		String strQuery = "";	
+		
+		strQuery = "update t_pago_factura set kpago = "+keypago+" where kfactura = "+kfactura+" and cestadoregistro = 52";
+				
+		try{
+			iObjLog.debug("Entrando PagoFacturaDao.updatePagoFactura:Entrando...  " + strQuery);
+			
+			objConn = iObjSesion.connection();				
+			objStatement = objConn.createStatement();
+			if(keypago>0){
+				objStatement.execute(strQuery);					
+			}
+			
+		}catch (Exception aObjExcepcion) { 
+			iObjLog.error("ERROR PagoFacturaDao.updatePagoFactura: ", aObjExcepcion);
+			throw aObjExcepcion;			
+    	}finally{
+    		if (objStatement != null) {
+				objStatement.close();
+				objStatement = null;
+			}
+    	}
+	}
 		
 
-	public PagoFacturaBean pagoFactura(PagoFacturaBean objPagoFacturaBean) throws Exception {
+	public PagoFacturaBean pagoFactura(PagoFacturaBean objPagoFacturaBean, int keypago) throws Exception {
 		iObjSesion = HibernateUtil.getSession();
+				
 		List objListaFactura = new ArrayList();
 		Query objQuery = null;
 		String strQuery = "";
 		TFactura objTFactura = null;
 		TPagoFactura objTPagoFactura = new TPagoFactura();
 		CTipoPagoFactura objTipoPagoFactura =  new CTipoPagoFactura();
+		
     	try{
-			iObjLog.debug("Entrando FacturacionMayoreoDao.pagoFactura:Entrando...  " + objPagoFacturaBean.getKfactura());
-			HibernateUtil.beginTrans();
+			iObjLog.debug("Entrando PagoFacturaDao.pagoFactura:Entrando...  " + objPagoFacturaBean.getKfactura()+"     "+keypago);
+			 HibernateUtil.beginTrans(); 
+			
 			strQuery = "select bOF 															\n" +					
 			   		   "from TFactura bOF 													\n" +	
 			           "where bOF.kfactura in  (" + objPagoFacturaBean.getKfactura() + ") 	\n" +
 			           "order by kfactura desc";
-			iObjLog.debug("Entrando FacturacionMayoreoDao.pagoFactura:Entrando...  " + strQuery);
-			objQuery = iObjSesion.createQuery(strQuery);
-			objListaFactura = objQuery.list();
+			iObjLog.debug("Entrando PagoFacturaDao.pagoFactura:Entrando...  " + strQuery);
+			 objQuery = iObjSesion.createQuery(strQuery);                   
+             objListaFactura = objQuery.list();
 			if (objListaFactura != null) {
 				if (objListaFactura.size() >0) {
 					objTFactura = (TFactura)objListaFactura.get(0);
@@ -78,23 +314,27 @@ public class PagoFacturaDao {
 							iObjSesion.update(objTFactura);
 							iObjSesion.flush();            					
 						}
+						
+						this.updatePagoFactura(keypago, objPagoFacturaBean.getKfactura());
+						
+						Consumo consumo=new Consumo();
+						//consumo.consumirWS();
+						
 						objPagoFacturaBean.setSmensaje("Exito en el registro del Pago");
 					} else {
 						objPagoFacturaBean.setSmensaje("Existe un error en el Sistema comunicarse con Gerencia de TI");
 					}					
 				}
 			}
-			iObjLog.debug("Entrando FacturacionMayoreoDao.pagoFactura:Saliendo...  ");
+			iObjLog.debug("Entrando PagoFacturaDao.pagoFactura:Saliendo...  ");
     	} catch (Exception aObjExcepcion) { 
-			iObjLog.error("ERROR FacturacionMayoreoDao.pagoFactura: ", aObjExcepcion);
+			iObjLog.error("ERROR PagoFacturaDao.pagoFactura: ", aObjExcepcion);
 			throw aObjExcepcion;			
     	} finally{
     		objQuery = null;
-    		objListaFactura = null;
-    		objTFactura = null;
-    		objTPagoFactura = null;
-    		objTipoPagoFactura = null;
-        	HibernateUtil.closeSession();
+            objListaFactura = null;
+            objTPagoFactura = null;
+	    	HibernateUtil.closeSession();
     	}		
     	return objPagoFacturaBean;
 	}			

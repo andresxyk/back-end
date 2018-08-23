@@ -28,8 +28,14 @@ public class FacturaElectronicaFOPDao {
 	        sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_Olab");
         } else if (objFactura.getCmarca() == 5) {
         	sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_Swisslab");
-        } else {
+        } else if (objFactura.getCmarca() == 4){
 	        sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_Azteca");
+        } else if (objFactura.getCmarca() == 4){
+        	if(objFactura.getSserie().equals("AJP")){
+        		sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_JennerPrado");        		
+        	}else if(objFactura.getSserie().equals("AJL")){
+        		sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_JennerLean"); 
+        	}        	
         }
         String strLogoFactura = "";
         String strRFC = "";
@@ -147,7 +153,11 @@ public class FacturaElectronicaFOPDao {
 		        	strLogoFactura = "SwisslabSmall.jpg";
 		        	strRFC = "RFCTSwisslabFactura.jpg";
 		        	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE LABORATORIOS DE ANALISIS CLINICOS SWISSLAB S.A. de C.V. EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
-		        } else {
+		        } else if (objFactura.getCmarca() == 4){
+		        	strLogoFactura = "AztecaSmall.jpg";
+		        	strRFC = "RFCTAztecaFactura.jpg";
+		        	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE LABORATORIO QUIMICO CLINICO AZTECA S.A.P.I. DE C.V. EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
+		        } else if (objFactura.getCmarca() == 7){
 		        	strLogoFactura = "AztecaSmall.jpg";
 		        	strRFC = "RFCTAztecaFactura.jpg";
 		        	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE LABORATORIO QUIMICO CLINICO AZTECA S.A.P.I. DE C.V. EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";

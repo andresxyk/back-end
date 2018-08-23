@@ -35,6 +35,12 @@ public class FacturaElectronicaEmpresaFOPDao {
             sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_Azteca");
         }  else if (objFactura.getCmarca() == 5) {
             sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_Swisslab");
+        }  else if (objFactura.getCmarca() == 7) {
+        	if(objFactura.getSserie().equals("AJP")){
+        		sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_JennerPrado");
+        	}else if(objFactura.getSserie().equals("AJL")){
+        		sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_JennerLean");
+        	}
         } 
         
         if (objFactura.getCmarca() == 1) {
@@ -45,7 +51,11 @@ public class FacturaElectronicaEmpresaFOPDao {
         	strLogoFactura = "AztecaSmall.jpg";
         	strRFC = "RFCTAztecaFactura.jpg";
         	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE LABORATORIO QUIMICO CLINICO AZTECA S.A.P.I. DE C.V. EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
-        } else {
+        } else if(objFactura.getCmarca() == 4){
+        	strLogoFactura = "AztecaSmall.jpg";
+        	strRFC = "RFCTAztecaFactura.jpg";
+        	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE LABORATORIO QUIMICO CLINICO AZTECA S.A.P.I. DE C.V. EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
+        } else if(objFactura.getCmarca() == 7){
         	strLogoFactura = "AztecaSmall.jpg";
         	strRFC = "RFCTAztecaFactura.jpg";
         	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE LABORATORIO QUIMICO CLINICO AZTECA S.A.P.I. DE C.V. EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";

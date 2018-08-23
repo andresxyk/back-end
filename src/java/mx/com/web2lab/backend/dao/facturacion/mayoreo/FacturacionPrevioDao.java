@@ -327,7 +327,7 @@ public class FacturacionPrevioDao {
 	
 	
 	
-    public String getPrevioFacturacion(String cConvenio,String uUserId,String strBloque, String nTipoPrevio, String nTipoFacturacion,String monto) throws Exception {
+    public String getPrevioFacturacion(String cConvenio,String uUserId,String strBloque, String nTipoPrevio, String nTipoFacturacion,String monto,String razon) throws Exception {
 		iObjSesion = HibernateUtil.getSession();
 		java.sql.Connection objConn = null;
 		java.sql.ResultSet objRst = null;
@@ -351,11 +351,11 @@ public class FacturacionPrevioDao {
 					monto="-1";
 				} 
 				if(nTipoPrevio.equals("1")){	
-					strSpFuncion="facturacion.func_olab_sp_return_detalle_fac("+cConvenio+","+getBloque(strBloque)+uUserId+","+bTipoFacturacion+","+monto+");";	
+					strSpFuncion="facturacion.func_olab_sp_return_detalle_fac("+cConvenio+","+getBloque(strBloque)+uUserId+","+bTipoFacturacion+","+monto+","+razon+");";	
 				} else if(nTipoPrevio.equals("2")) {
-					strSpFuncion="facturacion.func_olab_sp_return_group_fac("+cConvenio+","+getBloque(strBloque)+uUserId+","+bTipoFacturacion+","+monto+");";	
+					strSpFuncion="facturacion.func_olab_sp_return_group_fac("+cConvenio+","+getBloque(strBloque)+uUserId+","+bTipoFacturacion+","+monto+","+razon+");";	
 				} else if(nTipoPrevio.equals("3")) {
-					strSpFuncion="facturacion.func_olab_sp_return_group_exa_fac("+cConvenio+","+getBloque(strBloque)+uUserId+","+bTipoFacturacion+","+monto+");";
+					strSpFuncion="facturacion.func_olab_sp_return_group_exa_fac("+cConvenio+","+getBloque(strBloque)+uUserId+","+bTipoFacturacion+","+monto+","+razon+");";
 				}	
 				strSQL = "Select * from "+strSpFuncion;						
 				iObjLog.debug("Entrando FacturacionMayoreoDao.generarPrevio:Consulta...  " + strSQL);

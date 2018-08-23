@@ -63,7 +63,7 @@ public class FacturacionElectronicaMayoreoDao {
     	return objTfactura;
 	}		
 
-	public TFactura buscarFacturaFolio(String strfolioFactura, int marca) throws Exception {
+	public TFactura buscarFacturaFolio(String strfolioFactura, int marca, String serie) throws Exception {
 		Query objQuery = null;
 		String strQuery = "";
 		List objListaFacturas = new ArrayList();
@@ -76,7 +76,14 @@ public class FacturacionElectronicaMayoreoDao {
 			csucursal="1012";
 		}else if (marca==5){
 			csucursal="1013";
+		}else if (marca==7){
+			if(serie.equals("AJP")){
+				csucursal="1014";				
+			}else if(serie.equals("AJL")){
+				csucursal="1015";
+			}
 		}
+		
     	try{
 			iObjLog.debug("Entrando FacturacionElectronicaMayoreoDao.buscarFacturaFolio:Entrando...  " + strfolioFactura);
 			HibernateUtil.beginTrans();
