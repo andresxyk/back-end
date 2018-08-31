@@ -39,7 +39,8 @@ public class PagoFacturaDao {
 	}
 	
 	
-	public int pago(PagoFacturaBean objPagoFacturaBean,double monto, String formaPago, int marca) throws Exception{
+	public int pago(PagoFacturaBean objPagoFacturaBean,double monto, String formaPago, int marca,
+			String rfcBanco, String nomBanco, String cuentaClabe) throws Exception{
 
 		iObjLog.debug("Entrando PagoFacturaDao.pago:Entrando...  " + objPagoFacturaBean.getKfactura()+"  "+marca+"   "+formaPago);
 		int kpago=0;
@@ -72,10 +73,10 @@ public class PagoFacturaDao {
 		DateFormat hourFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 		String fechaActual= hourFormat.format(date);
 			
-		strQuery="insert into t_pago(mmonto, cformapago, dfechapago, smoneda, ccontrolfolio, dfecharegistro) "
-				+ "VALUES ("+monto+",'"+forPago+"','"+objPagoFacturaBean.getDfechapago()+"', 'MXN',"+keycontrolfolio+",'"+fechaActual+"')";	
+		strQuery="insert into t_pago_complemento(mmonto, cformapago, dfechapago, smoneda, ccontrolfolio, dfecharegistro, srfcbanco, snombrebanco,snumerocuentaclabe) "
+				+ "VALUES ("+monto+",'"+forPago+"','"+objPagoFacturaBean.getDfechapago()+"', 'MXN',"+keycontrolfolio+",'"+fechaActual+"','"+rfcBanco+"','"+nomBanco+"','"+cuentaClabe+"')";	
 		
-		strSQL="select kpago from t_pago where mmonto="+monto+" and dfechapago ='"+objPagoFacturaBean.getDfechapago()+"' and dfecharegistro ='"+fechaActual+"'";
+		strSQL="select kpagocomplemento from t_pago_complemento where mmonto="+monto+" and dfechapago ='"+objPagoFacturaBean.getDfechapago()+"' and dfecharegistro ='"+fechaActual+"'";
 		try{
 			iObjLog.debug("Entrando PagoFacturaDao.pago:Entrando...  " + strQuery);
 			
@@ -88,7 +89,7 @@ public class PagoFacturaDao {
 			strSQL = "";
 			if(rst != null) {
 				while(rst.next()) {
-					kpago=rst.getInt("kpago");
+					kpago=rst.getInt("kpagocomplemento");
 					break;
 				}				
 				rst.close();
@@ -107,7 +108,8 @@ public class PagoFacturaDao {
 			
 	}
 	
-	public int pagoMulti(Date fechaPago,double monto, String formaPago, int convenio, String kfactura) throws Exception{
+	public int pagoMulti(Date fechaPago,double monto, String formaPago, int convenio, String kfactura,
+			String rfcBanco, String nomBanco, String cuentaClabe) throws Exception{
 
 		iObjLog.debug("Entrando PagoFacturaDao.pago:Entrando...  " + kfactura+"  "+convenio+"   "+formaPago);
 		iObjSesion = HibernateUtil.getSession();
@@ -150,10 +152,10 @@ public class PagoFacturaDao {
 		String fechaActual= hourFormat.format(date);
 		strQueryCons="select * from t_pago_factura where kfactura in ("+kfactura+") and cestadoregistro = 52";
 		
-		strQuery="insert into t_pago(mmonto, cformapago, dfechapago, smoneda, ccontrolfolio, dfecharegistro) "
-				+ "VALUES ("+monto+",'"+forPago+"','"+fechaPago+"', 'MXN',"+keycontrolfolio+",'"+fechaActual+"')";	
+		strQuery="insert into t_pago_complemento(mmonto, cformapago, dfechapago, smoneda, ccontrolfolio, dfecharegistro, srfcbanco, snombrebanco,snumerocuentaclabe) "
+				+ "VALUES ("+monto+",'"+forPago+"','"+fechaPago+"', 'MXN',"+keycontrolfolio+",'"+fechaActual+"','"+rfcBanco+"','"+nomBanco+"','"+cuentaClabe+"')";	
 		
-		strSQL="select kpago from t_pago where mmonto="+monto+" and dfechapago ='"+fechaPago+"' and dfecharegistro ='"+fechaActual+"'";		
+		strSQL="select kpagocomplemento from t_pago_complemento where mmonto="+monto+" and dfechapago ='"+fechaPago+"' and dfecharegistro ='"+fechaActual+"'";		
 		
 		try{
 			objConn = iObjSesion.connection();				
@@ -177,7 +179,7 @@ public class PagoFacturaDao {
 				strSQL = "";
 				if(rst != null) {
 					while(rst.next()) {
-						kpago=rst.getInt("kpago");
+						kpago=rst.getInt("kpagocomplemento");
 						break;
 					}				
 					rst.close();
@@ -262,6 +264,38 @@ public class PagoFacturaDao {
 			}
     	}
 	}
+	
+	public void insertPagoFactura(TPagoFactura objTPagoFactura ,int keypago) throws Exception{
+		iObjLog.debug("Entrando PagoFacturaDao.updatePagoFactura:Entrando...  " + keypago+"  "+objTPagoFactura.getKpagofactura());
+		
+		Connection objConn 	   = null;
+		Statement objStatement = null;
+		String strQuery = "";	
+		
+		strQuery = "INSERT INTO t_pago_factura("+
+            "kpagofactura, kfactura, mtotalfactura, manticipo, mpago, msaldo, ctipopago, user_id, cestadoregistro, dregistro, dfechapago, ugrupopago,"+ 
+            "knotacredito, kpago) VALUES (nextval('t_pago_factura_sequence'::regclass),"+objTPagoFactura.getTfactura().getKfactura()+
+            ", "+objTPagoFactura.getMtotalfactura()+", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				
+		try{
+			iObjLog.debug("Entrando PagoFacturaDao.updatePagoFactura:Entrando...  " + strQuery);
+			
+			objConn = iObjSesion.connection();				
+			objStatement = objConn.createStatement();
+			if(keypago>0){
+				objStatement.execute(strQuery);					
+			}
+			
+		}catch (Exception aObjExcepcion) { 
+			iObjLog.error("ERROR PagoFacturaDao.updatePagoFactura: ", aObjExcepcion);
+			throw aObjExcepcion;			
+    	}finally{
+    		if (objStatement != null) {
+				objStatement.close();
+				objStatement = null;
+			}
+    	}
+	}
 		
 
 	public PagoFacturaBean pagoFactura(PagoFacturaBean objPagoFacturaBean, int keypago) throws Exception {
@@ -305,22 +339,19 @@ public class PagoFacturaDao {
 					objTPagoFactura.setCestadoregistro(objPagoFacturaBean.getCestadoregistro());
 					objTPagoFactura.setUgrupopago(objPagoFacturaBean.getUgrupopago());
 					objTPagoFactura.setKnotacredito(new Integer(0));
+					objTPagoFactura.setKpagocomplemento(new Integer(keypago));
+					
 					if (objPagoFacturaBeanActual.getMsaldo().doubleValue() >= objPagoFacturaBean.getMpago().doubleValue()) {
 						iObjSesion.save(objTPagoFactura);					
-						iObjSesion.flush();            					
+						iObjSesion.flush(); 
 						objPagoFacturaBean.setMsaldo(objTPagoFactura.getMsaldo());
 						if (objTPagoFactura.getMsaldo().doubleValue() <= 0.0) {
 							objTFactura.setCestadoregistro(51);
 							iObjSesion.update(objTFactura);
 							iObjSesion.flush();            					
-						}
-						
-						this.updatePagoFactura(keypago, objPagoFacturaBean.getKfactura());
-						
-						Consumo consumo=new Consumo();
-						//consumo.consumirWS();
-						
+						}						 
 						objPagoFacturaBean.setSmensaje("Exito en el registro del Pago");
+						objPagoFacturaBean.setKeypago(keypago);
 					} else {
 						objPagoFacturaBean.setSmensaje("Existe un error en el Sistema comunicarse con Gerencia de TI");
 					}					

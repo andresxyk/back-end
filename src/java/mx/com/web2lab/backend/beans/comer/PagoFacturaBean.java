@@ -24,7 +24,10 @@ public class PagoFacturaBean implements Serializable {
     /** nullable persistent field */
     private int userId;
 
-    /** persistent field */
+    /** nullable persistent field */
+    private int keypago;
+
+	/** persistent field */
     private int cestadoregistro;
 
     /** nullable persistent field */
@@ -98,6 +101,14 @@ public class PagoFacturaBean implements Serializable {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+	
+	public int getKeypago() {
+		return keypago;
+	}
+
+	public void setKeypago(int keypago) {
+		this.keypago = keypago;
 	}
 
 	public int getCestadoregistro() {

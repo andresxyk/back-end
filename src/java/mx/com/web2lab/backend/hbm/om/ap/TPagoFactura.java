@@ -41,7 +41,11 @@ public class TPagoFactura implements Serializable {
     /** identifier field */
     private java.lang.Integer knotacredito;
     
-    /** persistent field */
+    /** identifier field */
+    private java.lang.Integer kpagocomplemento;
+   
+
+	/** persistent field */
     private mx.com.web2lab.backend.hbm.om.ap.TFactura tfactura;
 
     /** persistent field */
@@ -178,6 +182,15 @@ public class TPagoFactura implements Serializable {
   public void setKnotacredito(java.lang.Integer knotacredito) {
         this.knotacredito = knotacredito;
     }
+  
+  
+  public java.lang.Integer getKpagocomplemento() {
+		return kpagocomplemento;
+	}
+
+	public void setKpagocomplemento(java.lang.Integer kpagocomplemento) {
+		this.kpagocomplemento = kpagocomplemento;
+	}
 
     public String toString() {
         return new ToStringBuilder(this)

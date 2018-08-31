@@ -110,6 +110,7 @@ public class MCatalogosTool
      */
     public List obtenAll(String sCatalogo,int cMarca) throws Exception
 	{
+    	iLog.debug("Entrando obtenerAll....");
         try
 		{
         	return iObjMCatalogosTool.obtenAll(sCatalogo,cMarca);

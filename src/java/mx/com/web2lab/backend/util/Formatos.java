@@ -1135,6 +1135,7 @@ public class Formatos  implements Serializable{
 		}		
 		return strReturn + strNumero;
 	}
+	
 
 
 }

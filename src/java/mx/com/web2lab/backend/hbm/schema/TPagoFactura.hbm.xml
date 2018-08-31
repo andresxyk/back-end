@@ -87,7 +87,12 @@
         column="knotacredito"
         length="8"
     />
-    
+    <property
+        name="kpagocomplemento"
+        type="int"
+        column="kpagocomplemento"
+        length="8"
+    />
 
     <!-- associations -->
     <!-- bi-directional many-to-one association to TFactura -->

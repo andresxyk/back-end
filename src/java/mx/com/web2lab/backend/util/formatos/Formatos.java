@@ -835,5 +835,27 @@ public class Formatos {
 		String formateado = new DecimalFormat(ceros.toString()).format(numero.longValue());	
 		return formateado;
 	}
+	
+
+	public static Date getFechaLimite(String fechaPago){
+		Date fechaLimite = null;
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		String strfechaLimite="10-";
+		try {
+			String[] splitFecha = fechaPago.split(" ");
+			String[] sFecha = splitFecha[0].split("-");
+			if(Integer.parseInt(sFecha[1])<12){
+				strfechaLimite+=(Integer.parseInt(sFecha[1])+1)+"-"+sFecha[2];
+			}else{
+				strfechaLimite+="01-"+sFecha[2]+1;
+			}
+			fechaLimite=formatter.parse(strfechaLimite);
+			
+		}catch (Exception e) {
+            e.printStackTrace();
+        }
+		return fechaLimite;
+	}
+	
 }
 

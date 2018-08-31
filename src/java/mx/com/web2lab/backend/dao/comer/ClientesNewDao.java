@@ -1936,6 +1936,45 @@ public class ClientesNewDao {
 							"<input type='checkbox' id='chkCrearComplento' checked>Crear Complemento de Pago"+
 						"</td>"+
 					"</tr>"+
+					"<tr>"+
+						"<td>"+
+						"</td>"+
+						"<td>"+
+							"<input type='checkbox' id='chkAgregarOpcionales' onClick='showCamposOpcionales();'>Agregar campos opcionales"+
+						"</td>"+
+					"</tr>"+
+					"<tr>"+
+						"<td colspan='2'>"+
+							"<div id='divCamposOpcionales' style='display:none'>"+
+								"<table border='0' align='center' style='width: 100%' class='tabla'>" +
+									"<tr>"+
+										"<td>"+
+									  		"<b>Rfc del Banco:</b>"+ 				
+									  	"</td>"+
+									  	"<td>"+
+									  		"<input type='text' id='txtRfcBanco' style='background:#E6E6FA' size='30'>"+ 				
+									  	"</td>"+					  		
+									"</tr>"+
+									"<tr>"+
+										"<td>"+
+									  		"<b>Nombre del Banco:</b>"+ 				
+									  	"</td>"+
+									  	"<td>"+
+									  		"<input type='text' id='txtNombreBanco' style='background:#E6E6FA' size='50'>"+ 				
+									  	"</td>"+					  		
+									"</tr>"+
+									"<tr>"+
+										"<td>"+
+									  		"<b>Numero de Cuenta/Clabe:</b>"+ 				
+									  	"</td>"+
+									  	"<td>"+
+									  		"<input type='text' id='txtNumCuentaClabe' style='background:#E6E6FA' size='30'>"+ 				
+									  	"</td>"+					  		
+									"</tr>"+
+								"</table>" +
+							"</div>"+
+						"</td>"+
+					"</tr>"+
 				  "<tr>"+
 					  "<td>"+
 					  "</td>"+
