@@ -69,12 +69,27 @@ public class PagoFacturaDao {
 			forPago=formaPago;
 		}
 		
+		String camposopcionales="";
+		String datosopcionales="";
+		if(rfcBanco.length()>0){
+			camposopcionales+=", srfcbanco";
+			datosopcionales+=",'"+rfcBanco+"'";
+		}
+		if(nomBanco.length()>0){
+			camposopcionales+=", snombrebanco";
+			datosopcionales+=",'"+nomBanco+"'";
+		}
+		if(cuentaClabe.length()>0){
+			camposopcionales+=", snumerocuentaclabe";
+			datosopcionales+=",'"+cuentaClabe+"'";
+		}
+		
 		Date date = new Date();
 		DateFormat hourFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 		String fechaActual= hourFormat.format(date);
 			
-		strQuery="insert into t_pago_complemento(mmonto, cformapago, dfechapago, smoneda, ccontrolfolio, dfecharegistro, srfcbanco, snombrebanco,snumerocuentaclabe) "
-				+ "VALUES ("+monto+",'"+forPago+"','"+objPagoFacturaBean.getDfechapago()+"', 'MXN',"+keycontrolfolio+",'"+fechaActual+"','"+rfcBanco+"','"+nomBanco+"','"+cuentaClabe+"')";	
+		strQuery="insert into t_pago_complemento(mmonto, cformapago, dfechapago, smoneda, ccontrolfolio, dfecharegistro"+camposopcionales+") "
+				+ "VALUES ("+monto+",'"+forPago+"','"+objPagoFacturaBean.getDfechapago()+"', 'MXN',"+keycontrolfolio+",'"+fechaActual+"'"+datosopcionales+")";	
 		
 		strSQL="select kpagocomplemento from t_pago_complemento where mmonto="+monto+" and dfechapago ='"+objPagoFacturaBean.getDfechapago()+"' and dfecharegistro ='"+fechaActual+"'";
 		try{
@@ -146,14 +161,28 @@ public class PagoFacturaDao {
 		}else if(marca==8){
 			keycontrolfolio=161;
 		}
+		String camposopcionales="";
+		String datosopcionales="";
+		if(rfcBanco.length()>0){
+			camposopcionales+=", srfcbanco";
+			datosopcionales+=",'"+rfcBanco+"'";
+		}
+		if(nomBanco.length()>0){
+			camposopcionales+=", snombrebanco";
+			datosopcionales+=",'"+nomBanco+"'";
+		}
+		if(cuentaClabe.length()>0){
+			camposopcionales+=", snumerocuentaclabe";
+			datosopcionales+=",'"+cuentaClabe+"'";
+		}
 		
 		Date date = new Date();
 		DateFormat hourFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 		String fechaActual= hourFormat.format(date);
 		strQueryCons="select * from t_pago_factura where kfactura in ("+kfactura+") and cestadoregistro = 52";
 		
-		strQuery="insert into t_pago_complemento(mmonto, cformapago, dfechapago, smoneda, ccontrolfolio, dfecharegistro, srfcbanco, snombrebanco,snumerocuentaclabe) "
-				+ "VALUES ("+monto+",'"+forPago+"','"+fechaPago+"', 'MXN',"+keycontrolfolio+",'"+fechaActual+"','"+rfcBanco+"','"+nomBanco+"','"+cuentaClabe+"')";	
+		strQuery="insert into t_pago_complemento(mmonto, cformapago, dfechapago, smoneda, ccontrolfolio, dfecharegistro"+camposopcionales+") "
+				+ "VALUES ("+monto+",'"+forPago+"','"+fechaPago+"', 'MXN',"+keycontrolfolio+",'"+fechaActual+"'"+datosopcionales+")";	
 		
 		strSQL="select kpagocomplemento from t_pago_complemento where mmonto="+monto+" and dfechapago ='"+fechaPago+"' and dfecharegistro ='"+fechaActual+"'";		
 		
@@ -266,26 +295,45 @@ public class PagoFacturaDao {
 	}
 	
 	public void insertPagoFactura(TPagoFactura objTPagoFactura ,int keypago) throws Exception{
-		iObjLog.debug("Entrando PagoFacturaDao.updatePagoFactura:Entrando...  " + keypago+"  "+objTPagoFactura.getKpagofactura());
-		
+		iObjLog.debug("Entrando PagoFacturaDao.updatePagoFactura:Entrando...  " + keypago+"  "+objTPagoFactura.getKpagofactura());		
 		Connection objConn 	   = null;
 		Statement objStatement = null;
-		String strQuery = "";	
-		
+		String strQuery = "";			
 		strQuery = "INSERT INTO t_pago_factura("+
             "kpagofactura, kfactura, mtotalfactura, manticipo, mpago, msaldo, ctipopago, user_id, cestadoregistro, dregistro, dfechapago, ugrupopago,"+ 
             "knotacredito, kpago) VALUES (nextval('t_pago_factura_sequence'::regclass),"+objTPagoFactura.getTfactura().getKfactura()+
-            ", "+objTPagoFactura.getMtotalfactura()+", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-				
+            ", "+objTPagoFactura.getMtotalfactura()+", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";				
 		try{
-			iObjLog.debug("Entrando PagoFacturaDao.updatePagoFactura:Entrando...  " + strQuery);
-			
+			iObjLog.debug("Entrando PagoFacturaDao.updatePagoFactura:Entrando...  " + strQuery);			
 			objConn = iObjSesion.connection();				
 			objStatement = objConn.createStatement();
 			if(keypago>0){
 				objStatement.execute(strQuery);					
+			}			
+		}catch (Exception aObjExcepcion) { 
+			iObjLog.error("ERROR PagoFacturaDao.updatePagoFactura: ", aObjExcepcion);
+			throw aObjExcepcion;			
+    	}finally{
+    		if (objStatement != null) {
+				objStatement.close();
+				objStatement = null;
 			}
-			
+    	}
+	}
+	
+	public void updateMontosTFactura(int kfactura, BigDecimal total, BigDecimal subtotal)throws Exception{
+		iObjLog.debug("Entrando PagoFacturaDao.updateMontosTFactura:Entrando...  "+kfactura+"      " + total+"  "+subtotal);
+		Connection objConn 	   = null;
+		Statement objStatement = null;
+		String strQuery = "UPDATE T_FACTURA SET mtotal = "+total+", msubtotal = "+subtotal+", miva = "+(total.subtract(subtotal))+" "
+				+ "where kfactura = "+kfactura;
+		try{
+			iObjLog.debug("Entrando PagoFacturaDao.updatePagoFactura:Entrando...  " + strQuery);			
+			objConn = iObjSesion.connection();				
+			objStatement = objConn.createStatement();
+			if(kfactura>0){
+				objStatement.execute(strQuery);					
+			}			
 		}catch (Exception aObjExcepcion) { 
 			iObjLog.error("ERROR PagoFacturaDao.updatePagoFactura: ", aObjExcepcion);
 			throw aObjExcepcion;			
@@ -422,6 +470,7 @@ public class PagoFacturaDao {
                            }
                     }
                     if (bolExistenPagos == false) {
+                    	
                            objListaFactura.clear();
                            objListaFactura = null;
                            objListaFactura = new ArrayList();
@@ -436,10 +485,17 @@ public class PagoFacturaDao {
                                   if (objListaFactura.size()>0) {
                                         objTFactura = (TFactura)objListaFactura.get(0);
                                         iObjLog.debug("Consulta FacturacionMayoreoDao.getDatosPagoFactura:Consulta...2  " + objTFactura.getKfactura() + " " + objTFactura.getMtotal().doubleValue());
+                                       if(objTFactura.getScadenaoriginal()!=null && !objTFactura.getScadenaoriginal().trim().equals("")){
+	                                        String [] cadena=objTFactura.getScadenaoriginal().split("\\|");
+	                                        if( (objTFactura.getMtotal().compareTo(new BigDecimal(cadena[11]))!=0) ){
+	                                        	this.updateMontosTFactura(objTFactura.getKfactura().intValue(),new BigDecimal(cadena[11]), new BigDecimal(cadena[8]));
+	                                        	objTFactura.setMtotal(new BigDecimal(cadena[11]));
+	                                        }
+                                       }
+                                       objPagoFacturaBean.setMsaldo(objTFactura.getMtotal());
+                                       objPagoFacturaBean.setMtotalfactura(objTFactura.getMtotal());
                                         objPagoFacturaBean.setManticipo(new BigDecimal(0));
-                                        objPagoFacturaBean.setMpago(new BigDecimal(0));
-                                        objPagoFacturaBean.setMsaldo(objTFactura.getMtotal());
-                                        objPagoFacturaBean.setMtotalfactura(objTFactura.getMtotal());
+                                        objPagoFacturaBean.setMpago(new BigDecimal(0));                                        
                                          objPagoFacturaBean.setSformatofactura(FacturacionMayoreoDao.llenaIdFactura(objTFactura.getSserie(), objTFactura.getUfoliofactura() + "", 8));
                                          objPagoFacturaBean.setKfactura(objTFactura.getKfactura().intValue());
                                         objPagoFacturaBean.setSgridpagos("");
