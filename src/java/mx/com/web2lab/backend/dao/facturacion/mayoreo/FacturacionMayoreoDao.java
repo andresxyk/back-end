@@ -1,5 +1,8 @@
 package mx.com.web2lab.backend.dao.facturacion.mayoreo;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -9,6 +12,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import mx.com.web2lab.backend.beans.ap.OrdenExamenBean;
 import mx.com.web2lab.backend.beans.comer.ConvenioBean;
@@ -289,6 +294,94 @@ public class FacturacionMayoreoDao {
 		}		
 		return strNemonico + strReturn + intFactura;
 	}
+	
+	public static String pathXmlTimbrado(int csucursal){
+		String url="";
+		switch (csucursal) {
+		case 1003:
+			url="/home/orubio/apache-tomcat/webapps/ROOT/FacturasElectronicas_Olab/XML/FacturacionElectronica_";
+			break;
+		case 1012:
+			url="/home/orubio/apache-tomcat/webapps/ROOT/FacturasElectronicas_Azteca/XML/FacturacionElectronica_";
+			break;
+		case 1013:
+			url="/home/orubio/apache-tomcat/webapps/ROOT/FacturasElectronicas_Swisslab/XML/FacturacionElectronica_";
+			break;
+		case 1014:
+			url="/home/orubio/apache-tomcat/webapps/ROOT/FacturasElectronicas_Jenner/Prado/XML/FacturacionElectronica_";
+			break;
+		case 1015:
+			url="/home/orubio/apache-tomcat/webapps/ROOT/FacturasElectronicas_Jenner/Lean/XML/FacturacionElectronica_";
+			break;
+		default:
+			break;
+		}
+		return url;
+	}
+	
+	public static BigDecimal obtenerTotal(String xml){
+        BigDecimal total = null;
+        String atributoTotal="";
+        String exre=" Total=\"[0-9]{1,18}(.[0-9]{1,6})?\"";
+        String exreNum="[0-9]{1,18}(.[0-9]{1,6})?";
+        Pattern pattern = Pattern.compile(exre, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(xml);
+        if (matcher.find()) {
+            atributoTotal = matcher.group();
+            Pattern pattern2 = Pattern.compile(exreNum, Pattern.CASE_INSENSITIVE);
+            Matcher matcher2 = pattern2.matcher(atributoTotal);
+            if(matcher2.find()){
+                total =new BigDecimal(matcher2.group());
+            }            
+        }           
+        return total;
+    }
+    
+    public static BigDecimal obtenerSubTotal(String xml){
+        BigDecimal subTotal = null;
+        String atributoTotal="";
+        String exre="SubTotal=\"[0-9]{1,18}(.[0-9]{1,6})?\"";
+        String exreNum="[0-9]{1,18}(.[0-9]{1,6})?";
+        Pattern pattern = Pattern.compile(exre, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(xml);
+        if (matcher.find()) {
+            atributoTotal = matcher.group();
+            Pattern pattern2 = Pattern.compile(exreNum, Pattern.CASE_INSENSITIVE);
+            Matcher matcher2 = pattern2.matcher(atributoTotal);
+            if(matcher2.find()){
+                subTotal =new BigDecimal(matcher2.group());
+            }            
+        }           
+        return subTotal;
+    }
+	
+	public static String xmlString(File file){
+        FileInputStream fis = null;
+        String str = "";
+
+        try {
+            fis = new FileInputStream(file);
+            int content;
+            while ((content = fis.read()) != -1) {
+                // convert to char and display it
+                str += (char) content;
+            }
+
+            System.out.println("After reading file");
+            System.out.println(str);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fis != null)
+                    fis.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return str;
+    }
 	
 	public ConvenioBean getFacturasConvenio(ConvenioBean objConvenioBean) throws Exception {
 		FacturacionMayoreoDao objFacturacionMayoreoDao = new FacturacionMayoreoDao();

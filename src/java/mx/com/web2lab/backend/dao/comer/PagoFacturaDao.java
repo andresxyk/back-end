@@ -1,5 +1,6 @@
 package mx.com.web2lab.backend.dao.comer;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -485,18 +486,31 @@ public class PagoFacturaDao {
                                   if (objListaFactura.size()>0) {
                                         objTFactura = (TFactura)objListaFactura.get(0);
                                         iObjLog.debug("Consulta FacturacionMayoreoDao.getDatosPagoFactura:Consulta...2  " + objTFactura.getKfactura() + " " + objTFactura.getMtotal().doubleValue());
-                                       if(objTFactura.getScadenaoriginal()!=null && !objTFactura.getScadenaoriginal().trim().equals("")){
+                                        objPagoFacturaBean.setSformatofactura(FacturacionMayoreoDao.llenaIdFactura(objTFactura.getSserie(), objTFactura.getUfoliofactura() + "", 8));
+                                        if(objTFactura.getScadenaoriginal()!=null && !objTFactura.getScadenaoriginal().trim().equals("")){
 	                                        String [] cadena=objTFactura.getScadenaoriginal().split("\\|");
 	                                        if( (objTFactura.getMtotal().compareTo(new BigDecimal(cadena[11]))!=0) ){
 	                                        	this.updateMontosTFactura(objTFactura.getKfactura().intValue(),new BigDecimal(cadena[11]), new BigDecimal(cadena[8]));
 	                                        	objTFactura.setMtotal(new BigDecimal(cadena[11]));
 	                                        }
+                                       }else{                                    	   
+                                    	   String rutaXML = FacturacionMayoreoDao.pathXmlTimbrado(objTFactura.getCsucursal())+objPagoFacturaBean.getSformatofactura()+".xml";
+                                    	   File af = new File(rutaXML);
+                                    	   if(af.exists()){
+                                    		   String str =FacturacionMayoreoDao.xmlString(af);
+                                    		   BigDecimal total = FacturacionMayoreoDao.obtenerTotal(str);
+                                    		   BigDecimal subTotal = FacturacionMayoreoDao.obtenerSubTotal(str);
+                                    		   if( (objTFactura.getMtotal().compareTo(total)!=0) ){
+   	                                        	this.updateMontosTFactura(objTFactura.getKfactura().intValue(),total,subTotal);
+   	                                        	objTFactura.setMtotal(total);
+   	                                        }
+                                    	   }                                    	   
                                        }
                                        objPagoFacturaBean.setMsaldo(objTFactura.getMtotal());
                                        objPagoFacturaBean.setMtotalfactura(objTFactura.getMtotal());
                                         objPagoFacturaBean.setManticipo(new BigDecimal(0));
                                         objPagoFacturaBean.setMpago(new BigDecimal(0));                                        
-                                         objPagoFacturaBean.setSformatofactura(FacturacionMayoreoDao.llenaIdFactura(objTFactura.getSserie(), objTFactura.getUfoliofactura() + "", 8));
+                                         
                                          objPagoFacturaBean.setKfactura(objTFactura.getKfactura().intValue());
                                         objPagoFacturaBean.setSgridpagos("");
                                   }
