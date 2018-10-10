@@ -117,7 +117,7 @@ public class BusquedaFacturaDao {
 	            if (strfoliosFacturas.length()>0) { 		   
 				    strQuery =" select Tf"+
 			        		  " from TFactura Tf " +					
-							  " where Tf.ufoliofactura in("+strfoliosFacturas+") and Tf.csucursal>36 and Tf.csucursal not in(100)";    					
+							  " where Tf.ufoliofactura in("+strfoliosFacturas+") and Tf.csucursal>36 and Tf.csucursal not in(100,1016)";    					
 				    HibernateUtil.beginTrans();
 				    objQuery = iObjSesion.createQuery(strQuery);
 				    objListaFacturas = objQuery.list();

@@ -62,6 +62,8 @@ public class PagoFacturaDao {
 			keycontrolfolio=161;
 		}else if(marca==8){
 			keycontrolfolio=161;
+		}else if(marca==9){
+			keycontrolfolio=161;
 		}
 		String forPago="";
 		if(formaPago.length()==1){
@@ -439,7 +441,7 @@ public class PagoFacturaDao {
                     HibernateUtil.beginTrans();                    
                     strQuery = "select bOF                                                                        \n" +                             
                                     "from TPagoFactura bOF                                                 \n" +  
-                               "where bOF.tfactura.kfactura in  (" + kFactura + ") and bOF.cestadoregistro=52     \n" +
+                               "where bOF.tfactura.kfactura in  (" + kFactura + ") and bOF.cestadoregistro=52 \n" +
                                     "order by bOF.kpagofactura asc                                    ";
                     iObjLog.debug("Entrando FacturacionMayoreoDao.getDatosPagoFactura:Entrando...  " + strQuery);
                     objQuery = iObjSesion.createQuery(strQuery);

@@ -65,6 +65,8 @@ public class OrdenDatosFacturacionDao {
 					}else if(serie.equals("AJL")){
 						strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS JENNER LEAN' " ;
 					}
+				}else if (cmarca == 9){
+					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'CONTABILIDAD' " ;
 				}
 				
 			}			
