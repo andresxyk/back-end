@@ -278,36 +278,21 @@ public class FacturacionElectronicaMayoreoDao {
 		try {			    
 			
 				objStatement = objConn.createStatement();		
-				strSQL="SELECT count(*) cantidad, \n"+
-						"toesf.cexamen, \n"+
-						"to_char('NO APLICA') unidad, \n"+
-						"toesf.sexamen, \n"+
-						"round ((toesf.mfacturaempresa/1.16),2) costo_unitario, \n"+
-						"round (toesf.mfacturaempresa/1.16,2) * count(*) as importe, tosf.kfactura \n"+
-						"FROM t_orden_examen_sucursal_fac toesf, t_orden_sucursal_fac tosf \n"+
-						"WHERE toesf.cperfil=-1 and toesf.cestadoregistro<>43 \n"+
-						"and toesf.kordensucursalfac    =     tosf.kordensucursalfac  \n"+
-						"and tosf.kfactura in ( " + kFactura + ") \n"+
-						"GROUP BY toesf.cexamen,toesf.sexamen,toesf.mfacturaempresa, tosf.kfactura \n"+
-						"union all \n"+
-						"SELECT count (distinct (tosf.kordensucursal)), \n"+
-						"toesf.cperfil cexamen, \n"+
-						"to_char('NO APLICA') unidad, \n"+
-						"cp.sperfil sexamen, \n"+
-						"                                    (SELECT mpreciofacturarsiniva  \n"+
-						"                                    FROM e_convenio_perfil  \n"+
-						"                                    WHERE cperfil =cp.cperfil and cconvenio=tosf.cconvenio) costo_unitario, \n"+
-						"                                    (SELECT mpreciofacturarsiniva \n"+
-						"                                    FROM e_convenio_perfil \n"+
-						"                                    WHERE cperfil =cp.cperfil  and cconvenio=tosf.cconvenio) * count (distinct (tosf.kordensucursal)) importe, \n"+
-						"                                    tosf.kfactura \n"+
-						"FROM t_orden_examen_sucursal_fac toesf, c_perfil cp ,  t_orden_sucursal_fac tosf \n"+
-						"WHERE toesf.cperfil=cp.cperfil \n"+
-						"and toesf.cperfil<>-1  and toesf.cestadoregistro<>43 \n"+
-						"and toesf.kordensucursalfac    =     tosf.kordensucursalfac  \n"+
-						"and tosf.kfactura in ( " + kFactura + ") \n"+
-						"GROUP BY  toesf.cperfil,cp.sperfil,cp.cperfil, tosf.kfactura , tosf.cconvenio \n"+
-						"ORDER BY sexamen \n";
+				strSQL="select count(toesf.kordensucursal) cantidad, toesf.cexamen as cexamen, to_char('NO APLICA') unidad, toesf.sexamen as sexamen, "+
+						"round (sum((toesf.mfacturaempresa/1.16))/ count(distinct(toesf.kordensucursal)),2)costo_unitario, "+
+						"(round (sum((toesf.mfacturaempresa/1.16)),2) )importe, tosf.kfactura as kfactura "+
+						"from	t_orden_sucursal tos,t_orden_sucursal_fac tosf, t_orden_examen_sucursal_fac toesf, "+
+						"c_examen ce, c_convenio cc where toesf.kordensucursal = tosf.kordensucursal "+
+						"and tos.kordensucursal = tosf.kordensucursal and toesf.cexamen = ce.cexamen and cc.cconvenio  = tosf.cconvenio "+
+						"AND tosf.csucursal <> 100 and tosf.kfactura in ("+kFactura+") and toesf.cperfil = -1 and toesf.cestadoregistro <> 43 "+
+						"and toesf.kordensucursalfac = tosf.kordensucursalfac group by  toesf.cexamen,toesf.sexamen, tosf.kfactura "+
+						"UNION ALL select count(distinct(toesf.kordensucursal)), toesf.cperfil as cexamen,to_char('NO APLICA') unidad, toesf.sperfil as sexamen, "+
+						"round (sum((toesf.mfacturaempresa/1.16))/ count(distinct(toesf.kordensucursal)),2)costo_unitario, "+
+						"(round (sum((toesf.mfacturaempresa/1.16)),2) )importe, tosf.kfactura from t_orden_sucursal_fac tosf, "+
+						"t_orden_examen_sucursal_fac toesf, c_convenio cc, c_perfil cp where toesf.kordensucursal = tosf.kordensucursal "+
+						"and toesf.cperfil = cp.cperfil and cc.cconvenio  = tosf.cconvenio and tosf.csucursal <> 100 "+
+						"and toesf.cperfil <> -1 and toesf.cestadoregistro <> 43 and tosf.kfactura in ("+kFactura+") and toesf.kordensucursalfac = tosf.kordensucursalfac "+
+						"group by tosf.kfactura , toesf.cperfil ,toesf.sperfil order by sexamen";
 				iObjLog.debug("Entrando FacturaElectronicaMayoreoDao.createListExamenes:Consulta...  "+strSQL);
 				rst = objStatement.executeQuery(strSQL);
 				while(rst.next()) {	

@@ -235,6 +235,43 @@ public class PagoFacturaDao {
 		return kpago;			
 	}
 	
+	public int getMarcaKfactura(int kfactura) throws Exception{
+		int marca=0;
+		String strSQL = "";
+		Connection objConn 	   = null;
+		Statement objStatement = null;
+		iObjSesion = HibernateUtil.getSession();
+		ResultSet rst = null;		
+		strSQL="select ec.cmarca from t_factura tf inner join e_convenio ec on ec.cconvenio=tf.cconvenio where tf.kfactura ="+kfactura;
+		try{
+			iObjLog.debug("Entrando PagoFacturaDao.getMarcaKfactura:Entrando...  " + strSQL);			
+			objConn = iObjSesion.connection();				
+			objStatement = objConn.createStatement();	
+			rst = objStatement.executeQuery(strSQL);
+			strSQL = "";
+			if(rst != null) {
+				while(rst.next()) {
+					marca=rst.getInt("cmarca");
+					break;
+				}				
+				rst.close();
+			}			
+		}catch (Exception aObjExcepcion) { 
+			iObjLog.error("ERROR PagoFacturaDao.getMarcarConvenio: ", aObjExcepcion);
+			throw aObjExcepcion;			
+    	}finally{
+    		if (objStatement != null) {
+				objStatement.close();
+				objStatement = null;
+			}
+    		if (rst != null) {
+				rst.close();
+				rst = null;
+			}
+	    	HibernateUtil.closeSession();
+    	}		
+		return marca;
+	}
 	
 	public int getMarcarConvenio(int convenio) throws Exception{
 		int marca=0;
