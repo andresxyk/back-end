@@ -1968,7 +1968,15 @@ public class ClientesNewDao {
 									  		"<b>Numero de Cuenta/Clabe:</b>"+ 				
 									  	"</td>"+
 									  	"<td>"+
-									  		"<input type='text' id='txtNumCuentaClabe' style='background:#E6E6FA' size='30'>"+ 				
+									  		"<input type='text' id='txtNumCuentaClabe' style='background:#E6E6FA' size='50'>"+ 				
+									  	"</td>"+					  		
+									"</tr>"+
+									"<tr>"+
+										"<td>"+
+									  		"<b>Numero de Operacion:</b>"+ 				
+									  	"</td>"+
+									  	"<td>"+
+									  		"<input type='text' id='txtNumOperacion' style='background:#E6E6FA' size='50'>"+ 				
 									  	"</td>"+					  		
 									"</tr>"+
 								"</table>" +

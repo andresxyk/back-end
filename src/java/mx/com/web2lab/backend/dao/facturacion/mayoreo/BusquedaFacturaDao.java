@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +15,7 @@ import mx.com.web2lab.backend.beans.ap.OrdenExamenBean;
 import mx.com.web2lab.backend.beans.ap.PagoPacienteBean;
 import mx.com.web2lab.backend.beans.facturacion.NotaCreditoBean;
 import mx.com.web2lab.backend.beans.facturacion.NotaCreditoFacturaBean;
+import mx.com.web2lab.backend.beans.facturacion.TFacturaBean;
 import mx.com.web2lab.backend.beans.facturacion.DatosAdicionalesBean;
 import mx.com.web2lab.backend.beans.facturacion.TdatoAdicionalBean;
 import mx.com.web2lab.backend.beans.facturacion.electronica.BodyFacturaElectronicaBean;
@@ -141,6 +144,45 @@ public class BusquedaFacturaDao {
     			objListaFacturas=null;
     			objTFactura=null;
     			
+		}		
+	}
+	
+	public String getBusquedaComplemento(String strfoliosFacturas) throws Exception {
+		iObjLog.debug("Entrando BusquedaFActuraDao.getBusquedaComplemento:" + strfoliosFacturas);
+		iObjSesion = HibernateUtil.getSession();
+		String strQuery = "";
+		TFacturaBean tFacturaBean = new TFacturaBean();
+		String strReturn="";
+		java.sql.Connection objConn = null;
+		java.sql.ResultSet objRst = null;
+		java.sql.Statement objStmt = null;
+		
+		try{
+			if (strfoliosFacturas.length()>0) {
+				HibernateUtil.beginTrans();
+	            objConn = iObjSesion.connection();
+	            objStmt = objConn.createStatement();
+				strQuery = "select ufoliofactura, centidadlegal, dregistro, cestadoregistro from t_factura  where ufoliofactura in ("+strfoliosFacturas+") and csucursal = 1016";
+				
+				objRst = objStmt.executeQuery(strQuery);
+				while (objRst.next()) {
+					tFacturaBean.setUfoliofactura(new Integer(objRst.getInt("ufoliofactura")));
+					tFacturaBean.setCentidadlegal(new Integer(objRst.getInt("centidadlegal")));
+					tFacturaBean.setDregistro(objRst.getDate("dregistro"));
+					tFacturaBean.setCestadoregistro(new Integer(objRst.getInt("cestadoregistro")));
+				}
+	               		
+				strReturn=this.pintarComplementos(tFacturaBean);
+			}
+			iObjLog.debug("Saliendo BusquedaFacturaDao.getBusquedaComplemento...  " + strfoliosFacturas);
+	        return strReturn;
+		} catch (Exception aObjExcepcion) { 
+			iObjLog.error("ERROR BusquedaFacturaDao.getBusquedaComplemento...: ", aObjExcepcion);
+			throw aObjExcepcion;
+	    } finally{
+				HibernateUtil.closeSession();
+				objRst = null;
+	    		objStmt = null;
 		}		
 	}
 
@@ -399,14 +441,45 @@ public class BusquedaFacturaDao {
 														"			$<input type=\"text\" id=\"txtmTotal\" name=\"txtmTotal\"  onKeyPress=\"montos();\" onBlur=\"validaMonto(this.name);\" size=\"15\" style=\"width:100px;\" value='" + objRst.getString("mtotal") +"'>" +  
 														"		</td>				" +
 														"		<td>				" +
+//														"			<input type=\"checkbox\" id=\"chkSustitucion\" onClick=\"showFormSustitucion();\" >Sustitución" +
 														" 		    &nbsp;			" +
 														"		</td>				" +
 														"		<td>				" +
 														" 		    &nbsp;			" +
 														"		</td>				" +
 														"  </tr>					" +
-														"  <tr> 					" +
-														"  </tr> 					" +
+//														"  <tr> 					" +
+//											 			"		<td>				" +
+//											 			"			&nbsp;			" + 
+//											 			"		</td>				" + 
+//											 			"		<td>				" +
+//														"			&nbsp;			" +  
+//														"		</td>				" +
+//														"		<td>				" +
+//														"		<label id=\"labelFolioInterno\" style=\"display:none\">" +
+//														"			Folio interno:	" +
+//														"		</label>			" +
+//														"		</td>				" +
+//														"		<td>				" +
+//														" 		    <input type=\"text\" id=\"txtUfoliofacturaSustitucion\" size=\"15\" style=\"width:100px;display:none\" >" +
+//														"		</td>				" +
+//														"  </tr>					" +
+//														"  <tr> 					" +
+//											 			"		<td>				" +
+//											 			"			&nbsp;			" + 
+//											 			"		</td>				" + 
+//											 			"		<td>				" +
+//														"			&nbsp;			" +  
+//														"		</td>				" +
+//														"		<td>				" +
+//														"		<label id=\"labelFolioFiscal\" style=\"display	:none\">" +
+//														"			Folio Fiscal(UUID):	" +
+//														"		</label>			" +
+//														"		</td>				" +
+//														"		<td>				" +
+//														" 		    <input type=\"text\" id=\"txtFolioFiscal\" size=\"36\" style=\"width:240px;display:none\" >" +
+//														"		</td>				" +
+//														"  </tr>					" +
 														"</table>                   " +
 														"<table border='0' align='center' style='width: 883px' class='tabla'>" +
 														"  <tr> 					" +
@@ -452,11 +525,99 @@ public class BusquedaFacturaDao {
 	        	HibernateUtil.closeSession();
 			}		
 		}
+	
+	public String pintarComplementos(TFacturaBean bean) throws Exception{
+		String strReturn="";
+		String strEstadoFactura="";
+		strReturn="<table border='0' align='center' style='width: 883px' class='tabla'>" + 
+				  "<tr>" + 
+					"<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
+					"	<b><font color='black'>Complemento de Pago" + 
+					"	</font></b>" +
+					"</th>" + 
+					"<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
+					"	<b><font color='black'>Fecha Complemento" + 
+					"</th>" + 
+					"<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
+					"	<b><font color='black'>Estado del Complemento" + 
+					"</th>" +
+					"<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
+					"	<b><font color='black'>Archivos" + 
+					"</th>" + 
+				" </tr>" ;
+		
+		String pathPDF = "";
+		String pathXML = "";
+		if(bean.getCestadoregistro().intValue()==33){
+			strEstadoFactura="EMITIDA";
+		}else if(bean.getCestadoregistro().intValue()==34){
+			strEstadoFactura="CANCELADA";
+		}
+
+		switch (bean.getCentidadlegal().intValue()) {
+		case 1: pathPDF = "FacturasElectronicas_Olab/XMLTMP/PDF";
+				pathXML = "FacturasElectronicas_Olab/XML";
+			break;
+		case 5: pathPDF = "FacturasElectronicas_Azteca/XMLTMP/PDF";
+				pathXML = "FacturasElectronicas_Azteca/XML";
+			break;
+		case 6: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
+				pathXML = "FacturasElectronicas_Swisslab/XML";
+			break;
+		case 7: 
+				pathPDF = "FacturasElectronicas_Jenner/Prado/XMLTMP/PDF";
+				pathXML = "FacturasElectronicas_Jenner/Prado/XML";
+			break;
+		case 8: 			
+				pathPDF = "FacturasElectronicas_Jenner/Lean/XMLTMP/PDF";
+				pathXML = "FacturasElectronicas_Jenner/Lean/XML";			
+		break;
+		default:
+			break;
+		}
+		strReturn+=	"<tr>"+
+				"<td align=\"center\">" + 
+				"	<font color='black'>" + this.llenaIdFactura("ACC",new Integer(bean.getUfoliofactura().intValue()).toString(),8)+
+				"	</font>" +
+				"</td>"+
+				"<td align=\"center\">" + 
+				"	<font color='black'>" + objFormatos.getFechaCompleta(bean.getDregistro())+
+				"	</font>" +
+				"</td >"+
+				"<td align=\"center\">" + 
+				"	<font color='black'>" + strEstadoFactura+
+				"	</font>" +
+				"</td >"+
+				"<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
+				"	<a href=\"javascript:visualizarFactura('http://192.237.150.70:9085/"+pathPDF+"/FacturacionElectronica_" + this.llenaIdFactura("ACC",new Integer(bean.getUfoliofactura().intValue()).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+	            "		<img alt='Factura - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
+				"	</a>" +
+				"	<a href=\"javascript:visualizarFactura('http://192.237.150.70:9085/"+pathXML+"/FacturacionElectronica_" + this.llenaIdFactura("ACC",new Integer(bean.getUfoliofactura().intValue()).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+	            "		<img alt='Factura - XML' id=\"imgXML\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoXml.png' />" +
+				"	</a>" +
+				"</td>" +
+			"</tr>";
+		
+		try {
+			strReturn+=	"</table>";
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return strReturn;
+	}
+	
+	
 	/**
      * Versión 25 de Marzo 2013 
      BY Tomar en cuenta el registro
+	 * @throws Exception 
      */
-	public String pintarFacturas(List objListaFacturas){
+	public String pintarFacturas(List objListaFacturas) throws Exception{
 		String strReturn="";
 		String strEstadoFactura="PAGADA";
 		TFactura objTFactura = new TFactura();
@@ -489,7 +650,38 @@ public class BusquedaFacturaDao {
 				" </tr>" ;
 		for(int i = 0; i < objListaFacturas.size() ; i++) {
 			objTFactura  = (TFactura) objListaFacturas.get(i);
-			try {
+			String [] arrPrado = {"117","118","126","127","128","129","130","132","134","138","139","140","141","142","143","196","198","199","200","1014"};
+			List listPrado = Arrays.asList(arrPrado);
+			String [] arrLean = {"115","116","119","120","121","122","123","124","125","131","133","135","136","137","177","146","197","1015"};
+			List listLean = Arrays.asList(arrLean);
+			String pathPDF = "";
+			String pathXML = "";
+			
+
+			switch (getMarca(objTFactura.getCconvenio())) {
+			case 1: pathPDF = "FacturasElectronicas_Olab/XMLTMP/PDF";
+						pathXML = "FacturasElectronicas_Olab/XML";
+				break;
+			case 4: pathPDF = "FacturasElectronicas_Azteca/XMLTMP/PDF";
+						pathXML = "FacturasElectronicas_Azteca/XML";
+				break;
+			case 5: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
+						pathXML = "FacturasElectronicas_Swisslab/XML";
+				break;
+			case 7: 
+					if(listPrado.contains(String.valueOf(objTFactura.getCsucursal()))){
+						pathPDF = "FacturasElectronicas_Jenner/Prado/XMLTMP/PDF";
+						pathXML = "FacturasElectronicas_Jenner/Prado/XML";
+					}else if(listLean.contains(String.valueOf(objTFactura.getCsucursal()))){
+						pathPDF = "FacturasElectronicas_Jenner/Lean/XMLTMP/PDF";
+						pathXML = "FacturasElectronicas_Jenner/Lean/XML";
+					}
+				break;
+			default:
+				break;
+			}
+			
+			try {	
 				
 				if(objTFactura.getCestadoregistro()==33){
 					strEstadoFactura="EMITIDA";
@@ -515,10 +707,10 @@ public class BusquedaFacturaDao {
 								"	</font>" +
 								"</td >"+
 								"<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
-								"	<a href=\"javascript:visualizarFactura('http://192.237.150.66:9085/FacturasElectronicas_Olab/PDF/FacturacionElectronica_" + this.llenaIdFactura(objTFactura.getSserie(),new Integer(objTFactura.getUfoliofactura()).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+								"	<a href=\"javascript:visualizarFactura('http://192.237.150.70:9085/"+pathPDF+"/FacturacionElectronica_" + this.llenaIdFactura(objTFactura.getSserie(),new Integer(objTFactura.getUfoliofactura()).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 		    		            "		<img alt='Factura - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
 								"	</a>" +
-								"	<a href=\"javascript:visualizarFactura('http://192.237.150.66:9085/FacturasElectronicas_Olab/XML/FacturacionElectronica_" + this.llenaIdFactura(objTFactura.getSserie(),new Integer(objTFactura.getUfoliofactura()).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+								"	<a href=\"javascript:visualizarFactura('http://192.237.150.70:9085/"+pathXML+"/FacturacionElectronica_" + this.llenaIdFactura(objTFactura.getSserie(),new Integer(objTFactura.getUfoliofactura()).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 		    		            "		<img alt='Factura - XML' id=\"imgXML\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoXml.png' />" +
 								"	</a>" +
 								"</td>" +								

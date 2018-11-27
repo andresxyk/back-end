@@ -8,6 +8,7 @@ import java.util.List;
 
 import mx.com.web2lab.backend.beans.facturacion.electronica.DesgloceFacturaExamenBean;
 import mx.com.web2lab.backend.beans.facturacion.electronica.FacturaElectronicaBean;
+import mx.com.web2lab.backend.beans.facturacion.electronica.FacturaSustitucionBean;
 import mx.com.web2lab.backend.hbm.HibernateUtil;
 import mx.com.web2lab.backend.hbm.om.ap.CCodigoPostal;
 import mx.com.web2lab.backend.hbm.om.ap.CControlFolio;
@@ -320,6 +321,65 @@ public class FacturacionElectronicaMayoreoDao {
 			
 		}
 	}	
+	
+	public FacturaSustitucionBean getUUIDTfactura(String ufoliosustitucion,int marca, String serie ) throws HibernateException{
+		iObjSesion = HibernateUtil.getSession();
+		java.sql.Connection objConn = null;
+		FacturaSustitucionBean facturaSustitucionBean = new FacturaSustitucionBean();
+		
+		String csucursal="";
+		
+		if(marca==1){
+			 csucursal="1003";
+		}else if (marca==4){
+			csucursal="1012";
+		}else if (marca==5){
+			csucursal="1013";
+		}else if (marca==7){
+			if(serie.equals("AJP")){
+				csucursal="1014";				
+			}else if(serie.equals("AJL")){
+				csucursal="1015";
+			}
+		}
+		
+		
+		try {
+			objConn = iObjSesion.connection();
+		} catch (HibernateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Statement objStatement = null;
+		ResultSet rst = null;
+		String strSQL = "";	
+		try {			    
+			
+				objStatement = objConn.createStatement();		
+				strSQL="select suddi,cestadoregistro from t_factura where ufoliofactura = "+ufoliosustitucion+" and csucursal = "+csucursal;
+				iObjLog.debug("Entrando FacturaElectronicaMayoreoDao.getUUIDTfactura:Consulta...  "+strSQL);
+				rst = objStatement.executeQuery(strSQL);
+				while(rst.next()) {	
+					facturaSustitucionBean.setSuuid(rst.getString("suddi"));
+					facturaSustitucionBean.setCestadoregistro(rst.getInt("cestadoregistro"));			
+				}
+				iObjLog.debug("FacturaElectronicaMayoreoDao.getUUIDTfactura:Saliendo...  ");
+				return facturaSustitucionBean;
+		} catch (Exception exp) {
+			  System.err.print(exp);			
+				return null;
+		} finally {
+			if (rst != null){
+				rst = null;
+			}			
+			if (objStatement != null){
+				objStatement = null;
+			}
+			HibernateUtil.closeSession();
+			iObjSesion.close();
+		}
+	}
+	
 
 	public void persistirAjusteFactura(Integer kfactura,int user_id_change,double msubtotal,double miva,double mtotal) throws Exception {		
 		iObjSesion = HibernateUtil.getSession();

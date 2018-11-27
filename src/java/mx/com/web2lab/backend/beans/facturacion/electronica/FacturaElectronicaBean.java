@@ -17,6 +17,10 @@ public class FacturaElectronicaBean {
 	
 	private int Turbine_User = 0;
 	
+	private String uuid = "";
+	
+	
+
 	/** nullable persistent field */
     private java.lang.String sserie;
 
@@ -899,6 +903,14 @@ public class FacturaElectronicaBean {
 
 	public int getTurbine_User() {
 		return Turbine_User;
+	}
+	
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
 	public void setsURL(String sURL) {
