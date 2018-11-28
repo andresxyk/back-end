@@ -322,7 +322,7 @@ public class FacturacionElectronicaMayoreoDao {
 		}
 	}	
 	
-	public FacturaSustitucionBean getUUIDTfactura(String ufoliosustitucion,int marca, String serie ) throws HibernateException{
+	public FacturaSustitucionBean getUUIDTfactura(String ufoliosustitucion,int marca, String serie ) {
 		iObjSesion = HibernateUtil.getSession();
 		java.sql.Connection objConn = null;
 		FacturaSustitucionBean facturaSustitucionBean = new FacturaSustitucionBean();
@@ -375,8 +375,6 @@ public class FacturacionElectronicaMayoreoDao {
 			if (objStatement != null){
 				objStatement = null;
 			}
-			HibernateUtil.closeSession();
-			iObjSesion.close();
 		}
 	}
 	

@@ -441,45 +441,45 @@ public class BusquedaFacturaDao {
 														"			$<input type=\"text\" id=\"txtmTotal\" name=\"txtmTotal\"  onKeyPress=\"montos();\" onBlur=\"validaMonto(this.name);\" size=\"15\" style=\"width:100px;\" value='" + objRst.getString("mtotal") +"'>" +  
 														"		</td>				" +
 														"		<td>				" +
-//														"			<input type=\"checkbox\" id=\"chkSustitucion\" onClick=\"showFormSustitucion();\" >Sustitución" +
-														" 		    &nbsp;			" +
+														"			<input type=\"checkbox\" id=\"chkSustitucion\" onClick=\"showFormSustitucion();\" >Sustitución" +
+//														" 		    &nbsp;			" +
 														"		</td>				" +
 														"		<td>				" +
 														" 		    &nbsp;			" +
 														"		</td>				" +
 														"  </tr>					" +
-//														"  <tr> 					" +
-//											 			"		<td>				" +
-//											 			"			&nbsp;			" + 
-//											 			"		</td>				" + 
-//											 			"		<td>				" +
-//														"			&nbsp;			" +  
-//														"		</td>				" +
-//														"		<td>				" +
-//														"		<label id=\"labelFolioInterno\" style=\"display:none\">" +
-//														"			Folio interno:	" +
-//														"		</label>			" +
-//														"		</td>				" +
-//														"		<td>				" +
-//														" 		    <input type=\"text\" id=\"txtUfoliofacturaSustitucion\" size=\"15\" style=\"width:100px;display:none\" >" +
-//														"		</td>				" +
-//														"  </tr>					" +
-//														"  <tr> 					" +
-//											 			"		<td>				" +
-//											 			"			&nbsp;			" + 
-//											 			"		</td>				" + 
-//											 			"		<td>				" +
-//														"			&nbsp;			" +  
-//														"		</td>				" +
-//														"		<td>				" +
-//														"		<label id=\"labelFolioFiscal\" style=\"display	:none\">" +
-//														"			Folio Fiscal(UUID):	" +
-//														"		</label>			" +
-//														"		</td>				" +
-//														"		<td>				" +
-//														" 		    <input type=\"text\" id=\"txtFolioFiscal\" size=\"36\" style=\"width:240px;display:none\" >" +
-//														"		</td>				" +
-//														"  </tr>					" +
+														"  <tr> 					" +
+											 			"		<td>				" +
+											 			"			&nbsp;			" + 
+											 			"		</td>				" + 
+											 			"		<td>				" +
+														"			&nbsp;			" +  
+														"		</td>				" +
+														"		<td>				" +
+														"		<label id=\"labelFolioInterno\" style=\"display:none\">" +
+														"			Folio interno:	" +
+														"		</label>			" +
+														"		</td>				" +
+														"		<td>				" +
+														" 		    <input type=\"text\" id=\"txtUfoliofacturaSustitucion\" size=\"15\" style=\"width:100px;display:none\" >" +
+														"		</td>				" +
+														"  </tr>					" +
+														"  <tr> 					" +
+											 			"		<td>				" +
+											 			"			&nbsp;			" + 
+											 			"		</td>				" + 
+											 			"		<td>				" +
+														"			&nbsp;			" +  
+														"		</td>				" +
+														"		<td>				" +
+														"		<label id=\"labelFolioFiscal\" style=\"display	:none\">" +
+														"			Folio Fiscal(UUID):	" +
+														"		</label>			" +
+														"		</td>				" +
+														"		<td>				" +
+														" 		    <input type=\"text\" id=\"txtFolioFiscal\" size=\"36\" style=\"width:240px;display:none\" >" +
+														"		</td>				" +
+														"  </tr>					" +
 														"</table>                   " +
 														"<table border='0' align='center' style='width: 883px' class='tabla'>" +
 														"  <tr> 					" +
