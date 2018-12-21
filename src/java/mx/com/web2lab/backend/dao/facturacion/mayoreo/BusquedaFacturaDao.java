@@ -326,6 +326,144 @@ public class BusquedaFacturaDao {
 		}
 
 	**/
+	
+	/*
+	 * tipoFactura: 
+	 * 1 - facturas
+	 * 2 - Nota de credito
+	 * 3 - Complemento de pago
+	 */	
+	public String getBusquedaFacturasSustitucion(String folio, int idMarca, int tipoFactura) throws Exception{
+		
+		String strReturn = "";
+		iObjLog.debug("Entrando BusquedaFacturaDao.getBusquedaFacturasSustitucion:" + folio);
+		iObjSesion = HibernateUtil.getSession();
+		java.sql.Connection objConn = null;
+		java.sql.ResultSet objRst = null;
+		java.sql.Statement objStmt = null;
+		int csucursal = 0;
+		String strQuery = "";
+		switch (idMarca) {
+		case 1:
+			csucursal = 1003;
+			break;
+		case 4:
+			csucursal = 1012;
+			break;
+		case 5:
+			csucursal = 1013;
+			break;
+		case 7:
+			csucursal = 1014;
+			break;
+		case 8:
+			csucursal = 1015;
+			break;
+		case 9:
+			csucursal = 1007;
+			break;
+			
+		default:
+			break;
+		}	
+		
+		if(tipoFactura == 1){			
+			
+			strQuery =  "select tf.kfactura, tf.sserie, tf.ufoliofactura,tfc.factura_id, tf.dregistro, tf.dcancelacionfactura from t_factura tf "+
+					"inner join t_factura_cancelada tfc on tfc.kfactura = tf.kfactura "+
+					"where tf.csucursal in ("+csucursal+") and tf.cconvenio in (select cconvenio from t_factura where ufoliofactura = "+folio+" and csucursal = "+csucursal+") "+ 
+					"and (dregistro between (sysdate-365) and (sysdate)) and tf.ctipocomprobantecfdi <> -1 order by tf.dregistro desc";
+			
+		}else if(tipoFactura == 2){
+			strQuery = "select tnc.knotacredito as kfactura, tnc.sserie, tnc.ufoliofactura,tfc.factura_id, tnc.dregistro, tnc.dcancelacionfactura from t_nota_credito tnc "+
+					"inner join t_factura_cancelada tfc on tfc.kfactura = tnc.knotacredito "+ 
+					"where tnc.csucursal in (1004) and tnc.cconvenio in (select cconvenio from t_nota_credito where ufoliofactura = "+folio+" and csucursal = 1004) "+ 
+					"and (dregistro between (sysdate-365) and (sysdate)) and tnc.ctipocomprobantecfdi <> -1 order by tnc.dregistro desc";
+		}else if(tipoFactura == 3){
+			strQuery =  "select tf.kfactura, tf.sserie, tf.ufoliofactura,tfc.factura_id, tf.dregistro, tf.dcancelacionfactura from t_factura tf "+
+						"inner join t_factura_cancelada tfc on tfc.kfactura = tf.kfactura "+ 
+						"where tf.kfactura in ( "+
+						"select kfactura from t_pago_complemento where kpagocomplemento in (select kpagocomplemento from t_pago_factura where kfactura in ( "+
+						"select kfactura from t_factura where ufoliofactura = "+folio+" and csucursal = "+csucursal+") and cestadoregistro = 53) "+
+						"and kpagocomplementopadre is NULL and kfactura is not null and ncomplementogenerado = 1 "+
+						"UNION ALL "+
+						"select kfactura from t_pago_complemento where kpagocomplemento in ( "+
+						"select kpagocomplementopadre from t_pago_complemento where kpagocomplemento in (select kpagocomplemento from t_pago_factura where kfactura in ( "+
+						"select kfactura from t_factura where ufoliofactura = "+folio+" and csucursal = "+csucursal+") and cestadoregistro = 53) "+
+						"and kpagocomplementopadre is not NULL and ncomplementogenerado = 0 ) and ncomplementogenerado = 1 and kfactura is not null "+
+						") and tf.ctipocomprobantecfdi <> -1";
+		}else if (tipoFactura == 4){
+			strQuery =  "select tf.kfactura, tf.sserie, tf.ufoliofactura,tfc.factura_id, tf.dregistro, tf.dcancelacionfactura from t_factura tf "+
+					"inner join t_factura_cancelada tfc on tfc.kfactura = tf.kfactura "+ 
+					"where tf.kfactura in ( "+
+					"select kfactura from t_pago_complemento where kpagocomplemento in (select kpagocomplemento from t_pago_factura where kfactura in ( "+
+					folio+") and cestadoregistro = 53) "+
+					"and kpagocomplementopadre is NULL and kfactura is not null and ncomplementogenerado = 1 "+
+					"UNION ALL "+
+					"select kfactura from t_pago_complemento where kpagocomplemento in ( "+
+					"select kpagocomplementopadre from t_pago_complemento where kpagocomplemento in (select kpagocomplemento from t_pago_factura where kfactura in ( "+
+					folio+") and cestadoregistro = 53) "+
+					"and kpagocomplementopadre is not NULL and ncomplementogenerado = 0 ) and ncomplementogenerado = 1 and kfactura is not null "+
+					") and tf.ctipocomprobantecfdi <> -1";
+		}
+		
+		iObjLog.debug("Entrando BusquedaFacturaDao.getBusquedaFacturasSustitucion: " + strQuery);
+		
+		try {
+			HibernateUtil.beginTrans();
+            objConn = iObjSesion.connection();
+            objStmt = objConn.createStatement();
+            if (strQuery != "") {
+            	objRst = objStmt.executeQuery(strQuery);
+            	strReturn="<table border='0' align='center' style='width: 883px' class='tabla'>" + 
+        				  "<tr>" + 
+	        					"<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
+	        					"	<b><font color='black'>Folio Factura" + 
+	        					"	</font></b>" +
+	        					"</th>" + 
+	        					"<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
+	        					"	<b><font color='black'>Folio Fiscal (UUID)" + 
+	        					"</th>" + 
+	        					"<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
+	        					"	<b><font color='black'>Fecha de Cancelacion" + 
+	        					"</th>" +
+        					" </tr>" ;
+            	
+            	
+            	while (objRst.next()) {
+            		strReturn+=	"<tr>"+
+            				"<td align=\"center\">" + 
+	            				"<a onclick=\"javascript:agregarDatosSustitucion("+objRst.getString("ufoliofactura")+","+objRst.getString("kfactura")+",'"+objRst.getString("factura_id")+"');\" style=\"FONT-SIZE: x-small; FONT-VARIANT: normal; FONT-WEIGHT: normal; COLOR: black; FONT-STYLE: normal\" href=\"javascript:doNothing()\" align=\"bottom\">"+
+	            				this.llenaIdFactura(objRst.getString("sserie"),objRst.getString("ufoliofactura"),8)+
+	            				"</a>" +
+            				"</td>"+
+            				"<td align=\"center\">" + 
+            				"	<font color='black'>" + objRst.getString("factura_id")+
+            				"	</font>" +
+            				"</td >"+
+            				"<td align=\"center\">" + 
+            				"	<font color='black'>" + objRst.getString("dcancelacionfactura")+
+            				"	</font>" +
+            				"</td >"+
+            			"</tr>";
+            	}
+            	strReturn+=	"</table>";
+            }
+			
+		} catch (Exception aObjExcepcion) { 
+			iObjLog.error("ERROR BusquedaFacturaDao.getBusquedaFacturaAjuste: ", aObjExcepcion);
+			throw aObjExcepcion;
+        } finally{
+    		objRst = null;
+    		objStmt = null;
+        	HibernateUtil.closeSession();
+		}
+		
+		return strReturn;
+	}
+	
+	
+	
 	//MODIFICACION BY 02/09/2013
 	public String getBusquedaFacturaAjuste(String strfoliosFacturas, Integer idMarca) throws Exception {
 		 iObjLog.debug("Entrando BusquedaFacturaDao.getBusquedaFacturaAjuste:" + strfoliosFacturas);
@@ -381,7 +519,8 @@ public class BusquedaFacturaDao {
 									"<input type='hidden' id='hdenMiva'   value='"+ objRst.getString("miva") +"' >" +
 									"<input type='hidden' id='hdenMtotal' value='"+ objRst.getString("mtotal") +"' >" +
 									"<input type='hidden' id='cMarca' value='"+ objRst.getInt("cmarca") +"' >" +
-						
+									"<input type='hidden' id='hdenkfacturaSustitucion' value=''>" +
+									"<input type='hidden' id='hdenUuidSustitucion' value=''>" +
 									"	<tr >		"+
 									"  		<th colspan='4'>"+
 									"     		<b style='font-weight: bold; font-size: medium; color: black; font-style: normal; font-variant: normal'>Datos de la Factura</b>"+
@@ -457,27 +596,14 @@ public class BusquedaFacturaDao {
 														"		</td>				" +
 														"		<td>				" +
 														"		<label id=\"labelFolioInterno\" style=\"display:none\">" +
-														"			Folio interno:	" +
+														"			Folio de la factura a sustituir:	" +
 														"		</label>			" +
 														"		</td>				" +
 														"		<td>				" +
-														" 		    <input type=\"text\" id=\"txtUfoliofacturaSustitucion\" size=\"15\" style=\"width:100px;display:none\" >" +
-														"		</td>				" +
-														"  </tr>					" +
-														"  <tr> 					" +
-											 			"		<td>				" +
-											 			"			&nbsp;			" + 
-											 			"		</td>				" + 
-											 			"		<td>				" +
-														"			&nbsp;			" +  
-														"		</td>				" +
-														"		<td>				" +
-														"		<label id=\"labelFolioFiscal\" style=\"display	:none\">" +
-														"			Folio Fiscal(UUID):	" +
-														"		</label>			" +
-														"		</td>				" +
-														"		<td>				" +
-														" 		    <input type=\"text\" id=\"txtFolioFiscal\" size=\"36\" style=\"width:240px;display:none\" >" +
+														" 		    <input type=\"text\" id=\"txtUfoliofacturaSustitucion\" size=\"15\" style=\"width:100px;display:none\" disabled>" +
+														"			<a id='popupBuscar' style=\"display:none\" href='javascript:doNothing()' onclick=\"javascript:showSubModalSustitucion();\">"+
+														"				<img alt='Buscar Sustitucion' id='imgBuscar' border='0' src=\"/web2labportal/images/icoBuscar.png\" width=\"25\" height=\"23\" />"+
+														"			</a>"+
 														"		</td>				" +
 														"  </tr>					" +
 														"</table>                   " +
@@ -589,10 +715,10 @@ public class BusquedaFacturaDao {
 				"	</font>" +
 				"</td >"+
 				"<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
-				"	<a href=\"javascript:visualizarFactura('http://192.168.100.182:9085/"+pathPDF+"/FacturacionElectronica_" + this.llenaIdFactura("ACC",new Integer(bean.getUfoliofactura().intValue()).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+				"	<a href=\"javascript:visualizarFactura('http://192.237.150.70:9085/"+pathPDF+"/FacturacionElectronica_" + this.llenaIdFactura("ACC",new Integer(bean.getUfoliofactura().intValue()).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 	            "		<img alt='Factura - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
 				"	</a>" +
-				"	<a href=\"javascript:visualizarFactura('http://192.168.100.182:9085/"+pathXML+"/FacturacionElectronica_" + this.llenaIdFactura("ACC",new Integer(bean.getUfoliofactura().intValue()).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+				"	<a href=\"javascript:visualizarFactura('http://192.237.150.70:9085/"+pathXML+"/FacturacionElectronica_" + this.llenaIdFactura("ACC",new Integer(bean.getUfoliofactura().intValue()).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 	            "		<img alt='Factura - XML' id=\"imgXML\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoXml.png' />" +
 				"	</a>" +
 				"</td>" +
@@ -707,10 +833,10 @@ public class BusquedaFacturaDao {
 								"	</font>" +
 								"</td >"+
 								"<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
-								"	<a href=\"javascript:visualizarFactura('http://192.168.100.182:9085/"+pathPDF+"/FacturacionElectronica_" + this.llenaIdFactura(objTFactura.getSserie(),new Integer(objTFactura.getUfoliofactura()).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+								"	<a href=\"javascript:visualizarFactura('http://192.237.150.70:9085/"+pathPDF+"/FacturacionElectronica_" + this.llenaIdFactura(objTFactura.getSserie(),new Integer(objTFactura.getUfoliofactura()).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 		    		            "		<img alt='Factura - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
 								"	</a>" +
-								"	<a href=\"javascript:visualizarFactura('http://192.168.100.182:9085/"+pathXML+"/FacturacionElectronica_" + this.llenaIdFactura(objTFactura.getSserie(),new Integer(objTFactura.getUfoliofactura()).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+								"	<a href=\"javascript:visualizarFactura('http://192.237.150.70:9085/"+pathXML+"/FacturacionElectronica_" + this.llenaIdFactura(objTFactura.getSserie(),new Integer(objTFactura.getUfoliofactura()).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 		    		            "		<img alt='Factura - XML' id=\"imgXML\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoXml.png' />" +
 								"	</a>" +
 								"</td>" +								

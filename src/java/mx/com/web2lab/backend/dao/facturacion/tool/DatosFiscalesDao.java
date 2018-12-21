@@ -308,7 +308,67 @@ public class DatosFiscalesDao {
     		objSta = null;
     		objResultSet = null;
         }
-	}		
+	}	
+	
+	public int obtenerEntidadLegal(int kfactura) throws Exception {	
+		
+		
+		iObjSesion = HibernateUtil.getSession();
+		Connection objCon = null;
+		Statement objSta = null;
+		ResultSet objResultSet = null;
+		String strQuery = "";
+		int centidadlegal = 1;
+		iObjLog.debug("Entrando DatosFiscalesDao.obtenerEntidadLegal:... kfactura " + kfactura);
+    	try{            
+        	objCon = iObjSesion.connection();
+	        objSta = objCon.createStatement();
+        	strQuery = "SELECT centidadlegal from t_factura where kfactura = "+kfactura;
+            			   
+				iObjLog.debug("Consulta DatosFiscalesDao.obtenerEntidadLegal:...  " + strQuery);
+			objResultSet = objSta.executeQuery(strQuery);
+			if (objResultSet != null) {					
+				iObjLog.debug("Consulta DatosFiscalesDao.obtenerEntidadLegal:...");
+				while(objResultSet.next()) {
+					centidadlegal = objResultSet.getInt("centidadlegal");
+					
+				}					
+			}
+			return centidadlegal;
+		} catch (Exception aObjExcepcion) { 
+			iObjLog.error("ERROR DatosFiscalesDao.obtenerEntidadLegal: ", aObjExcepcion);
+			throw aObjExcepcion;
+        } finally {
+        	HibernateUtil.closeSession();
+        	objResultSet.close();
+        	objSta.close();
+    		objSta = null;
+    		objResultSet = null;
+        }
+	}
+	
+	public void updateNCKfactura(int knotaCredito, int kfactura) throws Exception {		
+		iObjSesion = HibernateUtil.getSession();
+		Connection objCon = null;
+		ResultSet objResultSet = null;
+		Statement objSta = null;
+		String strQuery = "";
+		iObjLog.debug("Entrando DatosFiscalesDao.updateNCKfactura:... knotaCredito " + knotaCredito + " kfactura " + kfactura);
+    	try{            
+        	objCon = iObjSesion.connection();
+	        objSta = objCon.createStatement();	        
+	        strQuery = "update t_nota_credito set kfactura = "+kfactura+" where knotacredito ="+knotaCredito;			
+			iObjLog.debug("Consulta DatosFiscalesDao.updateNCKfactura:...  " + strQuery);
+			objSta.execute(strQuery);
+		} catch (Exception aObjExcepcion) { 
+			iObjLog.error("ERROR DatosFiscalesDao.updateNCKfactura: ", aObjExcepcion);
+			throw aObjExcepcion;
+        } finally {
+        	HibernateUtil.closeSession();
+        	objSta.close();
+    		objSta = null;
+        }
+	}
 
 	
 	public DatosFiscalesBean buscarDatosFiscalesOrden(long kOrdenSucursal, int kDatoFiscal) throws Exception {		

@@ -1867,7 +1867,7 @@ public class ClientesNewDao {
 					  "</td>"+
 					  "<td>"+
 						  "<input type='text' id='txtFechaDepositoGlobal' size='12' value='' style='background:#E6E6FA' onKeyup='javascript:agregaDiag(this);' onChange='javascript:this.value=validaFormatoFecha(this.value);validafechafrm(document.frmAdminClientes.txtFechaDepositoGlobal);' onFocus='javascript:validafechafrm(document.frmAdminClientes.txtFechaDepositoGlobal);'/>"+		
-						  "<a href='javascript:doNothing()' onclick='javascript:setDateField(document.frmAdminClientes.txtFechaDepositoGlobal); top.newWin =  ventanaNormal('/web2labportal/javascript/calendar.html','cal','WIDTH=230,HEIGHT=230')>"+
+						  "<a href='javascript:doNothing()' onclick='javascript:setDateField(document.frmAdminClientes.txtFechaDepositoGlobal); top.newWin =  ventanaNormal('$content.getURI('javascript/calendar.html')','cal','WIDTH=230,HEIGHT=230')>"+
 						  	"<img alt='Seleccione una fecha' id='imgFechaDeposito' border='0' src='/web2labportal/images/icono_calend.gif' />"+						  
 						  "</a>"+	
 					  "</td>"+			
@@ -1933,7 +1933,7 @@ public class ClientesNewDao {
 						"<td>"+
 						"</td>"+
 						"<td>"+
-							"<input type='checkbox' id='chkCrearComplento' checked>Crear Complemento de Pago"+
+							"<input type='checkbox' id='chkCrearComplento' onClick='showCheckSustitucion();'>Crear Complemento de Pago"+
 						"</td>"+
 					"</tr>"+
 					"<tr>"+
@@ -1983,6 +1983,31 @@ public class ClientesNewDao {
 							"</div>"+
 						"</td>"+
 					"</tr>"+
+					"<tr>"+
+						"<td>"+
+						"</td>"+
+						"<td>"+
+							"<div id='divCheckSustitucion' style='display:none'>"+
+								"<input type='checkbox' id='chkAgregarSustitucion' onClick='showCamposSustitucion();'>Sustitucion"+
+							"</div>	"+
+						"</td>"+
+					"</tr>"+
+					"<tr>"+
+						"<td>"+
+							"<input type='hidden' id='hdenkfacturaSustitucion' value=''>"+
+							"<input type='hidden' id='hdenUuidSustitucion' value=''>"+
+						"</td>"+
+						"<td>"+
+							"<div id='divCamposSustitucion' style='display:none'>"+
+								"<b>Folio interno:</b>"+
+								"<input type='text' id='txtUfoliofacturaSustitucion' style='background:#E6E6FA' size='15' disabled>"+
+								"<a id='popupBuscar' href='javascript:doNothing()' onclick=\"showSubModalSustitucion();\">"+
+									"<img alt='Buscar Sustitucion' id='imgBuscar' border='0' src=\"/web2labportal/images/icoBuscar.png\" width=\"25\" height=\"23\" />"+  
+								"</a>"+
+							"</div>"+
+						"</td>"+
+					"</tr>"+
+					
 				  "<tr>"+
 					  "<td>"+
 					  "</td>"+
