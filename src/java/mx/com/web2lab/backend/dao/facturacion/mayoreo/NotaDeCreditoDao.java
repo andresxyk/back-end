@@ -840,6 +840,21 @@ public class NotaDeCreditoDao {
 						   	"						<option value='04'>04 - TARJETA DE CREDITO</option>"+ 
 						   	"						<option value='05'>05 - MONEDERO ELECTRONICO</option>"+
 						   	"						<option value='06'>06 - DINERO ELECTRONICO</option>"+
+						   	"						<option value='08'>08 - VALES DE DESPENSA</option>"+
+						   	"						<option value='12'>12 - DACION EN PAGO</option>"+
+						   	"						<option value='13'>13 - PAGO POR SUBROGACION</option>"+
+						   	"						<option value='14'>14 - PAGO POR CONSIGNACION</option>"+
+						   	"						<option value='15'>15 - CONDONACION</option>"+
+						   	"						<option value='17'>17 - COMPENSACION</option>"+
+						   	"						<option value='23'>23 - NOVACION</option>"+
+						   	"						<option value='24'>24 - CONFUSION</option>"+
+						   	"						<option value='25'>25 - REMISION DE DEUDA</option>"+
+						   	"						<option value='26'>26 - PRESCRIPCION O CADUCIDAD</option>"+
+						   	"						<option value='27'>27 - A SATISFACCION DEL ACREEDOR</option>"+
+						   	"						<option value='28'>28 - TARJETA DE DEBITO</option>"+
+						   	"						<option value='29'>29 - TARJETA DE SERVICIOS</option>"+
+						   	"						<option value='30'>30 - APLICACION DE ANTICIPOS</option>"+
+						   	"						<option value='99'>99 - POR DEFINIR</option>"+
 						   	"						</select>"+
 							"					</td>"+
 							"					<td>"+
@@ -892,7 +907,7 @@ public class NotaDeCreditoDao {
 							"					</td>"+
 							"				</tr>"+
 							"				<tr>"+
-							"					<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
+							"					<th colspan='2' nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
 							"						<b><font color='black'>Concepto" + 
 							"						</font></b>" +
 							"					</th>" + 
@@ -906,7 +921,7 @@ public class NotaDeCreditoDao {
 							"					</th>" +
 							"				</tr>"+
 							"				<tr>"+
-							"					<td>"+
+							"					<td colspan='2'>"+
 							"						<input type='text' id='txtConcepto' style=\"WIDTH: 100%\">"+
 							"					</td>"+
 							"					<td>"+
