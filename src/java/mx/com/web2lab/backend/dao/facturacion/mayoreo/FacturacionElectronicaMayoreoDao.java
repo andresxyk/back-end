@@ -280,7 +280,7 @@ public class FacturacionElectronicaMayoreoDao {
 			
 				objStatement = objConn.createStatement();		
 				strSQL="select count(toesf.kordensucursal) cantidad, toesf.cexamen as cexamen, to_char('NO APLICA') unidad, toesf.sexamen as sexamen, "+
-						"round (sum((toesf.mfacturaempresa/1.16))/ count(distinct(toesf.kordensucursal)),2)costo_unitario, "+
+						"round (sum((toesf.mfacturaempresa/1.16))/ count(toesf.kordensucursal),2)costo_unitario, "+
 						"(round (sum((toesf.mfacturaempresa/1.16)),2) )importe, tosf.kfactura as kfactura "+
 						"from	t_orden_sucursal tos,t_orden_sucursal_fac tosf, t_orden_examen_sucursal_fac toesf, "+
 						"c_examen ce, c_convenio cc where toesf.kordensucursal = tosf.kordensucursal "+
