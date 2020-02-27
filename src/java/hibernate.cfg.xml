@@ -63,6 +63,7 @@
   		<mapping resource="mx/com/web2lab/backend/hbm/schema/CTipoPersona.hbm.xml"/> 
   		<mapping resource="mx/com/web2lab/backend/hbm/schema/CVigencia.hbm.xml"/>
   		<mapping resource="mx/com/web2lab/backend/hbm/schema/CZonaMedico.hbm.xml"/>
+  		<mapping resource="mx/com/web2lab/backend/hbm/schema/CZonaVenta.hbm.xml"/>
   		<mapping resource="mx/com/web2lab/backend/hbm/schema/EConvenio.hbm.xml"/>
   		<mapping resource="mx/com/web2lab/backend/hbm/schema/EConvenioClasificacion.hbm.xml"/>
   		<mapping resource="mx/com/web2lab/backend/hbm/schema/EConvenioPerfil.hbm.xml"/>

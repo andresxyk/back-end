@@ -518,7 +518,8 @@ public class BusquedaFacturaDao {
 									"<input type='hidden' id='hdenMsubtotal' value='"+ objRst.getString("msubtotal") +"' >" +
 									"<input type='hidden' id='hdenMiva'   value='"+ objRst.getString("miva") +"' >" +
 									"<input type='hidden' id='hdenMtotal' value='"+ objRst.getString("mtotal") +"' >" +
-									"<input type='hidden' id='cMarca' value='"+ objRst.getInt("cmarca") +"' >" +
+//									"<input type='hidden' id='cMarca' value='"+ objRst.getInt("cmarca") +"' >" +
+									"<input type='hidden' id='cMarca' value='"+ idMarca +"' >" +
 									"<input type='hidden' id='hdenkfacturaSustitucion' value=''>" +
 									"<input type='hidden' id='hdenUuidSustitucion' value=''>" +
 									"	<tr >		"+
@@ -716,12 +717,12 @@ public class BusquedaFacturaDao {
 				"</td >"+
 				"<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
 
-				"	<a href=\"javascript:visualizarFactura('http://192.237.150.67:9085/"+pathPDF+"/FacturacionElectronica_" + this.llenaIdFactura("ACC",new Integer(bean.getUfoliofactura().intValue()).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+				"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathPDF+"/FacturacionElectronica_" + this.llenaIdFactura("ACC",new Integer(bean.getUfoliofactura().intValue()).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 
 	            "		<img alt='Factura - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
 				"	</a>" +
 
-				"	<a href=\"javascript:visualizarFactura('http://192.237.150.67:9085/"+pathXML+"/FacturacionElectronica_" + this.llenaIdFactura("ACC",new Integer(bean.getUfoliofactura().intValue()).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+				"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathXML+"/FacturacionElectronica_" + this.llenaIdFactura("ACC",new Integer(bean.getUfoliofactura().intValue()).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 
 	            "		<img alt='Factura - XML' id=\"imgXML\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoXml.png' />" +
 				"	</a>" +
@@ -838,12 +839,12 @@ public class BusquedaFacturaDao {
 								"</td >"+
 								"<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
 
-								"	<a href=\"javascript:visualizarFactura('http://192.237.150.67:9085/"+pathPDF+"/FacturacionElectronica_" + this.llenaIdFactura(objTFactura.getSserie(),new Integer(objTFactura.getUfoliofactura()).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+								"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathPDF+"/FacturacionElectronica_" + this.llenaIdFactura(objTFactura.getSserie(),new Integer(objTFactura.getUfoliofactura()).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 
 		    		            "		<img alt='Factura - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
 								"	</a>" +
 
-								"	<a href=\"javascript:visualizarFactura('http://192.237.150.67:9085/"+pathXML+"/FacturacionElectronica_" + this.llenaIdFactura(objTFactura.getSserie(),new Integer(objTFactura.getUfoliofactura()).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+								"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathXML+"/FacturacionElectronica_" + this.llenaIdFactura(objTFactura.getSserie(),new Integer(objTFactura.getUfoliofactura()).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 
 		    		            "		<img alt='Factura - XML' id=\"imgXML\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoXml.png' />" +
 								"	</a>" +

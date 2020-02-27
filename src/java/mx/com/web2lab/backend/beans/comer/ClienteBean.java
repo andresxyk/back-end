@@ -14,6 +14,8 @@ public class ClienteBean implements Serializable {
     /** identifier field */
     private int cmarca = 1;
     
+    private String smarca = "";
+    
     /** nullable persistent field */
     private java.lang.String srazonsocial;
 
@@ -74,6 +76,8 @@ public class ClienteBean implements Serializable {
     private String sreport_pages_cxc;
     
     private boolean breadonly = true;
+    
+    private int czonaventa = 0;
 
 	public int getCcliente() {
 		return ccliente;
@@ -280,6 +284,31 @@ public class ClienteBean implements Serializable {
 
 	public void setCmarca(int cmarca) {
 		this.cmarca = cmarca;
+	}
+
+	public String getSmarca() {
+		if (this.cmarca == 1) {
+			this.smarca = "OLAB";
+		} else if (this.cmarca == 4) {
+			this.smarca = "AZTECA";
+		} else if (this.cmarca == 5) {
+			this.smarca = "SWISSLAB";
+		} else if (this.cmarca == 7) {
+			this.smarca = "JENNER";
+		}		
+		return smarca;
+	}
+
+	public void setSmarca(String smarca) {
+		this.smarca = smarca;
+	}
+
+	public int getCzonaventa() {
+		return czonaventa;
+	}
+
+	public void setCzonaventa(int czonaventa) {
+		this.czonaventa = czonaventa;
 	}
 
 }

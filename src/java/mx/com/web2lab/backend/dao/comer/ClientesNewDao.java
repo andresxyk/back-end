@@ -15,11 +15,13 @@ import mx.com.web2lab.backend.beans.comer.ClienteBean;
 import mx.com.web2lab.backend.beans.comer.ConvenioBean;
 import mx.com.web2lab.backend.beans.comer.ExamenConvenioBean;
 import mx.com.web2lab.backend.beans.comer.MetricasClieConBean;
+import mx.com.web2lab.backend.beans.facturacion.DatosFiscalesBean;
 import mx.com.web2lab.backend.dao.ap.GeneracionPasswordDao;
 import mx.com.web2lab.backend.dao.catalogos.CatalogosPKGCatalogosDao;
 import mx.com.web2lab.backend.dao.facturacion.mayoreo.FacturacionMayoreoDao;
 import mx.com.web2lab.backend.dao.mail.MailDao;
 import mx.com.web2lab.backend.dao.tools.AdministracionFOP_PDF;
+import mx.com.web2lab.backend.dao.tools.CodigoPostalDao;
 import mx.com.web2lab.backend.dao.tools.ReporteEstadoCuentaCxC;
 import mx.com.web2lab.backend.hbm.ConfiguracionProperties;
 import mx.com.web2lab.backend.hbm.HibernateUtil;
@@ -257,6 +259,11 @@ public class ClientesNewDao {
 		String strQuery = "";
 		List lstClientes = new ArrayList();
 		CCliente objClienteHB = new CCliente();; 
+		CodigoPostalDao objCodigoPostalDao = new CodigoPostalDao(iObjSesion);
+		DatosFiscalesBean objDatosFiscalesBean = new DatosFiscalesBean();
+		
+    	CCodigoPostal objCP = new CCodigoPostal();
+		
 		try {			
             HibernateUtil.beginTrans();
         	if (objClienteBean.getCcliente() > 0) {			
@@ -285,11 +292,18 @@ public class ClientesNewDao {
 						objClienteHB = (CCliente)lstClientes.get(0);
 					}
 				}			        		
-        	}        	
-        	CCodigoPostal objCP = new CCodigoPostal();
-	        	objCP.setCcodigopostal(new Integer(objClienteBean.getCcodigopostal()));
+        	}   
+        	objDatosFiscalesBean.setcPostal(objClienteBean.getScodigopostal());
+        	objDatosFiscalesBean.setStrCiudad(objClienteBean.getSestado());
+        	objDatosFiscalesBean.setStrColonia(objClienteBean.getScolonia());
+        	objDatosFiscalesBean.setStrDelegacionMunicipio(objClienteBean.getSdelegacionmunicipio());
+        	objDatosFiscalesBean.setStrEstado(objClienteBean.getSestado());
+        	        	
+        	objCP.setCcodigopostal(new Integer(objCodigoPostalDao.newDatosSepomex(objDatosFiscalesBean)));
+//	        	objCP.setCcodigopostal(new Integer(objClienteBean.getCcodigopostal()));
 				iObjLog.debug("Consulta ClientesDao.setClienteActualizacion.....Beans CodigoPostal.." + objClienteBean.getCcodigopostal());        	
 	        	objClienteHB.setCcodigopostal(objCP);
+	        	
         	CEstadoRegistro objEstadoRegistro = new CEstadoRegistro();
 	        	objEstadoRegistro.setCestadoregistro(new Integer(10));
 	        	objClienteHB.setCestadoregistro(objEstadoRegistro);
@@ -305,10 +319,10 @@ public class ClientesNewDao {
         	objClienteHB.setSmnemonico(objClienteBean.getSmnemonico());
         	objClienteHB.setUserid(new BigDecimal(4333));
         	objClienteHB.setCmarca(objClienteBean.getCmarca());
+        	objClienteHB.setCzonaventa(objClienteBean.getCzonaventa());
 			iObjLog.debug("Consulta ClientesDao.setClienteActualizacion.....Beans creados");
         	if (objClienteBean.getCcliente() == 0) {
             	objClienteHB.setDregistro(new Date());
-            	objClienteHB.setCzonaventa(0);
         		iObjSesion.save(objClienteHB);
         	} else {
         		iObjSesion.update(objClienteHB);            		
@@ -322,6 +336,9 @@ public class ClientesNewDao {
 			iObjLog.error("ERROR ClientesDao.setClienteActualizacion: ", aObjExcepcion);
 			throw aObjExcepcion;
         } finally{
+        	objDatosFiscalesBean = null;
+        	objCodigoPostalDao = null;
+        	objCP = null;
         	HibernateUtil.closeSession();
 		}		
 	}	
@@ -537,6 +554,47 @@ public class ClientesNewDao {
 	    			objGeneracionPasswordDao = null;
 	    			bolActualizacionCorreoElectronico = true;
                 }
+                if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 21) {
+                	if (objConvenioBean.getCmarca() == 1) {
+                    	objConvenioHB.setCagrupacion(new Integer(12));
+                	} else if (objConvenioBean.getCmarca() == 4) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 5) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 7) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	}
+                } else if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 22) {
+                	if (objConvenioBean.getCmarca() == 1) {
+                    	objConvenioHB.setCagrupacion(new Integer(8));
+                	} else if (objConvenioBean.getCmarca() == 4) {
+                    	objConvenioHB.setCagrupacion(new Integer(5));
+                	} else if (objConvenioBean.getCmarca() == 5) {
+                    	objConvenioHB.setCagrupacion(new Integer(5));
+                	} else if (objConvenioBean.getCmarca() == 7) {
+                    	objConvenioHB.setCagrupacion(new Integer(5));
+                	}
+                } else if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 23) {
+                	if (objConvenioBean.getCmarca() == 1) {
+                    	objConvenioHB.setCagrupacion(new Integer(12));
+                	} else if (objConvenioBean.getCmarca() == 4) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 5) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 7) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	}
+                } else if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 24) {
+                	if (objConvenioBean.getCmarca() == 1) {
+                    	objConvenioHB.setCagrupacion(new Integer(12));
+                	} else if (objConvenioBean.getCmarca() == 4) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 5) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 7) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	}
+                }
             	iObjSesion.update(objConvenioHB);            	
     			if ((objConvenioBean.getScorreoelectronico().trim().length() > 4) && (bolActualizacionCorreoElectronico)) {
             		MailDao objMailDao = new MailDao();
@@ -562,7 +620,47 @@ public class ClientesNewDao {
 	        		objConvenioHB.setSpasswordconsulta(" ");
 	        		objConvenioHB.setScorreoelectronico(" ");
                 }
-//                objConvenioHB.setCzonaventa(0);
+                if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 21) {
+                	if (objConvenioBean.getCmarca() == 1) {
+                    	objConvenioHB.setCagrupacion(new Integer(12));
+                	} else if (objConvenioBean.getCmarca() == 4) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 5) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 7) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	}
+                } else if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 22) {
+                	if (objConvenioBean.getCmarca() == 1) {
+                    	objConvenioHB.setCagrupacion(new Integer(8));
+                	} else if (objConvenioBean.getCmarca() == 4) {
+                    	objConvenioHB.setCagrupacion(new Integer(5));
+                	} else if (objConvenioBean.getCmarca() == 5) {
+                    	objConvenioHB.setCagrupacion(new Integer(5));
+                	} else if (objConvenioBean.getCmarca() == 7) {
+                    	objConvenioHB.setCagrupacion(new Integer(5));
+                	}
+                } else if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 23) {
+                	if (objConvenioBean.getCmarca() == 1) {
+                    	objConvenioHB.setCagrupacion(new Integer(12));
+                	} else if (objConvenioBean.getCmarca() == 4) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 5) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 7) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	}
+                } else if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 24) {
+                	if (objConvenioBean.getCmarca() == 1) {
+                    	objConvenioHB.setCagrupacion(new Integer(12));
+                	} else if (objConvenioBean.getCmarca() == 4) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 5) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 7) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	}
+                }                	
             	iObjSesion.save(objConvenioHB);
     			if (objConvenioBean.getScorreoelectronico().trim().length() > 4) {
             		MailDao objMailDao = new MailDao();
@@ -585,6 +683,15 @@ public class ClientesNewDao {
 //        		}
             	iObjSesion.update(objEConvenioHB);            	
             } else {
+            	if (objConvenioBean.getCmarca() == 1) {
+            		objListaCorporativa.setClistacorporativa(new Integer(3));
+            	} else if (objConvenioBean.getCmarca() == 4) {
+            		objListaCorporativa.setClistacorporativa(new Integer(8));
+            	} else if (objConvenioBean.getCmarca() == 5) {
+            		objListaCorporativa.setClistacorporativa(new Integer(19));
+            	} else if (objConvenioBean.getCmarca() == 7) {
+            		objListaCorporativa.setClistacorporativa(new Integer(21));
+            	}
         		objEConvenioHB.setCconvenio(objConvenioHB);
         		objEConvenioHB.setCestadoregistro(objEstadoRegistro);
         		objEConvenioHB.setClistacorporativa(objListaCorporativa);
@@ -592,7 +699,7 @@ public class ClientesNewDao {
         		objEConvenioHB.setDinicio(objConvenioBean.getDinicio());
         		objEConvenioHB.setDtermino(objConvenioBean.getDtermino());
         			CMarca objCMarca = new CMarca();
-        			objCMarca.setCmarca(new Integer(1));
+        			objCMarca.setCmarca(new Integer(objConvenioBean.getCmarca()));
         		objEConvenioHB.setCmarca(objCMarca);
         		iObjSesion.save(objEConvenioHB);
             }
@@ -730,7 +837,9 @@ public class ClientesNewDao {
 							objClienteBean.setScodigopostal(objClienteHB.getCcodigopostal().getCpostal());
 							objClienteBean.setScolonia(objClienteHB.getCcodigopostal().getScolonia());
 							objClienteBean.setSdelegacionmunicipio(objClienteHB.getCcodigopostal().getSdelegacionmunicipio());
-							objClienteBean.setSestado(objClienteHB.getCcodigopostal().getSestado());						
+							objClienteBean.setSestado(objClienteHB.getCcodigopostal().getSestado());		
+							objClienteBean.setCmarca(objClienteHB.getCmarca());
+							objClienteBean.setCzonaventa(objClienteHB.getCzonaventa());
 							Set objMapaConvenios = (Set) objClienteHB.getCconvenios();
 							Iterator iteConvenios = objMapaConvenios.iterator();
 							CConvenio objConvenio = null;

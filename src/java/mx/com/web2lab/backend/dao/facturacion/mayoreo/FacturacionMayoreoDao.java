@@ -299,19 +299,19 @@ public class FacturacionMayoreoDao {
 		String url="";
 		switch (csucursal) {
 		case 1003:
-			url="/home/orubio/apache-tomcat/webapps/ROOT/FacturasElectronicas_Olab/XML/FacturacionElectronica_";
+			url="/mnt/gda/apache-tomcat/webapps/ROOT/FacturasElectronicas_Olab/XML/FacturacionElectronica_";
 			break;
 		case 1012:
-			url="/home/orubio/apache-tomcat/webapps/ROOT/FacturasElectronicas_Azteca/XML/FacturacionElectronica_";
+			url="/mnt/gda/apache-tomcat/webapps/ROOT/FacturasElectronicas_Azteca/XML/FacturacionElectronica_";
 			break;
 		case 1013:
-			url="/home/orubio/apache-tomcat/webapps/ROOT/FacturasElectronicas_Swisslab/XML/FacturacionElectronica_";
+			url="/mnt/gda/apache-tomcat/webapps/ROOT/FacturasElectronicas_Swisslab/XML/FacturacionElectronica_";
 			break;
 		case 1014:
-			url="/home/orubio/apache-tomcat/webapps/ROOT/FacturasElectronicas_Jenner/Prado/XML/FacturacionElectronica_";
+			url="/mnt/gda/apache-tomcat/webapps/ROOT/FacturasElectronicas_Jenner/Prado/XML/FacturacionElectronica_";
 			break;
 		case 1015:
-			url="/home/orubio/apache-tomcat/webapps/ROOT/FacturasElectronicas_Jenner/Lean/XML/FacturacionElectronica_";
+			url="/mnt/gda/apache-tomcat/webapps/ROOT/FacturasElectronicas_Jenner/Lean/XML/FacturacionElectronica_";
 			break;
 		default:
 			break;

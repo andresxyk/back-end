@@ -36,6 +36,10 @@ public class CConvenio implements Serializable {
     /** nullable persistent field 
     private java.lang.String snemonico; */
     
+    /** identifier field */
+    private java.lang.Integer cagrupacion;
+    
+    
     /** persistent field */
     private mx.com.web2lab.backend.hbm.om.ap.CTipoConvenio ctipoconvenio;
 
@@ -65,7 +69,7 @@ public class CConvenio implements Serializable {
 
     /** full constructor */
 //    public CConvenio(java.lang.Integer cconvenio, java.lang.String sconvenio, java.util.Date dregistro, java.math.BigDecimal userid,  java.math.BigDecimal useridchange , String spassword, String spasswordconsulta, String scorreoelectronico,String snemonico ,mx.com.web2lab.backend.hbm.om.ap.CTipoConvenio ctipoconvenio, mx.com.web2lab.backend.hbm.om.ap.CCliente ccliente, Set tordenexamensucursals, Set econvenioperfils, Set econveniodetalles, Set econvenioclasificacions, Set econvenios, Set cpromocionmarketings, Set tordensucursalfacs) {
-    public CConvenio(java.lang.Integer cconvenio, java.lang.String sconvenio, java.util.Date dregistro, java.math.BigDecimal userid,  java.math.BigDecimal useridchange , String spassword, String spasswordconsulta, String scorreoelectronico,mx.com.web2lab.backend.hbm.om.ap.CTipoConvenio ctipoconvenio, mx.com.web2lab.backend.hbm.om.ap.CCliente ccliente, Set tordenexamensucursals, Set econvenioperfils, Set econveniodetalles, Set econvenioclasificacions, Set econvenios, Set cpromocionmarketings, Set tordensucursalfacs) {    
+    public CConvenio(java.lang.Integer cconvenio, java.lang.String sconvenio, java.util.Date dregistro, java.math.BigDecimal userid,  java.math.BigDecimal useridchange , String spassword, String spasswordconsulta, String scorreoelectronico, Integer cagrupacion,mx.com.web2lab.backend.hbm.om.ap.CTipoConvenio ctipoconvenio, mx.com.web2lab.backend.hbm.om.ap.CCliente ccliente, Set tordenexamensucursals, Set econvenioperfils, Set econveniodetalles, Set econvenioclasificacions, Set econvenios, Set cpromocionmarketings, Set tordensucursalfacs) {    
         this.cconvenio = cconvenio;
         this.sconvenio = sconvenio;
         this.dregistro = dregistro;
@@ -75,6 +79,7 @@ public class CConvenio implements Serializable {
         this.spasswordconsulta = spasswordconsulta;        
 //        this.snemonico = snemonico;
         this.scorreoelectronico = scorreoelectronico;
+        this.cagrupacion = cagrupacion;
         this.ctipoconvenio = ctipoconvenio;
         this.ccliente = ccliente;
         this.tordenexamensucursals = tordenexamensucursals;
@@ -174,6 +179,14 @@ public class CConvenio implements Serializable {
 
     public void setScorreoelectronico(java.lang.String scorreoelectronico) {
         this.scorreoelectronico = scorreoelectronico;
+    }
+    
+    public java.lang.Integer getCagrupacion() {
+        return this.cagrupacion;
+    }
+
+    public void setCagrupacion(java.lang.Integer cagrupacion) {
+        this.cagrupacion = cagrupacion;
     }
     
     public mx.com.web2lab.backend.hbm.om.ap.CTipoConvenio getCtipoconvenio() {
