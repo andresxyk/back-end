@@ -26,6 +26,8 @@ public class DatosFiscalesDao {
 	public DatosFiscalesDao(){
 		iObjSesion = HibernateUtil.getSession();
 	}
+	
+	
 
 	public String showGridDatoFiscal(DatosFiscalesBean objDatosFiscalesBean) throws Exception {
 		String strReturn = "";

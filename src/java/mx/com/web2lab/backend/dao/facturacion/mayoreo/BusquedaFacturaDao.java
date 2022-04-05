@@ -494,6 +494,8 @@ public class BusquedaFacturaDao {
 	            		csucursal = 1014;
 	            	} else if (idMarca.equals(new Integer(8))) {
 	            		csucursal = 1015;
+	            	} else if (idMarca.equals(new Integer(15))){
+	            		csucursal = 1017;
 	            	}
 	            	
 	            	
@@ -585,7 +587,8 @@ public class BusquedaFacturaDao {
 //														" 		    &nbsp;			" +
 														"		</td>				" +
 														"		<td>				" +
-														" 		    &nbsp;			" +
+														" 		    <div id='divchkDescuento' style=\"display:none\" ><input type=\"checkbox\" id=\"chkDescuento\" onClick=\"showFormDescuento();\"  >Descuento </div>" +
+														" 		    <div id='divchkRetencion' ><input type=\"checkbox\" id=\"chkRetencion\" >Retencion de IVA</div>" +
 														"		</td>				" +
 														"  </tr>					" +
 														"  <tr> 					" +
@@ -630,13 +633,45 @@ public class BusquedaFacturaDao {
 											 			"			<input type=\"text\" id=\"txtOrdenCompra\"  onKeyPress=\"numero();\" size=\"30\" style=\"width:100px;display:none\" value=\"0\"> " +
 											 			"			<input type=\"button\" id=\"idCrearPdfXml\" name=\"idCrearPdfXml\" value=\"Generar PDF y XML\" onClick=\"generacionPdfXml();\" class=\"boton\"> "+
 											 			"		</td> " +
-											 			"		<td>" +
+											 			"		<td>" + 
 											 			"			<input type=\"button\" name=\"LimpiaFac\" value=\"Limpia\" onClick=\"limpiaFactura();\" class=\"boton\"> " +
 											 			"		</td> " +
 											 			"		<td>				" +
 														" 		    &nbsp;			" +
 														"		</td>				" +
 											 			" 	</tr>                   " +
+											 			"  <tr> 					" +
+											 			"		<td>				" +
+											 			"			&nbsp;			" + 
+											 			"		</td>				" + 
+											 			"		<td>				" +
+														"			&nbsp;			" +  
+														"		</td>				" +
+														"		<td>				" +
+														"		<label id=\"labelDescuentosFac\" style=\"display:none\">" +
+														"			Descuentos:	" +
+														"		</label>			" +
+														"		</td>				" +
+														"		<td>				" +
+														" 		    <input type=\"text\" id=\"txtDescuentosFac\" size=\"15\" style=\"width:400px;display:none\">" +
+														"		</td>				" +
+														"  </tr>					" +
+														"  <tr> 					" +
+											 			"		<td>				" +
+											 			"			&nbsp;			" + 
+											 			"		</td>				" + 
+											 			"		<td>				" +
+														"			&nbsp;			" +  
+														"		</td>				" +
+														"		<td>				" +
+														"		<label id=\"labelNotaDescuentosFac\" style=\"display:none\">" +
+														"			Nota Descuento:	" +
+														"		</label>			" +
+														"		</td>				" +
+														"		<td>				" +
+														" 		    <textarea  id=\"txtNotaDescuentosFac\" rows=\"4\" cols=\"50\" style=\"display:none\">" +
+														"		</td>				" +
+														"  </tr>					" +
 											 			"</table> "; 
 									            		
 	            	}
@@ -691,6 +726,9 @@ public class BusquedaFacturaDao {
 		case 6: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
 				pathXML = "FacturasElectronicas_Swisslab/XML";
 			break;
+		case 16: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
+		pathXML = "FacturasElectronicas_Swisslab/XML";
+		break;
 		case 7: 
 				pathPDF = "FacturasElectronicas_Jenner/Prado/XMLTMP/PDF";
 				pathXML = "FacturasElectronicas_Jenner/Prado/XML";
@@ -713,7 +751,7 @@ public class BusquedaFacturaDao {
 				"</td >"+
 				"<td align=\"center\">" + 
 				"	<font color='black'>" + strEstadoFactura+
-				"	</font>" +
+				"	</font>" + 
 				"</td >"+
 				"<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
 
@@ -799,6 +837,9 @@ public class BusquedaFacturaDao {
 			case 5: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
 						pathXML = "FacturasElectronicas_Swisslab/XML";
 				break;
+			case 15: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
+			pathXML = "FacturasElectronicas_Swisslab/XML";
+			break;
 			case 7: 
 					if(listPrado.contains(String.valueOf(objTFactura.getCsucursal()))){
 						pathPDF = "FacturasElectronicas_Jenner/Prado/XMLTMP/PDF";
@@ -827,7 +868,7 @@ public class BusquedaFacturaDao {
 								"</td>"+
 								"<td align=\"center\">" + 
 								"	<font color='black'>$" + objFormatos.formateaNumero(objTFactura.getMtotal())+
-								"	</font>" +
+								"	</font>" + 
 								"</td >"+
 								"<td align=\"center\">" + 
 								"	<font color='black'>" + objFormatos.getFechaCompleta(objTFactura.getDregistro())+
@@ -966,7 +1007,7 @@ public class BusquedaFacturaDao {
 						"	</font>" +
 						"</td >"+
 						"<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
-						"<a href=\"http://192.237.150.66:9085/FacturasElectronicas_Olab/PDF/FacturacionElectronica_" + this.llenaIdFactura(objFactura.getSserie(),new Integer(objFactura.getUfoliofactura()).toString(),8) + ".pdf\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+						"<a href=\"http://192.237.150.66:9085/FacturasElectronicas_Olab/XMLTMP/PDF/FacturacionElectronica_" + this.llenaIdFactura(objFactura.getSserie(),new Integer(objFactura.getUfoliofactura()).toString(),8) + ".pdf\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 			            "		<img alt='Factura - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
 						"	</a>" +
 						"	<a href=\"http://192.237.150.66:9085/FacturasElectronicas_Olab/XML/FacturacionElectronica_" + this.llenaIdFactura(objFactura.getSserie(),new Integer(objFactura.getUfoliofactura()).toString(),8) + ".xml\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  

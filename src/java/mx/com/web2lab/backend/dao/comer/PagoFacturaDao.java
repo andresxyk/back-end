@@ -66,6 +66,8 @@ public class PagoFacturaDao {
 			keycontrolfolio=161;
 		}else if(marca==9){
 			keycontrolfolio=161;
+		}else if(marca == 15){
+			keycontrolfolio=161;
 		}
 		String forPago="";
 		if(formaPago.length()==1){
@@ -490,7 +492,7 @@ public class PagoFacturaDao {
 					/* Creacion de un nuevo Pago de la Factura */	
 					objTPagoFactura.setCtipopago(objTipoPagoFactura);
 					objTPagoFactura.setDfechapago(objPagoFacturaBean.getDfechapago());
-					objTPagoFactura.setDregistro(objPagoFacturaBean.getDregistro());
+				 	objTPagoFactura.setDregistro(objPagoFacturaBean.getDregistro());
 					objTPagoFactura.setManticipo(objPagoFacturaBean.getManticipo());
 					objTPagoFactura.setMpago(objPagoFacturaBean.getMpago());
 					objTPagoFactura.setMtotalfactura(objTFactura.getMtotal());
@@ -501,7 +503,7 @@ public class PagoFacturaDao {
 					objTPagoFactura.setUgrupopago(objPagoFacturaBean.getUgrupopago());
 					objTPagoFactura.setKnotacredito(new Integer(0));
 					objTPagoFactura.setKpagocomplemento(new Integer(keypago));
-					
+					iObjLog.debug( objPagoFacturaBeanActual.getMsaldo().doubleValue()+  ">=" + objPagoFacturaBean.getMpago().doubleValue());
 					if (objPagoFacturaBeanActual.getMsaldo().doubleValue() >= objPagoFacturaBean.getMpago().doubleValue()) {
 						iObjSesion.save(objTPagoFactura);					
 						iObjSesion.flush(); 
@@ -599,25 +601,25 @@ public class PagoFacturaDao {
                                         objTFactura = (TFactura)objListaFactura.get(0);
                                         iObjLog.debug("Consulta FacturacionMayoreoDao.getDatosPagoFactura:Consulta...2  " + objTFactura.getKfactura() + " " + objTFactura.getMtotal().doubleValue());
                                         objPagoFacturaBean.setSformatofactura(FacturacionMayoreoDao.llenaIdFactura(objTFactura.getSserie(), objTFactura.getUfoliofactura() + "", 8));
-                                        if(objTFactura.getScadenaoriginal()!=null && !objTFactura.getScadenaoriginal().trim().equals("")){
-	                                        String [] cadena=objTFactura.getScadenaoriginal().split("\\|");
-	                                        if( (objTFactura.getMtotal().compareTo(new BigDecimal(cadena[11]))!=0) ){
-	                                        	this.updateMontosTFactura(objTFactura.getKfactura().intValue(),new BigDecimal(cadena[11]), new BigDecimal(cadena[8]));
-	                                        	objTFactura.setMtotal(new BigDecimal(cadena[11]));
-	                                        }
-                                       }else{                                    	   
-                                    	   String rutaXML = FacturacionMayoreoDao.pathXmlTimbrado(objTFactura.getCsucursal())+objPagoFacturaBean.getSformatofactura()+".xml";
-                                    	   File af = new File(rutaXML);
-                                    	   if(af.exists()){
-                                    		   String str =FacturacionMayoreoDao.xmlString(af);
-                                    		   BigDecimal total = FacturacionMayoreoDao.obtenerTotal(str);
-                                    		   BigDecimal subTotal = FacturacionMayoreoDao.obtenerSubTotal(str);
-                                    		   if( (objTFactura.getMtotal().compareTo(total)!=0) ){
-   	                                        	this.updateMontosTFactura(objTFactura.getKfactura().intValue(),total,subTotal);
-   	                                        	objTFactura.setMtotal(total);
-   	                                        }
-                                    	   }                                    	   
-                                       }
+//                                        if(objTFactura.getScadenaoriginal()!=null && !objTFactura.getScadenaoriginal().trim().equals("")){
+//	                                        String [] cadena=objTFactura.getScadenaoriginal().split("\\|");
+//	                                        if( (objTFactura.getMtotal().compareTo(new BigDecimal(cadena[11]))!=0) ){
+//	                                        	this.updateMontosTFactura(objTFactura.getKfactura().intValue(),new BigDecimal(cadena[11]), new BigDecimal(cadena[8]));
+//	                                        	objTFactura.setMtotal(new BigDecimal(cadena[11]));
+//	                                        }
+//                                       }else{                                    	   
+//                                    	   String rutaXML = FacturacionMayoreoDao.pathXmlTimbrado(objTFactura.getCsucursal())+objPagoFacturaBean.getSformatofactura()+".xml";
+//                                    	   File af = new File(rutaXML);
+//                                    	   if(af.exists()){
+//                                    		   String str =FacturacionMayoreoDao.xmlString(af);
+//                                    		   BigDecimal total = FacturacionMayoreoDao.obtenerTotal(str);
+//                                    		   BigDecimal subTotal = FacturacionMayoreoDao.obtenerSubTotal(str);
+//                                    		   if( (objTFactura.getMtotal().compareTo(total)!=0) ){
+//   	                                        	this.updateMontosTFactura(objTFactura.getKfactura().intValue(),total,subTotal);
+//   	                                        	objTFactura.setMtotal(total);
+//   	                                        }
+//                                    	   }                                    	   
+//                                       }
                                        objPagoFacturaBean.setMsaldo(objTFactura.getMtotal());
                                        objPagoFacturaBean.setMtotalfactura(objTFactura.getMtotal());
                                         objPagoFacturaBean.setManticipo(new BigDecimal(0));
@@ -886,6 +888,9 @@ public class PagoFacturaDao {
 			case 6: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
 						pathXML = "FacturasElectronicas_Swisslab/XML";
 				break;
+			case 16: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
+						pathXML = "FacturasElectronicas_Swisslab/XML";
+			break;
 			case 7: pathPDF = "FacturasElectronicas_Jenner/Prado/XMLTMP/PDF";
 						pathXML = "FacturasElectronicas_Jenner/Prado/XML";
 				break;
@@ -896,10 +901,10 @@ public class PagoFacturaDao {
 				break;
 			}
 			archivos = "<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
-					"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathPDF+"/NotaCredito_" + FacturacionMayoreoDao.llenaIdFactura("NCA",String.valueOf(notaCredito.getUfoliofactura()),9) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+					"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathPDF+"/NotaCredito_" + FacturacionMayoreoDao.llenaIdNC(notaCredito.getSserie(),String.valueOf(notaCredito.getUfoliofactura()),7) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 		            "		<img alt='Factura - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
 					"	</a>" +
-					"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathXML+"/NotaCredito_" + FacturacionMayoreoDao.llenaIdFactura("NCA",String.valueOf(notaCredito.getUfoliofactura()),9) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+					"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathXML+"/NotaCredito_" + FacturacionMayoreoDao.llenaIdNC(notaCredito.getSserie(),String.valueOf(notaCredito.getUfoliofactura()),7) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 		            "		<img alt='Factura - XML' id=\"imgXML\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoXml.png' />" +
 					"	</a>" +
 					"</td>";
@@ -943,6 +948,9 @@ public class PagoFacturaDao {
 					case 6: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
 								pathXML = "FacturasElectronicas_Swisslab/XML";
 						break;
+					case 16: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
+					pathXML = "FacturasElectronicas_Swisslab/XML";
+					break;
 					case 7: pathPDF = "FacturasElectronicas_Jenner/Prado/XMLTMP/PDF";
 								pathXML = "FacturasElectronicas_Jenner/Prado/XML";
 						break;
@@ -1004,6 +1012,9 @@ public class PagoFacturaDao {
 					case 6: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
 								pathXML = "FacturasElectronicas_Swisslab/XML";
 						break;
+					case 16: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
+					pathXML = "FacturasElectronicas_Swisslab/XML";
+					break;
 					case 7: pathPDF = "FacturasElectronicas_Jenner/Prado/XMLTMP/PDF";
 								pathXML = "FacturasElectronicas_Jenner/Prado/XML";
 						break;
@@ -1011,7 +1022,7 @@ public class PagoFacturaDao {
 								pathXML = "FacturasElectronicas_Jenner/Lean/XML";
 						break;
 					default:
-						break;
+						break; 
 					}
 					if(pagoComplementoPadre.getNcomplementogenerado().intValue()==1){
 						Observacion="COMPLEMENTO GENERADO";
@@ -1344,7 +1355,8 @@ public class PagoFacturaDao {
 			objRst = objStmt.executeQuery(strQuery);
 			while (objRst.next()) {
 				notaCredito.setUfoliofactura(objRst.getInt("ufoliofactura"));
-				notaCredito.setCentidadlegal(objRst.getInt("centidadlegal"));				
+				notaCredito.setCentidadlegal(objRst.getInt("centidadlegal"));	
+				notaCredito.setSserie(objRst.getString("sserie"));
 			}
 			iObjLog.debug("Saliendo PagoFacturaDao.getTNotaCredito:Saliendo...  ");
 		} catch (Exception aObjExcepcion) { 

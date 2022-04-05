@@ -19,6 +19,11 @@ public class FacturaElectronicaBean {
 	
 	private String uuid = "";
 	
+	private String notaDescuento = "";
+	private String descuentos = "";
+	private boolean bandDescuento = false;
+	
+	private boolean bandRetencion = false;
 	
 
 	/** nullable persistent field */
@@ -912,6 +917,8 @@ public class FacturaElectronicaBean {
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
+	
+	
 
 	public void setsURL(String sURL) {
 		this.sURL = sURL;
@@ -1026,6 +1033,38 @@ public class FacturaElectronicaBean {
 		} else {
 			this.cmarca = cmarca;
 		}
+	}
+
+	public String getNotaDescuento() {
+		return notaDescuento;
+	}
+
+	public void setNotaDescuento(String notaDescuento) {
+		this.notaDescuento = notaDescuento;
+	}
+
+	public String getDescuentos() {
+		return descuentos;
+	}
+
+	public void setDescuentos(String descuentos) {
+		this.descuentos = descuentos;
+	}
+
+	public boolean isBandDescuento() {
+		return bandDescuento;
+	}
+
+	public void setBandDescuento(boolean bandDescuento) {
+		this.bandDescuento = bandDescuento;
+	}
+
+	public boolean isBandRetencion() {
+		return bandRetencion;
+	}
+
+	public void setBandRetencion(boolean bandRetencion) {
+		this.bandRetencion = bandRetencion;
 	}
 
 	

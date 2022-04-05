@@ -55,6 +55,15 @@ public class CMedico implements Serializable {
     /** nullable persistent field */
     private int ucategoriamedico;
     
+    private int user_id;
+    
+    private int user_id_change;
+    
+    private String smarcasventa;
+    
+    private String susuarioweb;
+    
+    
     /** persistent field */
     private mx.com.web2lab.backend.hbm.om.ap.CEstadoRegistro cestadoregistro;
     
@@ -130,8 +139,42 @@ public class CMedico implements Serializable {
         this.emedicopaquetes = emedicopaquetes;
         this.tregalomedicos = tregalomedicos;
     }
+    
+    
 
-    public java.lang.Integer getCmedico() {
+    public String getSmarcasventa() {
+		return smarcasventa;
+	}
+
+	public void setSmarcasventa(String smarcasventa) {
+		this.smarcasventa = smarcasventa;
+	}
+
+	public String getSusuarioweb() {
+		return susuarioweb;
+	}
+
+	public void setSusuarioweb(String susuarioweb) {
+		this.susuarioweb = susuarioweb;
+	}
+
+	public int getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
+	}
+
+	public int getUser_id_change() {
+		return user_id_change;
+	}
+
+	public void setUser_id_change(int user_id_change) {
+		this.user_id_change = user_id_change;
+	}
+
+	public java.lang.Integer getCmedico() {
         return this.cmedico;
     }
 

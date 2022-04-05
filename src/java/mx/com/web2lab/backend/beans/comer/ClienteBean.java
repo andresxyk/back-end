@@ -16,6 +16,8 @@ public class ClienteBean implements Serializable {
     
     private String smarca = "";
     
+    private String smarcauser = "";
+    
     /** nullable persistent field */
     private java.lang.String srazonsocial;
 
@@ -78,6 +80,16 @@ public class ClienteBean implements Serializable {
     private boolean breadonly = true;
     
     private int czonaventa = 0;
+
+    
+    
+	public String getSmarcauser() {
+		return smarcauser;
+	}
+
+	public void setSmarcauser(String smarcauser) {
+		this.smarcauser = smarcauser;
+	}
 
 	public int getCcliente() {
 		return ccliente;
@@ -295,7 +307,11 @@ public class ClienteBean implements Serializable {
 			this.smarca = "SWISSLAB";
 		} else if (this.cmarca == 7) {
 			this.smarca = "JENNER";
-		}		
+		} else if (this.cmarca == 15) {
+			this.smarca = "LIACSA";
+		} else if (this.cmarca == 17) {
+			this.smarca = "DIAGNOSTIX";
+		}	
 		return smarca;
 	}
 

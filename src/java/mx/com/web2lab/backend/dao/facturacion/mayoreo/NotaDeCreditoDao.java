@@ -370,6 +370,49 @@ public class NotaDeCreditoDao {
 			}		
 		}
 	 
+	 
+	 public int getMarcaConvenio(int iCconvenio) throws Exception {
+			iObjLog.debug("Entrando DatosAdicionalesDao.getMarcaConvenio:" + iCconvenio);
+			iObjSesion = HibernateUtil.getSession();
+			String strQuery = "";
+			String strReturn = "";
+			java.sql.Connection objConn = null;
+			java.sql.ResultSet objRst = null;
+			java.sql.Statement objStmt = null;
+			int marca = 0;
+	    	try{
+	            HibernateUtil.beginTrans();
+	            objConn = iObjSesion.connection();
+	            objStmt = objConn.createStatement();
+	            if (iCconvenio > 0) {
+	        		strQuery =  "select cc.* " +					
+								" from  E_Convenio cc " +					
+								" where cc.cconvenio = " +  iCconvenio;
+	            } 
+	            if (strQuery != "") {
+	            	objRst = objStmt.executeQuery(strQuery);
+	            	while (objRst.next()) {
+	            		marca = new Integer(objRst.getString("cmarca")).intValue();            		
+	            	}
+	            }
+				iObjLog.debug("Saliendo DatosAdicionalesDao.getMarcaConvenio...  " + strReturn);
+				return marca;
+			} catch (Exception aObjExcepcion) { 
+				iObjLog.error("ERROR DatosAdicionalesDao.getMarcaConvenio: ", aObjExcepcion);
+				throw aObjExcepcion;
+	        } finally{
+	    		objRst = null;
+	    		objStmt = null;
+	        	HibernateUtil.closeSession();
+			}		
+		}
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 	public String pintarGridFacturas(List objListaFacturaConvenio){
 		String strReturn="";
 		String strscript="";
@@ -728,7 +771,7 @@ public class NotaDeCreditoDao {
 		NotaCreditoFacturaBean objNotaCreditoFacturaBean = null;
 		
 		iObjLog.debug("Entrando NotaDeCreditoDao.pintarGridFacturasElegidas...  " + objListaFacturaConvenio.size());
-		
+		 
 		strReturn="<table border='0' align='center' style='width: 883px' class='tabla'>" + 
 				  "	<tr colspan='2' align='center'>"+
 				  "		<td>" + 
@@ -1261,6 +1304,7 @@ public class NotaDeCreditoDao {
 		
 		try{
 				iObjLog.debug("Entrando NotaDeCreditoDao.persistirNota:...  cconvenio" +cconvenio+" strfacturasElegidas "+strfacturasElegidas + " strdescripcion "+strdescripcionnota);
+				int cmarca = getMarcaConvenio(cconvenio);
 				objNotaCreditoBean.setObjDatosFiscalesBean(objDatosFiscalesDAO.buscarDatosFiscalesConvenio(new Integer(cconvenio).longValue()));
 				objNotaCreditoBean.setCsucursal(new Integer(1004));
 				SucursalBean objSucursalTempBean = objSucursalDAO.getSucursal(objNotaCreditoBean.getCsucursal().intValue());
@@ -1280,7 +1324,11 @@ public class NotaDeCreditoDao {
 				objNotaCreditoBean.setCentidadlegal(objDatosFiscalesDAO.obtenerEntidadLegal(Integer.parseInt(splitFacturas[0])));
 				objNotaCreditoBean.setSfacturas(strfacturasElegidas);
 				objNotaCreditoBean.setIuserId(user_id.intValue());
-				objNotaCreditoBean.setSserie(objSucursalTempBean.getSserie());
+				if(cmarca == 15){
+					objNotaCreditoBean.setSserie("NCASL");					
+				}else{
+					objNotaCreditoBean.setSserie(objSucursalTempBean.getSserie());	
+				}
 				knotacredito=this.setNotaCredito(objNotaCreditoBean);
 				this.setPagoFactura(strfacturasElegidas,knotacredito,user_id);
 				//strReturn="Nota creada "+this.llenaIdFactura(objSucursalTempBean.getSserie(),objNotaCreditoBean.getUfoliofactura().toString(), 8);

@@ -28,6 +28,10 @@ public class CDireccionMedico implements Serializable {
 
     /** persistent field */
     private mx.com.web2lab.backend.hbm.om.ap.medico.CMedico cmedico;
+    
+    private java.lang.Integer user_id;
+    
+    private java.lang.Integer user_id_change;
 
     /** full constructor */
     public CDireccionMedico(java.lang.Integer cdireccionmedico, java.lang.String sdireccion, java.lang.String stelefono, mx.com.web2lab.backend.hbm.om.ap.CCodigoPostal ccodigopostal, mx.com.web2lab.backend.hbm.om.ap.CReferenciaDireccion creferenciadireccion, mx.com.web2lab.backend.hbm.om.ap.CEstadoRegistro cestadoregistro, mx.com.web2lab.backend.hbm.om.ap.medico.CMedico cmedico) {
@@ -53,7 +57,24 @@ public class CDireccionMedico implements Serializable {
         this.cmedico = cmedico;
     }
 
-    public java.lang.Integer getCdireccionmedico() {
+    
+    public java.lang.Integer getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(java.lang.Integer user_id) {
+		this.user_id = user_id;
+	}
+
+	public java.lang.Integer getUser_id_change() {
+		return user_id_change;
+	}
+
+	public void setUser_id_change(java.lang.Integer user_id_change) {
+		this.user_id_change = user_id_change;
+	}
+
+	public java.lang.Integer getCdireccionmedico() {
         return this.cdireccionmedico;
     }
 

@@ -77,6 +77,8 @@ public class FacturacionElectronicaMayoreoDao {
 			csucursal="1012";
 		}else if (marca==5){
 			csucursal="1013";
+		}else if (marca==15){
+			csucursal="1017";
 		}else if (marca==7){
 			if(serie.equals("AJP")){
 				csucursal="1014";				

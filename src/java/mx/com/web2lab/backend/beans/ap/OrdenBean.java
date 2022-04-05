@@ -607,7 +607,7 @@ public class OrdenBean implements Serializable {
 			if (this.getStrFactura().trim().length() > 0) {
 				strTituloFacturacion = "ORDEN FACTURADA";
 				strMensaje1 = "Esta Orden ya esta facturada, Comuníquese a la Sucursal por favor";
-				strMensaje2 = "Con la factura numero " + "<a href='http://192.237.150.66:9085/FacturasElectronicas_Olab/PDF/FacturacionElectronica_" + this.getStrFactura() + ".pdf'><div class='clearfix grpelem' id='u7917-4-OMRR'><p>" + this.getStrFactura() + "</a>" ;
+				strMensaje2 = "Con la factura numero " + "<a href='http://192.237.150.66:9085/FacturasElectronicas_Olab/XMLTMP/PDF/FacturacionElectronica_" + this.getStrFactura() + ".pdf'><div class='clearfix grpelem' id='u7917-4-OMRR'><p>" + this.getStrFactura() + "</a>" ;
 			} else if (this.getSmensajeerror().trim().length() > 0) {
 				strTituloFacturacion = "MENSAJE DE ERROR";
 				strMensaje1 = this.getSmensajeerror();

@@ -98,7 +98,140 @@ public class MedicoBean implements Serializable {
     
     private String sgridtelefonos = "";
     
-    /** default constructor */
+    private String tipoDireccion;
+    
+    private int ctipoDireccion;
+    
+    private int creferenciadireccion;
+    
+    private String sreferenciadireccion;
+    
+    private int userid;
+    
+    private boolean marcaolab = false;
+    
+    private boolean marcaazteca = false;
+    
+    private boolean marcaswisslab = false;
+    
+    private boolean marcajenner = false;
+    
+    private boolean marcaliacsa = false;
+    
+    private String smarcasventa;
+   
+    private String susuarioweb;
+    
+    private int cestadoregistro;
+    
+    
+    
+    
+    public int getCestadoregistro() {
+		return cestadoregistro;
+	}
+
+	public void setCestadoregistro(int cestadoregistro) {
+		this.cestadoregistro = cestadoregistro;
+	}
+
+	public String getSmarcasventa() {
+		return smarcasventa;
+	}
+
+	public void setSmarcasventa(String smarcasventa) {
+		this.smarcasventa = smarcasventa;
+	}
+
+	public String getSusuarioweb() {
+		return susuarioweb;
+	}
+
+	public void setSusuarioweb(String susuarioweb) {
+		this.susuarioweb = susuarioweb;
+	}
+
+	public boolean isMarcaolab() {
+		return marcaolab;
+	}
+
+	public void setMarcaolab(boolean marcaolab) {
+		this.marcaolab = marcaolab;
+	}
+
+	public boolean isMarcaazteca() {
+		return marcaazteca;
+	}
+
+	public void setMarcaazteca(boolean marcaazteca) {
+		this.marcaazteca = marcaazteca;
+	}
+
+	public boolean isMarcaswisslab() {
+		return marcaswisslab;
+	}
+
+	public void setMarcaswisslab(boolean marcaswisslab) {
+		this.marcaswisslab = marcaswisslab;
+	}
+
+	public boolean isMarcajenner() {
+		return marcajenner;
+	}
+
+	public void setMarcajenner(boolean marcajenner) {
+		this.marcajenner = marcajenner;
+	}
+
+	public boolean isMarcaliacsa() {
+		return marcaliacsa;
+	}
+
+	public void setMarcaliacsa(boolean marcaliacsa) {
+		this.marcaliacsa = marcaliacsa;
+	}
+
+	public int getUserid() {
+		return userid;
+	}
+
+	public void setUserid(int userid) {
+		this.userid = userid;
+	}
+
+	public int getCreferenciadireccion() {
+		return creferenciadireccion;
+	}
+
+	public void setCreferenciadireccion(int creferenciadireccion) {
+		this.creferenciadireccion = creferenciadireccion;
+	}
+
+	public String getSreferenciadireccion() {
+		return sreferenciadireccion;
+	}
+
+	public void setSreferenciadireccion(String sreferenciadireccion) {
+		this.sreferenciadireccion = sreferenciadireccion;
+	}
+
+	public int getCtipoDireccion() {
+		return ctipoDireccion;
+	}
+
+	public void setCtipoDireccion(int ctipoDireccion) {
+		this.ctipoDireccion = ctipoDireccion;
+	}
+
+	public String getTipoDireccion() {
+		return tipoDireccion;
+	}
+
+	public void setTipoDireccion(String tipoDireccion) {
+		this.tipoDireccion = tipoDireccion;
+	}
+
+	/** default constructor */
     public MedicoBean() {
     }
 

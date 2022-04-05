@@ -92,9 +92,32 @@ public class ConvenioBean implements Comparable,Serializable {
     private String spasswordconsulta;
     
     private String sreportecxc;
+    
+    private int tipocopago;
+    
+    private String montoCopago;
+    
+    
+    
         
     
-    public ConvenioBean () {
+    public int getTipocopago() {
+		return tipocopago;
+	}
+
+	public void setTipocopago(int tipocopago) {
+		this.tipocopago = tipocopago;
+	}
+
+	public String getMontoCopago() {
+		return montoCopago;
+	}
+
+	public void setMontoCopago(String montoCopago) {
+		this.montoCopago = montoCopago;
+	}
+
+	public ConvenioBean () {
 
     }
     

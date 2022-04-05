@@ -97,7 +97,7 @@ public class CodigoPostalDao {
 						" where cCP.bregistrosepo = false " +
 						"   AND cCP.sasentamiento = 'NINGUNO' " +
 						"   AND cCP.casentamiento = 1 " +
-						"   AND cCP.cpostal = " + objDatosFiscalesBean.getcPostal() +
+						"   AND cCP.cpostal = '" + objDatosFiscalesBean.getcPostal()+ "'" +
 						"   AND cCP.sciudad = '" + objDatosFiscalesBean.getStrCiudad() + "'" +
 						"   AND cCP.scolonia = '" + objDatosFiscalesBean.getStrColonia() + "'" +
 						"   AND cCP.sdelegacionmunicipio = '" + objDatosFiscalesBean.getStrDelegacionMunicipio() + "'" +
