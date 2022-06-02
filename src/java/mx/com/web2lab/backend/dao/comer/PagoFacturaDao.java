@@ -901,10 +901,10 @@ public class PagoFacturaDao {
 				break;
 			}
 			archivos = "<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
-					"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathPDF+"/NotaCredito_" + FacturacionMayoreoDao.llenaIdNC(notaCredito.getSserie(),String.valueOf(notaCredito.getUfoliofactura()),7) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+					"	<a href=\"javascript:visualizarFactura('http://10.20.26.6:9085/"+pathPDF+"/NotaCredito_" + FacturacionMayoreoDao.llenaIdNC(notaCredito.getSserie(),String.valueOf(notaCredito.getUfoliofactura()),7) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 		            "		<img alt='Factura - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
 					"	</a>" +
-					"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathXML+"/NotaCredito_" + FacturacionMayoreoDao.llenaIdNC(notaCredito.getSserie(),String.valueOf(notaCredito.getUfoliofactura()),7) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+					"	<a href=\"javascript:visualizarFactura('http://10.20.26.6:9085/"+pathXML+"/NotaCredito_" + FacturacionMayoreoDao.llenaIdNC(notaCredito.getSserie(),String.valueOf(notaCredito.getUfoliofactura()),7) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 		            "		<img alt='Factura - XML' id=\"imgXML\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoXml.png' />" +
 					"	</a>" +
 					"</td>";
@@ -964,12 +964,12 @@ public class PagoFacturaDao {
 						Observacion="COMPLEMENTO GENERADO";
 						archivos = "<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
 
-							"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathPDF+"/FacturacionElectronica_" + FacturacionMayoreoDao.llenaIdFactura("ACC",this.getUFolioFacturaByKfactura(pagoComplemento.getKfactura(),false).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+							"	<a href=\"javascript:visualizarFactura('http://10.20.26.6:9085/"+pathPDF+"/FacturacionElectronica_" + FacturacionMayoreoDao.llenaIdFactura("ACC",this.getUFolioFacturaByKfactura(pagoComplemento.getKfactura(),false).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 
 	    		            "		<img alt='Factura - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
 							"	</a>" +
 
-							"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathXML+"/FacturacionElectronica_" + FacturacionMayoreoDao.llenaIdFactura("ACC",this.getUFolioFacturaByKfactura(pagoComplemento.getKfactura(),false).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+							"	<a href=\"javascript:visualizarFactura('http://10.20.26.6:9085/"+pathXML+"/FacturacionElectronica_" + FacturacionMayoreoDao.llenaIdFactura("ACC",this.getUFolioFacturaByKfactura(pagoComplemento.getKfactura(),false).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 
 	    		            "		<img alt='Factura - XML' id=\"imgXML\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoXml.png' />" +
 							"	</a>" +
@@ -1028,12 +1028,12 @@ public class PagoFacturaDao {
 						Observacion="COMPLEMENTO GENERADO";
 						archivos="<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
 
-								"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathPDF+"/FacturacionElectronica_" + FacturacionMayoreoDao.llenaIdFactura("ACC",this.getUFolioFacturaByKfactura(pagoComplementoPadre.getKfactura(),false).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+								"	<a href=\"javascript:visualizarFactura('http://10.20.26.6:9085/"+pathPDF+"/FacturacionElectronica_" + FacturacionMayoreoDao.llenaIdFactura("ACC",this.getUFolioFacturaByKfactura(pagoComplementoPadre.getKfactura(),false).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 
 		    		            "		<img alt='Factura - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
 								"	</a>" +
 
-								"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathXML+"/FacturacionElectronica_" + FacturacionMayoreoDao.llenaIdFactura("ACC",this.getUFolioFacturaByKfactura(pagoComplementoPadre.getKfactura(),false).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+								"	<a href=\"javascript:visualizarFactura('http://10.20.26.6:9085/"+pathXML+"/FacturacionElectronica_" + FacturacionMayoreoDao.llenaIdFactura("ACC",this.getUFolioFacturaByKfactura(pagoComplementoPadre.getKfactura(),false).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 
 		    		            "		<img alt='Factura - XML' id=\"imgXML\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoXml.png' />" +
 								"	</a>" +
