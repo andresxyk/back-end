@@ -6,19 +6,18 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import mx.com.web2lab.backend.beans.facturacion.DatosAdicionalesBean;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import mx.com.web2lab.backend.beans.facturacion.Definitivo;
+import mx.com.web2lab.backend.beans.facturacion.FacturacionBean;
 import mx.com.web2lab.backend.beans.facturacion.TdatoAdicionalBean;
-import mx.com.web2lab.backend.dao.ap.DatosOrdenDao;
 import mx.com.web2lab.backend.hbm.HibernateUtil;
 import mx.com.web2lab.backend.hbm.om.ap.CDatoAdicional;
 import mx.com.web2lab.backend.hbm.om.ap.TDatoAdicional;
-import mx.com.web2lab.backend.hbm.om.ap.TOrdenSucursal;
-
 import mx.com.web2lab.backend.util.Formatos;
 import net.sf.hibernate.Query;
 import net.sf.hibernate.Session;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 public class FacturacionPrevioDao {
 
@@ -27,8 +26,7 @@ public class FacturacionPrevioDao {
 	private Session iObjSesion = null;
 	
 	private Formatos objFormatos = new Formatos();
-	
-	
+
 	public FacturacionPrevioDao(){
 		iObjSesion = HibernateUtil.getSession();
 	}
@@ -326,8 +324,7 @@ public class FacturacionPrevioDao {
 	
 	
 	
-	
-    public String getPrevioFacturacion(String cConvenio,String uUserId,String strBloque, String nTipoPrevio, String nTipoFacturacion,String monto,String razon) throws Exception {
+	public FacturacionBean getFacturaById(int kfactura) throws Exception {
 		iObjSesion = HibernateUtil.getSession();
 		java.sql.Connection objConn = null;
 		java.sql.ResultSet objRst = null;
@@ -336,7 +333,62 @@ public class FacturacionPrevioDao {
 		String strReturn = "";
 		boolean bTipoFacturacion=false;
 		String strSpFuncion="";
-		
+		FacturacionBean dto = new FacturacionBean();
+    	try{
+    		iObjLog.debug("Entrando FacturacionMayoreoDao.getFacturaById:Entrando...  ");
+            HibernateUtil.beginTrans();	            
+            objConn = iObjSesion.connection();
+            objStmt = objConn.createStatement();
+            
+			strSQL = "select tf.msubtotal,tf.miva,tf.mtotal,ccdf.cconvenio,ccdf.sdigitoscuenta,ccdf.stipopago,cc.cmarca, tf.centidadlegal, tf.ufoliofactura " +					
+						" from t_factura tf,c_convenio_dato_fiscal ccdf,t_dato_fiscal tdf,c_cliente cc " +	
+						" where tf.cconvenio=ccdf.cconvenio " +
+						" and tdf.kdatofiscal=ccdf.kdatofiscal " +
+						" and cc.ccliente=tf.ccliente " +
+						" and tf.kfactura=" +  kfactura ;						
+				iObjLog.debug("Entrando FacturacionMayoreoDao.getFacturaById:Consulta...  " + strSQL);
+				objRst = objStmt.executeQuery(strSQL);
+				int inti = 1;
+				if(objRst != null) {
+					while(objRst.next()) {
+						dto.setMtotal(objRst.getDouble("mtotal"));
+						dto.setMsubtotal(objRst.getDouble("msubtotal"));
+						dto.setMiva(objRst.getDouble("miva"));
+						dto.setCconvenio(objRst.getInt("cconvenio"));
+						dto.setCmarca(objRst.getInt("cmarca"));
+						dto.setCentidadlegal(objRst.getInt("centidadlegal"));
+						dto.setUfoliofactura(objRst.getInt("ufoliofactura"));
+				inti++;
+					}				
+					objRst.close();
+				}
+			 
+			iObjLog.debug("Saliendo FacturacionMayoreoDao.getFacturaById:Saliendo...  " + strReturn);
+		} catch (Exception aObjExcepcion) { 
+			iObjLog.error("ERROR FacturacionMayoreoDao.getFacturaById: ", aObjExcepcion);
+			throw aObjExcepcion;
+        } finally{
+			objRst = null;
+			objStmt = null;
+        	HibernateUtil.closeSession();
+		}		
+		return dto;
+   	}
+	
+	
+	
+	
+    public Definitivo getPrevioFacturacion(String cConvenio,String uUserId,String strBloque, String nTipoPrevio, String nTipoFacturacion,String monto,String razon) throws Exception {
+		iObjSesion = HibernateUtil.getSession();
+		java.sql.Connection objConn = null;
+		java.sql.ResultSet objRst = null;
+		java.sql.Statement objStmt = null;
+		String strSQL = "";		
+		String strReturn = "";
+		Definitivo definitivo = new Definitivo();
+		int kfactura = 0;
+		boolean bTipoFacturacion=false;
+		String strSpFuncion="";
     	try{
     		iObjLog.debug("Entrando FacturacionMayoreoDao.generarPrevio:Entrando...  " + cConvenio +" "+strBloque+" "+nTipoPrevio+" "+nTipoFacturacion);
             HibernateUtil.beginTrans();	            
@@ -346,7 +398,7 @@ public class FacturacionPrevioDao {
             if((!cConvenio.equals("0")) && (strBloque.length()>0) && (!nTipoPrevio.equals("0"))) {
 				if(nTipoFacturacion.equals("1")) {
 					bTipoFacturacion=true;
-				}
+				} 
 				if(monto.equals("0")) {
 					monto="-1";
 				} 
@@ -392,6 +444,7 @@ public class FacturacionPrevioDao {
 										"<td align=\"center\">" + objRst.getString("sdatoadicional9") 							+ "</td>" +
 										"<td align=\"center\">" + objRst.getString("sdatoadicional10") 							+ "</td>" +
 										"</tr>";
+							kfactura = objRst.getInt("kfactura");
 					   } else if(nTipoPrevio.equals("2")) {
 						   strReturn +="<tr>" +
 									"<td align=\"center\">" + inti 															+ "</td>" +
@@ -417,7 +470,7 @@ public class FacturacionPrevioDao {
 									"<td align=\"center\">" + objRst.getString("sdatoadicional9") 							+ "</td>" +
 									"<td align=\"center\">" + objRst.getString("sdatoadicional10") 							+ "</td>" +
 									"</tr>";
-						   
+						   kfactura = objRst.getInt("kfactura");
 					   } else if(nTipoPrevio.equals("3")) {
 						   strReturn +="<tr>" +
 									"<td align=\"center\">" + inti 															+ "</td>" +
@@ -432,7 +485,7 @@ public class FacturacionPrevioDao {
 									"<td align=\"center\">" + objFormatos.formateaNumero(objRst.getString("mtotal")) 		+ "</td>" +
 									"<td align=\"center\">" + objRst.getString("uconsecutivo") 								+ "</td>" +
 									"</tr>";
-						   
+						   kfactura = objRst.getInt("kfactura");
 					   }
 					 
 				inti++;
@@ -440,6 +493,8 @@ public class FacturacionPrevioDao {
 					objRst.close();
 				}
 			} 
+            definitivo.setReporte(strReturn);
+            definitivo.setKfactura(kfactura);
 			iObjLog.debug("Saliendo FacturacionMayoreoDao.getPrevioFacturacion:Saliendo...  " + strReturn);
 		} catch (Exception aObjExcepcion) { 
 			iObjLog.error("ERROR FacturacionMayoreoDao.getPrevioFacturacion: ", aObjExcepcion);
@@ -449,7 +504,7 @@ public class FacturacionPrevioDao {
 			objStmt = null;
         	HibernateUtil.closeSession();
 		}		
-		return strReturn;
+		return definitivo;
    	}
     
    public String getBloque(String strBloque){

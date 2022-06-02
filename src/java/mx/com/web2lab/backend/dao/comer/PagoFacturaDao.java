@@ -19,6 +19,7 @@ import mx.com.web2lab.backend.dao.facturacion.mayoreo.FacturacionMayoreoDao;
 import mx.com.web2lab.backend.hbm.HibernateUtil;
 import mx.com.web2lab.backend.hbm.om.ap.CTipoPagoFactura;
 import mx.com.web2lab.backend.hbm.om.ap.TFactura;
+import mx.com.web2lab.backend.hbm.om.ap.TNotaCredito;
 import mx.com.web2lab.backend.hbm.om.ap.TPagoFactura;
 import mx.com.web2lab.backend.util.Consumo;
 import mx.com.web2lab.backend.util.Formatos;
@@ -42,7 +43,7 @@ public class PagoFacturaDao {
 	
 	
 	public int pago(PagoFacturaBean objPagoFacturaBean,double monto, String formaPago, int marca,
-			String rfcBanco, String nomBanco, String cuentaClabe, String numOperacion) throws Exception{
+			String rfcBanco, String nomBanco, String cuentaClabe, String numOperacion, boolean sustitucion, String uuidSustitucion) throws Exception{
 
 		iObjLog.debug("Entrando PagoFacturaDao.pago:Entrando...  " + objPagoFacturaBean.getKfactura()+"  "+marca+"   "+formaPago);
 		int kpago=0;
@@ -64,6 +65,8 @@ public class PagoFacturaDao {
 		}else if(marca==8){
 			keycontrolfolio=161;
 		}else if(marca==9){
+			keycontrolfolio=161;
+		}else if(marca == 15){
 			keycontrolfolio=161;
 		}
 		String forPago="";
@@ -90,6 +93,10 @@ public class PagoFacturaDao {
 		if(numOperacion.length()>0){
 			camposopcionales+=", snumerooperacion";
 			datosopcionales+=",'"+numOperacion+"'";
+		}
+		if(sustitucion){
+			camposopcionales+=", suddi";
+			datosopcionales+=",'"+uuidSustitucion+"'";
 		}
 		
 		Date date = new Date();
@@ -130,6 +137,64 @@ public class PagoFacturaDao {
 		return kpago;
 			
 	}
+	
+	public String statusComplemento(int folioSustitucion, String uuidSustitucion) throws Exception{
+
+		iObjLog.debug("Entrando PagoFacturaDao.statusComplemento:Entrando...  " + folioSustitucion+"  "+uuidSustitucion);
+		String res = "";
+		int kpago=0;
+		Connection objConn 	   = null;
+		Statement objStatement = null;
+		ResultSet rst = null;
+		Query objQuery = null;
+		String strSQL = "";
+		int cestadoregistro = 0;
+		String suuid = "";
+		
+		strSQL="select cestadoregistro, suddi from t_factura where csucursal = 1016 and ufoliofactura = "+folioSustitucion;
+		try{
+			iObjLog.debug("Entrando PagoFacturaDao.pago:Entrando...  " + strSQL);
+			
+			objConn = iObjSesion.connection();				
+			objStatement = objConn.createStatement();	
+			
+			rst = objStatement.executeQuery(strSQL);
+			if(rst != null) {
+				while(rst.next()) {
+					cestadoregistro=rst.getInt("cestadoregistro");
+					suuid = rst.getString("suddi");
+					break;
+				}				
+				rst.close();
+			}
+			
+			if(cestadoregistro==0 && suuid.equals("")){
+				res = "No se tiene registro de la factura a sustituir";
+			}else{
+				if(cestadoregistro != 34){
+					res = "Complemento de pago no cancelado";
+				}else{
+					if(suuid.equals(uuidSustitucion)){
+						res = "Correcto";
+					}else{
+						res = "El UUID no es igual al que se tiene registrado";
+					}
+				}
+			}
+			
+		}catch (Exception aObjExcepcion) { 
+			iObjLog.error("ERROR PagoFacturaDao.statusComplemento: ", aObjExcepcion);
+			throw aObjExcepcion;			
+    	}finally{
+    		if (objStatement != null) {
+				objStatement.close();
+				objStatement = null;
+			}
+    	}
+		return res;
+			
+	}
+	
 	
 	public int pagoMulti(Date fechaPago,double monto, String formaPago, int convenio, String kfactura,
 			String rfcBanco, String nomBanco, String cuentaClabe, String numOperacion) throws Exception{
@@ -187,6 +252,7 @@ public class PagoFacturaDao {
 			camposopcionales+=", snumerooperacion";
 			datosopcionales+=",'"+numOperacion+"'";
 		}
+		
 		
 		Date date = new Date();
 		DateFormat hourFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
@@ -420,13 +486,13 @@ public class PagoFacturaDao {
 				if (objListaFactura.size() >0) {
 					objTFactura = (TFactura)objListaFactura.get(0);
 					
-					PagoFacturaBean objPagoFacturaBeanActual = this.getDatosPagoFactura(objPagoFacturaBean.getKfactura(), false);
+					PagoFacturaBean objPagoFacturaBeanActual = this.getDatosPagoFactura(objPagoFacturaBean.getKfactura(), false,true);
 					
 					objTipoPagoFactura.setCtipopago(new Integer(objPagoFacturaBean.getCtipopago()));
 					/* Creacion de un nuevo Pago de la Factura */	
 					objTPagoFactura.setCtipopago(objTipoPagoFactura);
 					objTPagoFactura.setDfechapago(objPagoFacturaBean.getDfechapago());
-					objTPagoFactura.setDregistro(objPagoFacturaBean.getDregistro());
+				 	objTPagoFactura.setDregistro(objPagoFacturaBean.getDregistro());
 					objTPagoFactura.setManticipo(objPagoFacturaBean.getManticipo());
 					objTPagoFactura.setMpago(objPagoFacturaBean.getMpago());
 					objTPagoFactura.setMtotalfactura(objTFactura.getMtotal());
@@ -437,7 +503,7 @@ public class PagoFacturaDao {
 					objTPagoFactura.setUgrupopago(objPagoFacturaBean.getUgrupopago());
 					objTPagoFactura.setKnotacredito(new Integer(0));
 					objTPagoFactura.setKpagocomplemento(new Integer(keypago));
-					
+					iObjLog.debug( objPagoFacturaBeanActual.getMsaldo().doubleValue()+  ">=" + objPagoFacturaBean.getMpago().doubleValue());
 					if (objPagoFacturaBeanActual.getMsaldo().doubleValue() >= objPagoFacturaBean.getMpago().doubleValue()) {
 						iObjSesion.save(objTPagoFactura);					
 						iObjSesion.flush(); 
@@ -471,7 +537,7 @@ public class PagoFacturaDao {
      * Versión 25 de Marzo 2013 
      BY Tomar en cuenta el registro 
      */
-       public PagoFacturaBean getDatosPagoFactura(int kFactura, boolean bolcloseConection) throws Exception {
+       public PagoFacturaBean getDatosPagoFactura(int kFactura, boolean bolcloseConection, boolean pagos) throws Exception {
              List objListaFactura = null;
              iObjSesion = HibernateUtil.getSession();
              Query objQuery = null;
@@ -515,7 +581,7 @@ public class PagoFacturaDao {
                                          objPagoFacturaBean.setSgridpagos(objPagoFacturaBean.getSgridpagos() + this.getBodyPagos(objTPagoFactura));                                             
                                         strFolioFactura = "DETALLE PAGOS - FACTURA: " + FacturacionMayoreoDao.llenaIdFactura(objTPagoFactura.getTfactura().getSserie(), objTPagoFactura.getTfactura().getUfoliofactura() + "", 8) + " MONTO: $" + objTPagoFactura.getMtotalfactura();
                                   }
-                                  objPagoFacturaBean.setSgridpagos(this.getEncabezadoPagos(strFolioFactura) + objPagoFacturaBean.getSgridpagos() + "</table>");
+                                  objPagoFacturaBean.setSgridpagos(this.getEncabezadoPagos(strFolioFactura,pagos) + objPagoFacturaBean.getSgridpagos() + "</table>");
                            }
                     }
                     if (bolExistenPagos == false) {
@@ -535,25 +601,25 @@ public class PagoFacturaDao {
                                         objTFactura = (TFactura)objListaFactura.get(0);
                                         iObjLog.debug("Consulta FacturacionMayoreoDao.getDatosPagoFactura:Consulta...2  " + objTFactura.getKfactura() + " " + objTFactura.getMtotal().doubleValue());
                                         objPagoFacturaBean.setSformatofactura(FacturacionMayoreoDao.llenaIdFactura(objTFactura.getSserie(), objTFactura.getUfoliofactura() + "", 8));
-                                        if(objTFactura.getScadenaoriginal()!=null && !objTFactura.getScadenaoriginal().trim().equals("")){
-	                                        String [] cadena=objTFactura.getScadenaoriginal().split("\\|");
-	                                        if( (objTFactura.getMtotal().compareTo(new BigDecimal(cadena[11]))!=0) ){
-	                                        	this.updateMontosTFactura(objTFactura.getKfactura().intValue(),new BigDecimal(cadena[11]), new BigDecimal(cadena[8]));
-	                                        	objTFactura.setMtotal(new BigDecimal(cadena[11]));
-	                                        }
-                                       }else{                                    	   
-                                    	   String rutaXML = FacturacionMayoreoDao.pathXmlTimbrado(objTFactura.getCsucursal())+objPagoFacturaBean.getSformatofactura()+".xml";
-                                    	   File af = new File(rutaXML);
-                                    	   if(af.exists()){
-                                    		   String str =FacturacionMayoreoDao.xmlString(af);
-                                    		   BigDecimal total = FacturacionMayoreoDao.obtenerTotal(str);
-                                    		   BigDecimal subTotal = FacturacionMayoreoDao.obtenerSubTotal(str);
-                                    		   if( (objTFactura.getMtotal().compareTo(total)!=0) ){
-   	                                        	this.updateMontosTFactura(objTFactura.getKfactura().intValue(),total,subTotal);
-   	                                        	objTFactura.setMtotal(total);
-   	                                        }
-                                    	   }                                    	   
-                                       }
+//                                        if(objTFactura.getScadenaoriginal()!=null && !objTFactura.getScadenaoriginal().trim().equals("")){
+//	                                        String [] cadena=objTFactura.getScadenaoriginal().split("\\|");
+//	                                        if( (objTFactura.getMtotal().compareTo(new BigDecimal(cadena[11]))!=0) ){
+//	                                        	this.updateMontosTFactura(objTFactura.getKfactura().intValue(),new BigDecimal(cadena[11]), new BigDecimal(cadena[8]));
+//	                                        	objTFactura.setMtotal(new BigDecimal(cadena[11]));
+//	                                        }
+//                                       }else{                                    	   
+//                                    	   String rutaXML = FacturacionMayoreoDao.pathXmlTimbrado(objTFactura.getCsucursal())+objPagoFacturaBean.getSformatofactura()+".xml";
+//                                    	   File af = new File(rutaXML);
+//                                    	   if(af.exists()){
+//                                    		   String str =FacturacionMayoreoDao.xmlString(af);
+//                                    		   BigDecimal total = FacturacionMayoreoDao.obtenerTotal(str);
+//                                    		   BigDecimal subTotal = FacturacionMayoreoDao.obtenerSubTotal(str);
+//                                    		   if( (objTFactura.getMtotal().compareTo(total)!=0) ){
+//   	                                        	this.updateMontosTFactura(objTFactura.getKfactura().intValue(),total,subTotal);
+//   	                                        	objTFactura.setMtotal(total);
+//   	                                        }
+//                                    	   }                                    	   
+//                                       }
                                        objPagoFacturaBean.setMsaldo(objTFactura.getMtotal());
                                        objPagoFacturaBean.setMtotalfactura(objTFactura.getMtotal());
                                         objPagoFacturaBean.setManticipo(new BigDecimal(0));
@@ -806,9 +872,45 @@ public class PagoFacturaDao {
 		iObjLog.debug("Consulta PagoFacturaDao.getBodyPagos:...  ");
 		iObjLog.debug("+++++++++"+objPagoFacturaBean.getKnotacredito());
 		if(objPagoFacturaBean.getKnotacredito().intValue()>0){
+			String pathPDF = "";
+			String pathXML = "";
+			String Observacion ="";
+			String archivos = "";
+			TNotaCredito notaCredito = getTNotaCredito(objPagoFacturaBean.getKnotacredito(), false);
+			
+			switch (notaCredito.getCentidadlegal()) {
+			case 1: pathPDF = "FacturasElectronicas_Olab/XMLTMP/PDF";
+						pathXML = "FacturasElectronicas_Olab/XML";
+				break;
+			case 5: pathPDF = "FacturasElectronicas_Azteca/XMLTMP/PDF";
+						pathXML = "FacturasElectronicas_Azteca/XML";
+				break;
+			case 6: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
+						pathXML = "FacturasElectronicas_Swisslab/XML";
+				break;
+			case 16: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
+						pathXML = "FacturasElectronicas_Swisslab/XML";
+			break;
+			case 7: pathPDF = "FacturasElectronicas_Jenner/Prado/XMLTMP/PDF";
+						pathXML = "FacturasElectronicas_Jenner/Prado/XML";
+				break;
+			case 8: pathPDF = "FacturasElectronicas_Jenner/Lean/XMLTMP/PDF";
+						pathXML = "FacturasElectronicas_Jenner/Lean/XML";
+				break;
+			default:
+				break;
+			}
+			archivos = "<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
+					"	<a href=\"javascript:visualizarFactura('http://10.20.26.6:9085/"+pathPDF+"/NotaCredito_" + FacturacionMayoreoDao.llenaIdNC(notaCredito.getSserie(),String.valueOf(notaCredito.getUfoliofactura()),7) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+		            "		<img alt='Factura - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
+					"	</a>" +
+					"	<a href=\"javascript:visualizarFactura('http://10.20.26.6:9085/"+pathXML+"/NotaCredito_" + FacturacionMayoreoDao.llenaIdNC(notaCredito.getSserie(),String.valueOf(notaCredito.getUfoliofactura()),7) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+		            "		<img alt='Factura - XML' id=\"imgXML\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoXml.png' />" +
+					"	</a>" +
+					"</td>";
+			
 			strReturn = ("<tr>" + 
-					"	<td align='center'>" + 
-							objPagoFacturaBean.getCtipopago().getStipopago() + 
+					"	<td align='center'>" +  
 					"	</td>" + 
 					"	<td align='center'>" + 
 						objFormatos.getFechaCompleta(objPagoFacturaBean.getDfechapago()) + 
@@ -819,9 +921,7 @@ public class PagoFacturaDao {
 					"	<td align='center'>" + 
 							"$" + objPagoFacturaBean.getMsaldo() + 
 					"	</td>" +
-					"	<td align='center'>" + 
-						"-" + 
-					"	</td>" +
+					archivos+
 					"	<td align='center'>" + 
 						"Nota de Credito" + 
 					"	</td>" +
@@ -848,6 +948,9 @@ public class PagoFacturaDao {
 					case 6: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
 								pathXML = "FacturasElectronicas_Swisslab/XML";
 						break;
+					case 16: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
+					pathXML = "FacturasElectronicas_Swisslab/XML";
+					break;
 					case 7: pathPDF = "FacturasElectronicas_Jenner/Prado/XMLTMP/PDF";
 								pathXML = "FacturasElectronicas_Jenner/Prado/XML";
 						break;
@@ -860,10 +963,14 @@ public class PagoFacturaDao {
 					if(pagoComplemento.getNcomplementogenerado().intValue()==1){
 						Observacion="COMPLEMENTO GENERADO";
 						archivos = "<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
-							"	<a href=\"javascript:visualizarFactura('http://40.84.228.70:9085/"+pathPDF+"/FacturacionElectronica_" + FacturacionMayoreoDao.llenaIdFactura("ACC",this.getUFolioFacturaByKfactura(pagoComplemento.getKfactura(),false).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+
+							"	<a href=\"javascript:visualizarFactura('http://10.20.26.6:9085/"+pathPDF+"/FacturacionElectronica_" + FacturacionMayoreoDao.llenaIdFactura("ACC",this.getUFolioFacturaByKfactura(pagoComplemento.getKfactura(),false).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+
 	    		            "		<img alt='Factura - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
 							"	</a>" +
-							"	<a href=\"javascript:visualizarFactura('http://40.84.228.70:9085/"+pathXML+"/FacturacionElectronica_" + FacturacionMayoreoDao.llenaIdFactura("ACC",this.getUFolioFacturaByKfactura(pagoComplemento.getKfactura(),false).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+
+							"	<a href=\"javascript:visualizarFactura('http://10.20.26.6:9085/"+pathXML+"/FacturacionElectronica_" + FacturacionMayoreoDao.llenaIdFactura("ACC",this.getUFolioFacturaByKfactura(pagoComplemento.getKfactura(),false).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+
 	    		            "		<img alt='Factura - XML' id=\"imgXML\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoXml.png' />" +
 							"	</a>" +
 							"</td>";
@@ -905,6 +1012,9 @@ public class PagoFacturaDao {
 					case 6: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
 								pathXML = "FacturasElectronicas_Swisslab/XML";
 						break;
+					case 16: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
+					pathXML = "FacturasElectronicas_Swisslab/XML";
+					break;
 					case 7: pathPDF = "FacturasElectronicas_Jenner/Prado/XMLTMP/PDF";
 								pathXML = "FacturasElectronicas_Jenner/Prado/XML";
 						break;
@@ -912,15 +1022,19 @@ public class PagoFacturaDao {
 								pathXML = "FacturasElectronicas_Jenner/Lean/XML";
 						break;
 					default:
-						break;
+						break; 
 					}
 					if(pagoComplementoPadre.getNcomplementogenerado().intValue()==1){
 						Observacion="COMPLEMENTO GENERADO";
 						archivos="<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
-								"	<a href=\"javascript:visualizarFactura('http://40.84.228.70:9085/"+pathPDF+"/FacturacionElectronica_" + FacturacionMayoreoDao.llenaIdFactura("ACC",this.getUFolioFacturaByKfactura(pagoComplementoPadre.getKfactura(),false).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+
+								"	<a href=\"javascript:visualizarFactura('http://10.20.26.6:9085/"+pathPDF+"/FacturacionElectronica_" + FacturacionMayoreoDao.llenaIdFactura("ACC",this.getUFolioFacturaByKfactura(pagoComplementoPadre.getKfactura(),false).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+
 		    		            "		<img alt='Factura - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
 								"	</a>" +
-								"	<a href=\"javascript:visualizarFactura('http://40.84.228.70:9085/"+pathXML+"/FacturacionElectronica_" + FacturacionMayoreoDao.llenaIdFactura("ACC",this.getUFolioFacturaByKfactura(pagoComplementoPadre.getKfactura(),false).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+
+								"	<a href=\"javascript:visualizarFactura('http://10.20.26.6:9085/"+pathXML+"/FacturacionElectronica_" + FacturacionMayoreoDao.llenaIdFactura("ACC",this.getUFolioFacturaByKfactura(pagoComplementoPadre.getKfactura(),false).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+
 		    		            "		<img alt='Factura - XML' id=\"imgXML\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoXml.png' />" +
 								"	</a>" +
 								"</td>";
@@ -983,7 +1097,14 @@ public class PagoFacturaDao {
      * Versión 25 de Marzo 2013 
      BY
      */
-	private String getEncabezadoPagos(String strTitulo) {
+	private String getEncabezadoPagos(String strTitulo, boolean pagos) {
+		String botonReversar = "";
+		if (pagos){
+			botonReversar = "<tr>"+
+							"	<input type=\"button\" value=\"Reversar Pago\" name=\"Reversar Pago\" class=\"boton\" onclick=\"reversarPago();\">"+
+							"</tr>";
+		}
+		
 		return ("<table width=\"100%\" class=\"tabla\">" + 
 				"<tr>" + 
 				"<th colspan='8'>" +
@@ -992,9 +1113,7 @@ public class PagoFacturaDao {
 				"    </center>" +
 				"</th>     " +
 				"</tr>" +
-				"<tr>"+
-				"	<input type=\"button\" value=\"Reversar Pago\" name=\"Reversar Pago\" class=\"boton\" onclick=\"reversarPago();\">"+
-				"</tr>"+
+				botonReversar+
 				"<tr>" + 
 				"<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
 				"	<b><font color='black'>CUENTA" + 
@@ -1218,6 +1337,41 @@ public class PagoFacturaDao {
 		}		
 		return pagoComplemento;
    	}
+	
+	public TNotaCredito getTNotaCredito(Integer knotacredito,boolean bolcloseConection) throws Exception {
+		iObjSesion = HibernateUtil.getSession();
+		java.sql.Connection objConn = null;
+		java.sql.ResultSet objRst = null;
+		java.sql.Statement objStmt = null;
+		String strQuery = "";
+		TNotaCredito notaCredito = new TNotaCredito();
+    	try{
+			iObjLog.debug("Entrando PagoFacturaDao.getTNotaCredito:Entrando...  ");
+            HibernateUtil.beginTrans();	            
+            objConn = iObjSesion.connection();
+            objStmt = objConn.createStatement();	            
+			strQuery =  "select * from t_nota_credito where knotacredito = "+knotacredito;
+			iObjLog.debug("Entrando PacientesDao.getTNotaCredito:Consulta...  " + strQuery);
+			objRst = objStmt.executeQuery(strQuery);
+			while (objRst.next()) {
+				notaCredito.setUfoliofactura(objRst.getInt("ufoliofactura"));
+				notaCredito.setCentidadlegal(objRst.getInt("centidadlegal"));	
+				notaCredito.setSserie(objRst.getString("sserie"));
+			}
+			iObjLog.debug("Saliendo PagoFacturaDao.getTNotaCredito:Saliendo...  ");
+		} catch (Exception aObjExcepcion) { 
+			iObjLog.error("ERROR PagoFacturaDao.getTNotaCredito: ", aObjExcepcion);
+			throw aObjExcepcion;
+        } finally{
+			objRst = null;
+			objStmt = null;
+			if(bolcloseConection){
+				HibernateUtil.closeSession();
+			}
+		}		
+		return notaCredito;
+   	}
+	
 	
 	public Integer getUFolioFacturaByKfactura(Integer kFactura, boolean bolcloseConection) throws Exception {
 		iObjSesion = HibernateUtil.getSession();

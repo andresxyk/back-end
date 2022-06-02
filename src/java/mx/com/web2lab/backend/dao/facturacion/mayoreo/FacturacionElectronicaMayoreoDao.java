@@ -77,6 +77,8 @@ public class FacturacionElectronicaMayoreoDao {
 			csucursal="1012";
 		}else if (marca==5){
 			csucursal="1013";
+		}else if (marca==15){
+			csucursal="1017";
 		}else if (marca==7){
 			if(serie.equals("AJP")){
 				csucursal="1014";				
@@ -280,7 +282,7 @@ public class FacturacionElectronicaMayoreoDao {
 			
 				objStatement = objConn.createStatement();		
 				strSQL="select count(toesf.kordensucursal) cantidad, toesf.cexamen as cexamen, to_char('NO APLICA') unidad, toesf.sexamen as sexamen, "+
-						"round (sum((toesf.mfacturaempresa/1.16))/ count(distinct(toesf.kordensucursal)),2)costo_unitario, "+
+						"round (sum((toesf.mfacturaempresa/1.16))/ count(toesf.kordensucursal),2)costo_unitario, "+
 						"(round (sum((toesf.mfacturaempresa/1.16)),2) )importe, tosf.kfactura as kfactura "+
 						"from	t_orden_sucursal tos,t_orden_sucursal_fac tosf, t_orden_examen_sucursal_fac toesf, "+
 						"c_examen ce, c_convenio cc where toesf.kordensucursal = tosf.kordensucursal "+
@@ -322,7 +324,7 @@ public class FacturacionElectronicaMayoreoDao {
 		}
 	}	
 	
-	public FacturaSustitucionBean getUUIDTfactura(String ufoliosustitucion,int marca, String serie ) throws HibernateException{
+	public FacturaSustitucionBean getUUIDTfactura(String ufoliosustitucion,int marca, String serie ) {
 		iObjSesion = HibernateUtil.getSession();
 		java.sql.Connection objConn = null;
 		FacturaSustitucionBean facturaSustitucionBean = new FacturaSustitucionBean();
@@ -375,8 +377,6 @@ public class FacturacionElectronicaMayoreoDao {
 			if (objStatement != null){
 				objStatement = null;
 			}
-			HibernateUtil.closeSession();
-			iObjSesion.close();
 		}
 	}
 	

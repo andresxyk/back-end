@@ -370,6 +370,49 @@ public class NotaDeCreditoDao {
 			}		
 		}
 	 
+	 
+	 public int getMarcaConvenio(int iCconvenio) throws Exception {
+			iObjLog.debug("Entrando DatosAdicionalesDao.getMarcaConvenio:" + iCconvenio);
+			iObjSesion = HibernateUtil.getSession();
+			String strQuery = "";
+			String strReturn = "";
+			java.sql.Connection objConn = null;
+			java.sql.ResultSet objRst = null;
+			java.sql.Statement objStmt = null;
+			int marca = 0;
+	    	try{
+	            HibernateUtil.beginTrans();
+	            objConn = iObjSesion.connection();
+	            objStmt = objConn.createStatement();
+	            if (iCconvenio > 0) {
+	        		strQuery =  "select cc.* " +					
+								" from  E_Convenio cc " +					
+								" where cc.cconvenio = " +  iCconvenio;
+	            } 
+	            if (strQuery != "") {
+	            	objRst = objStmt.executeQuery(strQuery);
+	            	while (objRst.next()) {
+	            		marca = new Integer(objRst.getString("cmarca")).intValue();            		
+	            	}
+	            }
+				iObjLog.debug("Saliendo DatosAdicionalesDao.getMarcaConvenio...  " + strReturn);
+				return marca;
+			} catch (Exception aObjExcepcion) { 
+				iObjLog.error("ERROR DatosAdicionalesDao.getMarcaConvenio: ", aObjExcepcion);
+				throw aObjExcepcion;
+	        } finally{
+	    		objRst = null;
+	    		objStmt = null;
+	        	HibernateUtil.closeSession();
+			}		
+		}
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 	public String pintarGridFacturas(List objListaFacturaConvenio){
 		String strReturn="";
 		String strscript="";
@@ -626,7 +669,7 @@ public class NotaDeCreditoDao {
 			        				objNotaCreditoFacturaBean.setDregistro(objTFactura.getDregistro());
 			        				objListaFacturasConvenio.add(objNotaCreditoFacturaBean);	
 			        			}
-			        			strReturn=this.pintarGridFacturasElegidas(objListaFacturasConvenio);
+			        			strReturn=this.pintarGridFacturasElegidas(objListaFacturasConvenio,kfactura);
         			
 			        		}else{
 			        			strReturn="";
@@ -721,14 +764,14 @@ public class NotaDeCreditoDao {
 	
 	
 	
-	public String pintarGridFacturasElegidas(List objListaFacturaConvenio){
+	public String pintarGridFacturasElegidas(List objListaFacturaConvenio,String kfactura){
 		String strReturn="";
 		String strFacturasElegidas="";
 		double totalNota = 0.0;
 		NotaCreditoFacturaBean objNotaCreditoFacturaBean = null;
 		
 		iObjLog.debug("Entrando NotaDeCreditoDao.pintarGridFacturasElegidas...  " + objListaFacturaConvenio.size());
-		
+		 
 		strReturn="<table border='0' align='center' style='width: 883px' class='tabla'>" + 
 				  "	<tr colspan='2' align='center'>"+
 				  "		<td>" + 
@@ -787,24 +830,162 @@ public class NotaDeCreditoDao {
 							"			</font>"+
 							"		</td>"+
 							"   </tr>"+
+							"	<tr>"+
 							"		<td align=\"center\">"+
 							" 			<font color='black' size='4' >Convenio "+this.getNombreConvenio(objNotaCreditoFacturaBean.getCconvenio())+
 							"			</font>"+
 							"		</td>"+
-							"	<tr>"+
 							"   </tr>"+
-							"   <tr>"+
 							"   <tr>"+
 							"		<td align=\"center\">"+
 							"			Descripción que llevará la Nota de crédito:"+
 							"		</td>"+
 							"	</tr>"+
-							"   <td  align=\"center\">"+
-							"		"+
-							" 		 <textarea id=\"txtdescripcionNota\" rows=\"4\" cols=\"80\" >APLICA A LA FACTURA "+strFacturasElegidas.substring(0,strFacturasElegidas.length()-1)+
-							"		 </textarea>"+
+							"   <tr>"+
+							"  		<td  align=\"center\">"+
+							"			"+
+							" 			 <textarea id=\"txtdescripcionNota\" rows=\"4\" cols=\"80\" >APLICA A LA FACTURA "+strFacturasElegidas.substring(0,strFacturasElegidas.length()-1)+
+							"		 	 </textarea>"+
 							"	    </td>"+
 							"   </tr>"+
+							"	<tr>"+
+							"		<td><br><br>"+
+							"		</td>"+
+							"	</tr>"+
+							"	<tr>"+
+							"		<td>"+
+							"		<hr color=\"black\" size='2' ><br>"+
+							"		<div id='divFormFacturaNC' style='display:none'>"+
+							" 			<table border='0' align='center' style='width: 883px' class='tabla'>"+
+							"				<tr>"+
+							"					<td>"+
+							"						<b>Numero de Nota:</b>"+
+							"					</td>"+
+							"					<td>"+
+							"						<input type='text' id='txtNumNota' size='20' disabled>"+
+							"					</td>"+
+							"					<td>"+
+							"						<b>Numero de Factura:</b>"+
+							"					</td>"+
+							"					<td>"+
+							"						<input type='text' id='txtNumFactura' size='20' value='"+this.getufoliofactura(Integer.parseInt(kfactura))+"' disabled>"+
+							"					</td>"+
+							"				</tr>"+
+							"				<tr>"+
+							"					<td>"+
+							"						<b>Forma de Pago:</b>"+
+							"					</td>"+
+							"					<td>"+
+							"						<select id=\"selFormaPago\" style=\"width: 120px\" align=\"up\">"+
+						    "						<option value='01'>01 - EFECTIVO</option>"+
+						    "						<option value='02'>02 - CHEQUE NOMINATIVO</option>"+
+						   	"						<option value='03'>03 - TRANSFERENCIA ELECTRONICA DE FONDOS</option>"+
+						   	"						<option value='04'>04 - TARJETA DE CREDITO</option>"+ 
+						   	"						<option value='05'>05 - MONEDERO ELECTRONICO</option>"+
+						   	"						<option value='06'>06 - DINERO ELECTRONICO</option>"+
+						   	"						<option value='08'>08 - VALES DE DESPENSA</option>"+
+						   	"						<option value='12'>12 - DACION EN PAGO</option>"+
+						   	"						<option value='13'>13 - PAGO POR SUBROGACION</option>"+
+						   	"						<option value='14'>14 - PAGO POR CONSIGNACION</option>"+
+						   	"						<option value='15'>15 - CONDONACION</option>"+
+						   	"						<option value='17'>17 - COMPENSACION</option>"+
+						   	"						<option value='23'>23 - NOVACION</option>"+
+						   	"						<option value='24'>24 - CONFUSION</option>"+
+						   	"						<option value='25'>25 - REMISION DE DEUDA</option>"+
+						   	"						<option value='26'>26 - PRESCRIPCION O CADUCIDAD</option>"+
+						   	"						<option value='27'>27 - A SATISFACCION DEL ACREEDOR</option>"+
+						   	"						<option value='28'>28 - TARJETA DE DEBITO</option>"+
+						   	"						<option value='29'>29 - TARJETA DE SERVICIOS</option>"+
+						   	"						<option value='30'>30 - APLICACION DE ANTICIPOS</option>"+
+						   	"						<option value='99'>99 - POR DEFINIR</option>"+
+						   	"						</select>"+
+							"					</td>"+
+							"					<td>"+
+							"						<b>Método de Pago:</b>"+
+							"					</td>"+
+							"					<td>"+
+							"						<select id=\"selMetodoPago\" style=\"width: 120px\" align=\"up\">"+
+						    "						<option value='PUE'>PUE - PAGO EN UNA SOLA EXHIBICION</option>"+
+						   	"						</select>"+
+							"					</td>"+
+							"				</tr>"+
+							"				<tr>"+
+							"					<td>"+
+							"						<div id='divuuidFacturaLabel'>"+
+							"							<b>UUID Factura:</b>"+
+							"						</div>"+
+							"					</td>"+
+							"					<td>"+
+							"						<div id='divuuidFacturaText'>"+
+							"							<input type='text' id='txtUuidFactura' size='50' value='"+this.getUuidFactura(Integer.parseInt(kfactura))+"' disabled>"+
+							"						</div>"+
+							"					</td>"+
+							"					<td>"+
+							"					</td>"+
+							"					<td>"+
+							"					</td>"+
+							"				</tr>"+
+							"				<tr>"+
+							"					<td>"+
+							"						<input type='checkbox' id='chkAgregarSustitucion' onClick='showCamposSustitucion();'>Sustitucion"+
+							"					</td>"+
+							"				</tr>"+
+							"				<tr>"+
+							"					<td>"+
+							"						<div id='divuuidSustitucionLabel' style='display:none'>"+
+							"							<b>UUID Sustitucion:</b>"+
+							"						</div>"+
+							"					</td>"+
+							"					<td>"+
+							"						<div id='divuuidSustitucionText'  style='display:none'>"+
+							"							<input type='text' id='txtUuidSustitucion' size='50' disabled>"+
+							"							<a id='popupBuscar' href='javascript:doNothing()' onclick=\"javascript:showSubModalSustitucion();\">"+
+							"								<img alt='Buscar Sustitucion' id='imgBuscar' border='0' src=\"/web2labportal/images/icoBuscar.png\" width=\"25\" height=\"23\" />"+
+							"							</a>"+
+							"						</div>"+
+							"					</td>"+
+							"					<td>"+
+							"					</td>"+
+							"					<td>"+
+							"					</td>"+
+							"				</tr>"+
+							"				<tr>"+
+							"					<th colspan='2' nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
+							"						<b><font color='black'>Concepto" + 
+							"						</font></b>" +
+							"					</th>" + 
+							"					<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
+							"						<b><font color='black'>Cantidad" + 
+							"						</font></b>" +
+							"					</th>" + 
+							"					<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
+							"						<b><font color='black'>IVA" + 
+							"						</font></b>" +
+							"					</th>" +
+							"				</tr>"+
+							"				<tr>"+
+							"					<td colspan='2'>"+
+							"						<input type='text' id='txtConcepto' style=\"WIDTH: 100%\">"+
+							"					</td>"+
+							"					<td>"+
+							"						<input type='text' id='txtCantidad' style=\"WIDTH: 100%\">"+
+							"					</td>"+
+							"					<td>"+
+							"						<select id=\"selIva\" align=\"up\" style=\"WIDTH: 100%\" >"+
+						    "						<option value='0'>0</option>"+
+						    "						<option value='16'>0.16</option>"+
+						   	"						</select>"+
+							"					</td>"+							
+							"				</tr>"+
+							"				<tr>"+
+							"					<td align=\"right\">" + 
+							"						<br><input type='button' id='idEmitirNota' name='idEmitirNota' value='Emitir Nota de Credito' onClick='javascript:emitirNota();' class='boton'>"+
+							"					</td>" +
+							"				</tr>"+
+							"			</table>"+
+							"		</div>"+
+							"		</td>"+
+							"	</tr>"+
 							"</table>";
 			} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block
@@ -814,6 +995,78 @@ public class NotaDeCreditoDao {
 				e.printStackTrace();
 			}
 		return strReturn;
+	}
+	
+	public String getUuidFactura(int kfactura) throws Exception {
+		iObjLog.debug("Entrando DatosAdicionalesDao.getNombreConvenio:" + kfactura);
+		iObjSesion = HibernateUtil.getSession();
+		String strQuery = "";
+		String strReturn = "";
+		java.sql.Connection objConn = null;
+		java.sql.ResultSet objRst = null;
+		java.sql.Statement objStmt = null;
+		String suuid = "";
+    	try{
+            HibernateUtil.beginTrans();
+            objConn = iObjSesion.connection();
+            objStmt = objConn.createStatement();
+            if (kfactura > 0) {
+        		strQuery =  "select tf.* " +					
+							" from  t_factura tf " +					
+							" where tf.kfactura = " +  kfactura;
+            } 
+            if (strQuery != "") {
+            	objRst = objStmt.executeQuery(strQuery);
+            	while (objRst.next()) {
+            		suuid = objRst.getString("suddi");            		
+            	}
+            }
+			iObjLog.debug("Saliendo DatosAdicionalesDao.getNombreConvenio...  " + strReturn);
+			return suuid;
+		} catch (Exception aObjExcepcion) { 
+			iObjLog.error("ERROR DatosAdicionalesDao.getNombreConvenio: ", aObjExcepcion);
+			throw aObjExcepcion;
+        } finally{
+    		objRst = null;
+    		objStmt = null;
+        	HibernateUtil.closeSession();
+		}		
+	}
+	
+	public String getufoliofactura(int kfactura) throws Exception {
+		iObjLog.debug("Entrando DatosAdicionalesDao.getNombreConvenio:" + kfactura);
+		iObjSesion = HibernateUtil.getSession();
+		String strQuery = "";
+		String strReturn = "";
+		java.sql.Connection objConn = null;
+		java.sql.ResultSet objRst = null;
+		java.sql.Statement objStmt = null;
+		String folio = "";
+    	try{
+            HibernateUtil.beginTrans();
+            objConn = iObjSesion.connection();
+            objStmt = objConn.createStatement();
+            if (kfactura > 0) {
+        		strQuery =  "select tf.* " +					
+							" from  t_factura tf " +					
+							" where tf.kfactura = " +  kfactura;
+            } 
+            if (strQuery != "") {
+            	objRst = objStmt.executeQuery(strQuery);
+            	while (objRst.next()) {
+            		folio = objRst.getString("ufoliofactura");            		
+            	}
+            }
+			iObjLog.debug("Saliendo DatosAdicionalesDao.getNombreConvenio...  " + strReturn);
+			return folio;
+		} catch (Exception aObjExcepcion) { 
+			iObjLog.error("ERROR DatosAdicionalesDao.getNombreConvenio: ", aObjExcepcion);
+			throw aObjExcepcion;
+        } finally{
+    		objRst = null;
+    		objStmt = null;
+        	HibernateUtil.closeSession();
+		}		
 	}
 
 	public String pintarGridFacturasElegidasAsignacionBloque(List objListaFacturaConvenio){
@@ -1047,9 +1300,11 @@ public class NotaDeCreditoDao {
 		CConvenio objCconvenio=null;
 		TNotaCredito objTNotaCredito;
 		Integer knotacredito;
+		String [] splitFacturas  = strfacturasElegidas.split(",");
 		
 		try{
 				iObjLog.debug("Entrando NotaDeCreditoDao.persistirNota:...  cconvenio" +cconvenio+" strfacturasElegidas "+strfacturasElegidas + " strdescripcion "+strdescripcionnota);
+				int cmarca = getMarcaConvenio(cconvenio);
 				objNotaCreditoBean.setObjDatosFiscalesBean(objDatosFiscalesDAO.buscarDatosFiscalesConvenio(new Integer(cconvenio).longValue()));
 				objNotaCreditoBean.setCsucursal(new Integer(1004));
 				SucursalBean objSucursalTempBean = objSucursalDAO.getSucursal(objNotaCreditoBean.getCsucursal().intValue());
@@ -1066,14 +1321,20 @@ public class NotaDeCreditoDao {
 				objNotaCreditoBean.setMiva((dmontonotacredito)-((dmontonotacredito)/1.16));
 				objNotaCreditoBean.setMsubtotal((dmontonotacredito)-(objNotaCreditoBean.getMiva()));
 				objNotaCreditoBean.setMtotal(dmontonotacredito);
-				objNotaCreditoBean.setCentidadlegal(1);
+				objNotaCreditoBean.setCentidadlegal(objDatosFiscalesDAO.obtenerEntidadLegal(Integer.parseInt(splitFacturas[0])));
 				objNotaCreditoBean.setSfacturas(strfacturasElegidas);
 				objNotaCreditoBean.setIuserId(user_id.intValue());
-				objNotaCreditoBean.setSserie(objSucursalTempBean.getSserie());
+				if(cmarca == 15){
+					objNotaCreditoBean.setSserie("NCASL");					
+				}else{
+					objNotaCreditoBean.setSserie(objSucursalTempBean.getSserie());	
+				}
 				knotacredito=this.setNotaCredito(objNotaCreditoBean);
 				this.setPagoFactura(strfacturasElegidas,knotacredito,user_id);
-				strReturn="Nota creada "+this.llenaIdFactura(objSucursalTempBean.getSserie(),objNotaCreditoBean.getUfoliofactura().toString(), 8);
-			
+				//strReturn="Nota creada "+this.llenaIdFactura(objSucursalTempBean.getSserie(),objNotaCreditoBean.getUfoliofactura().toString(), 8);
+				objDatosFiscalesDAO.updateNCKfactura(knotacredito.intValue(), Integer.parseInt(splitFacturas[0]));
+				strReturn=objNotaCreditoBean.getUfoliofactura().toString();
+				
 		}catch(Exception aObjExcepcion){
 			iObjLog.error("ERROR OrdenDatosFacturacionDao.actualizarFacturaXML: ", aObjExcepcion);
 			throw aObjExcepcion;
@@ -1162,7 +1423,7 @@ public class NotaDeCreditoDao {
             objTNotaCredito.setCentidadlegal(objNotaCredito.getCentidadlegal());
             objTNotaCredito.setDregistro(new Date());
             objTNotaCredito.setCestadoregistro(33);
-            objTNotaCredito.setDcancelacionfactura(new Date());
+            objTNotaCredito.setDcancelacionfactura(null);
             objTNotaCredito.setUserIdChange(objNotaCredito.getIuserId());
             objTNotaCredito.setUserId(objNotaCredito.getIuserId());
             objTNotaCredito.setSobservacion("");

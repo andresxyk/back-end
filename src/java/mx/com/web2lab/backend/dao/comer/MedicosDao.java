@@ -57,7 +57,7 @@ public class MedicosDao {
 	            HibernateUtil.beginTrans();
 					strQuery = "select bPF " +					
 							" from CMedico bPF " +					
-							" where bPF.snombre=bPF.snombre and bPF.cclave != 1 and bPF.cclave != 99 ";
+							" where bPF.snombre=bPF.snombre and bPF.cclave != 1 and bPF.cclave != 99 and bPF.cmarca = 14 ";
 					if (objMedico.getCzona() > 0 ) {
 						iObjLog.debug("Entrando PacientesDao.buscarMedicos:Entrando...Zona  " +  objMedico.getCzona());
 						strQueryFiltro += " AND bPF.czonamedico.czona = " + objMedico.getCzona() + " ";
@@ -117,13 +117,72 @@ public class MedicosDao {
 								objMedicoBeanReturn.setUestadomedico(objMedicoReturn.getCestadoregistro().getCestadoregistro().intValue());
 								objMedicoBeanReturn.setSestadomedico(objMedicoReturn.getCestadoregistro().getSestadoregistro());
 								objMedicoBeanReturn.setSrfc(objMedicoReturn.getSrfc());
+								objMedicoBeanReturn.setSusuarioweb(objMedicoReturn.getSusuarioweb());
+								System.out.println("Splittt::"+objMedicoReturn.getSmarcasventa());
+								String [] splitMarcas = objMedicoReturn.getSmarcasventa().split(",");
+								for (int i = 0; i < splitMarcas.length; i++) {
+									System.out.println("for:::"+splitMarcas[i]);
+									if(splitMarcas[i].equals("1")){
+										objMedicoBeanReturn.setMarcaolab(true);
+									}
+									if(splitMarcas[i].equals("4")){
+										objMedicoBeanReturn.setMarcaazteca(true);
+									}
+									if(splitMarcas[i].equals("5")){
+										objMedicoBeanReturn.setMarcaswisslab(true);
+									}
+									if(splitMarcas[i].equals("7")){
+										objMedicoBeanReturn.setMarcajenner(true);
+									}
+									if(splitMarcas[i].equals("15")){
+										objMedicoBeanReturn.setMarcaliacsa(true);
+									}
+								}								
+								
 								iObjLog.debug("Consulta MedicosDao.buscarMedicos:Operacion...  " + objMedico.getUtipooperacion() );
 								if (objMedicoReturn.getCclave() > 0 && objMedicoReturn.getBregistrado() == true && objMedico.getUtipooperacion() == 1 && objListaMedicos.size() < 15) {
 									strQuery = "select cDM " +					
 											   " from CDireccionMedico cDM " +					
 											   " where cDM.cmedico= " + objMedicoReturn.getCmedico().intValue();
 									objQuery2 = iObjSesion.createQuery(strQuery);
-									objListaDirecciones = objQuery2.list(); 
+									objListaDirecciones = objQuery2.list();  
+									
+									if(objListaDirecciones.size()>0){
+										
+										objDireccion = (CDireccionMedico)objListaDirecciones.get(0);
+										
+										objMedicoBeanReturn.setSdireccion(objDireccion.getSdireccion());
+										objMedicoBeanReturn.setStelefono(objDireccion.getStelefono());																
+										objMedicoBeanReturn.setScolonia(objDireccion.getCcodigopostal().getScolonia());
+										objMedicoBeanReturn.setSdelegmuni(objDireccion.getCcodigopostal().getSdelegacionmunicipio());
+										objMedicoBeanReturn.setSciudad(objDireccion.getCcodigopostal().getSestado());
+										objMedicoBeanReturn.setScodigopostal(objDireccion.getCcodigopostal().getCpostal());
+										objMedicoBeanReturn.setKcodigopostal(objDireccion.getCcodigopostal().getCcodigopostal().intValue());
+										
+										objMedicoBeanReturn.setTipoDireccion(objDireccion.getCreferenciadireccion().getSreferenciadireccion());
+										objMedicoBeanReturn.setCtipoDireccion(objDireccion.getCreferenciadireccion().getCreferenciadireccion().intValue());
+										objMedicoBeanReturn.setSreferenciadireccion(objDireccion.getCreferenciadireccion().getSreferenciadireccion());
+										objMedicoBeanReturn.setCreferenciadireccion(objDireccion.getCreferenciadireccion().getCreferenciadireccion().intValue());
+										objMedicoBeanReturn.setCestadoregistro(objDireccion.getCestadoregistro().getCestadoregistro().intValue());
+									}else{
+										objMedicoBeanReturn.setSdireccion("");
+										objMedicoBeanReturn.setStelefono("");																
+										objMedicoBeanReturn.setScolonia("");
+										objMedicoBeanReturn.setSdelegmuni("");
+										objMedicoBeanReturn.setSciudad("");
+										objMedicoBeanReturn.setScodigopostal("");
+										objMedicoBeanReturn.setKcodigopostal(0);
+										
+										objMedicoBeanReturn.setTipoDireccion("");
+										objMedicoBeanReturn.setCtipoDireccion(0);
+										objMedicoBeanReturn.setSreferenciadireccion("");
+										objMedicoBeanReturn.setCreferenciadireccion(0);
+										objMedicoBeanReturn.setCestadoregistro(3);
+									}
+									
+									
+									
+									
 									objMedicoBeanReturn.setSgriddirecciones(this.getGridDireccionesMedico(objListaDirecciones,objMedicoReturn.getCestadoregistro().getCestadoregistro().intValue(),objMedicoReturn.getCestadoregistro().getSestadoregistro()));
 									objMedicoBeanReturn.setSgridtelefonos(this.getGridTelefonosMedico(objListaDirecciones));
 //									if (objListaDirecciones.size() > 0) {
@@ -303,6 +362,170 @@ public class MedicosDao {
 			return strReturn + "</table>";		
 	}
 		
+	
+	
+	public MedicoBean setMedicoAlta(MedicoBean objMedicoBean) throws Exception {
+		iObjSesion = HibernateUtil.getSession();
+		Query objQuery = null;
+		String strQuery = "";
+		List lstMedicos = new ArrayList();
+		CMedico objMedicoHB = new CMedico();		
+		List objListaDirecciones = new ArrayList();
+		CDireccionMedico objDireccion =  null;
+		Query objQuery2 = null;		
+		try {			
+            HibernateUtil.beginTrans();
+            
+            boolean existeMedico = false;
+            
+        	if (objMedicoBean.getCmedico().intValue()> 0) {		
+//        		String keymedico = objMedicoBean.getKmedico() +"";
+    			iObjLog.debug("Consulta MedicosDao.setMedicoAlta:...Por clave  " + objMedicoBean.getCmedico().intValue());
+        		strQuery =  "select cM " +					
+							" from CMedico cM " +					
+							" where cM.cmarca = 14 and cM.cclave = "+objMedicoBean.getCmedico().intValue();
+				objQuery = iObjSesion.createQuery(strQuery);
+//				objQuery.setParameter("cmedicoparam",Long.parseLong(keymedico));
+				lstMedicos = objQuery.list();
+				if(lstMedicos != null) {
+					if (lstMedicos.size() > 0) {
+						existeMedico = true;
+//						objMedicoHB = (CMedico)lstMedicos.get(0);
+					}
+				}			
+        	}
+        	
+        	
+        	
+        	
+//        	else {
+//    			iObjLog.debug("Consulta MedicosDao.setMedicoActualizacion:...Por nombre o appellidopaterno o appellidomaterno " + objMedicoBean.getSnombre().trim() + " " + objMedicoBean.getSappaterno().trim() + " " + objMedicoBean.getSapmaterno().trim());
+//        		strQuery =  "select cM " +					
+//        					" from CMedico cM " +					
+//							" where cM.cmarca = 14 AND cM.snombre like ('" + objMedicoBean.getSnombre().trim() + "') " +
+//							" AND cM.sapellidopaterno like ('" + objMedicoBean.getSappaterno().trim() + "') " +
+//        					" AND cM.sapellidomaterno like ('" + objMedicoBean.getSapmaterno().trim() + "') ";
+//				objQuery = iObjSesion.createQuery(strQuery);
+//				lstMedicos = objQuery.list();
+//				if(lstMedicos != null) {
+//					if (lstMedicos.size() > 0) {
+//						objMedicoHB = (CMedico)lstMedicos.get(0);
+//					}
+//				}			        		
+//        	} 
+        	
+        	
+        	if(!existeMedico){
+        		
+	        	
+	        	objMedicoHB.setSmarcasventa(objMedicoBean.getSmarcasventa());
+	        	objMedicoHB.setSusuarioweb(objMedicoBean.getSusuarioweb());
+	//        	if (objMedicoBean.getKmedico() == 0) {
+	        		objMedicoHB.setUser_id(objMedicoBean.getUserid());        		
+	//        	}else{
+	//        		objMedicoHB.setUser_id_change(objMedicoBean.getUserid());        		
+	//        	}
+	        	objMedicoHB.setSnombre(objMedicoBean.getSnombre().trim() + "");
+	        	objMedicoHB.setSapellidopaterno(objMedicoBean.getSappaterno().trim() + "");
+	        	objMedicoHB.setSapellidomaterno(objMedicoBean.getSapmaterno().trim() + "");
+	        	objMedicoHB.setSrfc(objMedicoBean.getSrfc().trim() + "");
+	        	objMedicoHB.setSemail(objMedicoBean.getScorreoelectro().trim() + "");      		
+	        	objMedicoHB.setCclave(objMedicoBean.getCmedico().intValue());
+	        		CEspecialidad objEspecialidad =  new CEspecialidad();
+	        		objEspecialidad.setCespecialidad(new Integer(objMedicoBean.getCespecialidad()));
+	        	objMedicoHB.setCespecialidad(objEspecialidad);
+	        		CMarca objMarca = new CMarca();
+	        		objMarca.setCmarca(new Integer(14));
+	        	objMedicoHB.setCmarca(objMarca);
+	        		CSexo objSexo = new CSexo();
+	        		objSexo.setCsexo(new Integer(objMedicoBean.getUsexo()));
+	        	objMedicoHB.setCsexo(objSexo);
+	        		CZonaMedico objZonaMedico = new CZonaMedico();
+	        		objZonaMedico.setCzona(new Integer(objMedicoBean.getCzona()));
+	        	objMedicoHB.setCzonamedico(objZonaMedico);
+	        	objMedicoHB.setBregistrado(true);
+	        	objMedicoHB.setDnacimiento(new Formatos().getFecha(objMedicoBean.getSnacimiento()));        	
+	        	objMedicoHB.setCformapagomedico(objMedicoBean.getCformapagomedico());
+	        	objMedicoHB.setShorariovisita(objMedicoBean.getShorariovisita().trim() + " ");        	
+	        	objMedicoHB.setScurp(objMedicoBean.getScurp().trim() + " ");
+	        	objMedicoHB.setUcategoriamedico(objMedicoBean.getUcategoriamedico());
+		        	CEstadoRegistro objEstadoRegistroMedico = new CEstadoRegistro();
+		        	objEstadoRegistroMedico.setCestadoregistro(new Integer(objMedicoBean.getUestadomedico()));
+	        	objMedicoHB.setCestadoregistro(objEstadoRegistroMedico);
+	//         	if (objMedicoBean.getKmedico() == 0) {
+	    			iObjLog.debug("Marca MedicosDao.setMedicoAlta Alta Medico");   
+	    			ToolsDao objTool = new ToolsDao();
+	    			
+	    			objMedicoHB.setCclave(objMedicoBean.getCmedico().intValue());
+	//    			objMedicoHB.setCclave(objTool.getSequenceNextId("cmedicoclave_sequence", iObjSesion.connection()).intValue());
+	    			iObjSesion.save(objMedicoHB);
+	    			  
+	    			
+					objDireccion = new CDireccionMedico();			
+						CCodigoPostal objCodigoPostal =  new CCodigoPostal();
+						objCodigoPostal.setCcodigopostal(new Integer(objMedicoBean.getKcodigopostal()));
+					objDireccion.setCcodigopostal(objCodigoPostal);
+					objDireccion.setSdireccion(objMedicoBean.getSdireccion().trim() + "");
+						CEstadoRegistro objEstadoRegistro = new CEstadoRegistro();
+						objEstadoRegistro.setCestadoregistro(new Integer(objMedicoBean.getCestadoregistro()));
+					objDireccion.setCestadoregistro(objEstadoRegistro);
+					objDireccion.setCmedico(objMedicoHB);
+						CReferenciaDireccion objRefereDirecc = new CReferenciaDireccion();
+						objRefereDirecc.setCreferenciadireccion(new Integer(objMedicoBean.getCtipoDireccion()));
+					objDireccion.setCreferenciadireccion(objRefereDirecc);
+					objDireccion.setStelefono(objMedicoBean.getStelefono().trim() + "");
+					objDireccion.setUser_id(new Integer(objMedicoBean.getUserid()));
+					objDireccion.setUser_id_change(new Integer(objMedicoBean.getUserid()));
+					iObjSesion.save(objDireccion);            		        	        		        		
+	//        	} else {
+	//    			iObjLog.debug("Marca MedicosDao.setMedicoActualizacion Actualizacion Medico");         		
+	//				strQuery = "select cDM " +					
+	//				   " from CDireccionMedico cDM " +					
+	//				   " where cDM.cmedico= " + objMedicoHB.getCmedico().intValue();
+	//				objQuery2 = iObjSesion.createQuery(strQuery);
+	//				objListaDirecciones = objQuery2.list(); 
+	//				objDireccion = (CDireccionMedico)objListaDirecciones.get(0);			
+	//					CCodigoPostal objCodigoPostal =  new CCodigoPostal();
+	//					objCodigoPostal.setCcodigopostal(new Integer(objMedicoBean.getKcodigopostal()));
+	//					
+	//					CReferenciaDireccion cReferenciaDireccion = new CReferenciaDireccion();
+	//					cReferenciaDireccion.setCreferenciadireccion(new Integer(objMedicoBean.getCtipoDireccion()));
+	//				objDireccion.setCcodigopostal(objCodigoPostal);
+	//				objDireccion.setCreferenciadireccion(cReferenciaDireccion);
+	//				objDireccion.setSdireccion(objMedicoBean.getSdireccion().trim() + "");
+	//				objDireccion.setStelefono(objMedicoBean.getStelefono().trim() + "");
+	//				objDireccion.setUser_id(new Integer(objMedicoBean.getUserid()));
+	//				objDireccion.setUser_id_change(new Integer(objMedicoBean.getUserid()));
+	//				
+	//				iObjSesion.update(objDireccion);            		        	        		
+	//        		iObjSesion.update(objMedicoHB);            		        		
+	//        	}
+	    		iObjSesion.flush();            	
+	//            HibernateUtil.commitTrans();	
+    		
+	    		objMedicoBean.setCmedico(new Long(objMedicoHB.getCclave()));
+	    		objMedicoBean.setKmedico(objMedicoHB.getCmedico().intValue());
+			}else{
+				objMedicoBean.setUtipooperacion(3);
+			}
+		
+    		
+			iObjLog.debug("Saliendo MedicosDao.setMedicoAlta " + objMedicoBean.toString());
+			return objMedicoBean;
+		} catch (Exception aObjExcepcion) { 
+			iObjLog.error("ERROR MedicosDao.setMedicoAlta: ", aObjExcepcion);
+			throw aObjExcepcion;
+        } finally{
+        	HibernateUtil.closeSession();
+		}		
+	}
+	
+	
+	
+	
+	
+	
+	
 	public MedicoBean setMedicoActualizacion(MedicoBean objMedicoBean) throws Exception {
 		iObjSesion = HibernateUtil.getSession();
 		Query objQuery = null;
@@ -314,34 +537,43 @@ public class MedicosDao {
 		Query objQuery2 = null;		
 		try {			
             HibernateUtil.beginTrans();
-        	if (objMedicoBean.getCmedico().intValue() > 0) {			
-    			iObjLog.debug("Consulta MedicosDao.setMedicoActualizacion:...Por Numero Cliente  " + objMedicoBean.getCmedico());
+        	if (objMedicoBean.getKmedico()> 0) {		
+//        		String keymedico = objMedicoBean.getKmedico() +"";
+    			iObjLog.debug("Consulta MedicosDao.setMedicoActualizacion:...Por Numero Cliente  " + objMedicoBean.getKmedico());
         		strQuery =  "select cM " +					
 							" from CMedico cM " +					
-							" where cM.cclave = :cmedicoparam";
+							" where cM.cmarca = 14 and cM.cmedico = "+objMedicoBean.getKmedico();
 				objQuery = iObjSesion.createQuery(strQuery);
-				objQuery.setParameter("cmedicoparam",objMedicoBean.getCmedico());
+//				objQuery.setParameter("cmedicoparam",Long.parseLong(keymedico));
 				lstMedicos = objQuery.list();
 				if(lstMedicos != null) {
 					if (lstMedicos.size() > 0) {
 						objMedicoHB = (CMedico)lstMedicos.get(0);
 					}
 				}			
-        	} else {
-    			iObjLog.debug("Consulta MedicosDao.setMedicoActualizacion:...Por nombre o appellidopaterno o appellidomaterno " + objMedicoBean.getSnombre().trim() + " " + objMedicoBean.getSappaterno().trim() + " " + objMedicoBean.getSapmaterno().trim());
-        		strQuery =  "select cM " +					
-        					" from CMedico cM " +					
-							" where cM.snombre like ('" + objMedicoBean.getSnombre().trim() + "') " +
-							" AND cM.sapellidopaterno like ('" + objMedicoBean.getSappaterno().trim() + "') " +
-        					" AND cM.sapellidomaterno like ('" + objMedicoBean.getSapmaterno().trim() + "') ";
-				objQuery = iObjSesion.createQuery(strQuery);
-				lstMedicos = objQuery.list();
-				if(lstMedicos != null) {
-					if (lstMedicos.size() > 0) {
-						objMedicoHB = (CMedico)lstMedicos.get(0);
-					}
-				}			        		
-        	}        	
+        	}
+//        	else {
+//    			iObjLog.debug("Consulta MedicosDao.setMedicoActualizacion:...Por nombre o appellidopaterno o appellidomaterno " + objMedicoBean.getSnombre().trim() + " " + objMedicoBean.getSappaterno().trim() + " " + objMedicoBean.getSapmaterno().trim());
+//        		strQuery =  "select cM " +					
+//        					" from CMedico cM " +					
+//							" where cM.cmarca = 14 AND cM.snombre like ('" + objMedicoBean.getSnombre().trim() + "') " +
+//							" AND cM.sapellidopaterno like ('" + objMedicoBean.getSappaterno().trim() + "') " +
+//        					" AND cM.sapellidomaterno like ('" + objMedicoBean.getSapmaterno().trim() + "') ";
+//				objQuery = iObjSesion.createQuery(strQuery);
+//				lstMedicos = objQuery.list();
+//				if(lstMedicos != null) {
+//					if (lstMedicos.size() > 0) {
+//						objMedicoHB = (CMedico)lstMedicos.get(0);
+//					}
+//				}			        		
+//        	}        	
+        	objMedicoHB.setSmarcasventa(objMedicoBean.getSmarcasventa());
+        	objMedicoHB.setSusuarioweb(objMedicoBean.getSusuarioweb());
+        	if (objMedicoBean.getKmedico() == 0) {
+        		objMedicoHB.setUser_id(objMedicoBean.getUserid());        		
+        	}else{
+        		objMedicoHB.setUser_id_change(objMedicoBean.getUserid());        		
+        	}
         	objMedicoHB.setSnombre(objMedicoBean.getSnombre().trim() + "");
         	objMedicoHB.setSapellidopaterno(objMedicoBean.getSappaterno().trim() + "");
         	objMedicoHB.setSapellidomaterno(objMedicoBean.getSapmaterno().trim() + "");
@@ -352,7 +584,7 @@ public class MedicosDao {
         		objEspecialidad.setCespecialidad(new Integer(objMedicoBean.getCespecialidad()));
         	objMedicoHB.setCespecialidad(objEspecialidad);
         		CMarca objMarca = new CMarca();
-        		objMarca.setCmarca(new Integer(1));
+        		objMarca.setCmarca(new Integer(14));
         	objMedicoHB.setCmarca(objMarca);
         		CSexo objSexo = new CSexo();
         		objSexo.setCsexo(new Integer(objMedicoBean.getUsexo()));
@@ -369,40 +601,80 @@ public class MedicosDao {
 	        	CEstadoRegistro objEstadoRegistroMedico = new CEstadoRegistro();
 	        	objEstadoRegistroMedico.setCestadoregistro(new Integer(objMedicoBean.getUestadomedico()));
         	objMedicoHB.setCestadoregistro(objEstadoRegistroMedico);
-         	if (objMedicoBean.getCmedico().intValue() == 0) {
+         	if (objMedicoBean.getKmedico() == 0) {
     			iObjLog.debug("Marca MedicosDao.setMedicoActualizacion Alta Medico");   
     			ToolsDao objTool = new ToolsDao();
-    			objMedicoHB.setCclave(objTool.getSequenceNextId("cmedicoclave_sequence", iObjSesion.connection()).intValue());
-         		iObjSesion.save(objMedicoHB);
-//				objDireccion = new CDireccionMedico();			
-//					CCodigoPostal objCodigoPostal =  new CCodigoPostal();
-//					objCodigoPostal.setCcodigopostal(new Integer(objMedicoBean.getKcodigopostal()));
-//				objDireccion.setCcodigopostal(objCodigoPostal);
-//				objDireccion.setSdireccion(objMedicoBean.getSdireccion().trim() + "");
-//					CEstadoRegistro objEstadoRegistro = new CEstadoRegistro();
-//					objEstadoRegistro.setCestadoregistro(new Integer(11));
-//				objDireccion.setCestadoregistro(objEstadoRegistro);
-//				objDireccion.setCmedico(objMedicoHB);
-//					CReferenciaDireccion objRefereDirecc = new CReferenciaDireccion();
-//					objRefereDirecc.setCreferenciadireccion(new Integer(1));
-//				objDireccion.setCreferenciadireccion(objRefereDirecc);
-//				objDireccion.setStelefono(objMedicoBean.getStelefono().trim() + "");
-//				iObjSesion.save(objDireccion);            		        	        		        		
+    			
+    			objMedicoHB.setCclave(objMedicoBean.getCmedico().intValue());
+//    			objMedicoHB.setCclave(objTool.getSequenceNextId("cmedicoclave_sequence", iObjSesion.connection()).intValue());
+    			Integer id =  (Integer) iObjSesion.save(objMedicoHB);
+    			iObjLog.debug("id:"+id);   
+    			
+				objDireccion = new CDireccionMedico();			
+					CCodigoPostal objCodigoPostal =  new CCodigoPostal();
+					objCodigoPostal.setCcodigopostal(new Integer(objMedicoBean.getKcodigopostal()));
+				objDireccion.setCcodigopostal(objCodigoPostal);
+				objDireccion.setSdireccion(objMedicoBean.getSdireccion().trim() + "");
+					CEstadoRegistro objEstadoRegistro = new CEstadoRegistro();
+					objEstadoRegistro.setCestadoregistro(new Integer(11));
+				objDireccion.setCestadoregistro(objEstadoRegistro);
+				objDireccion.setCmedico(objMedicoHB);
+					CReferenciaDireccion objRefereDirecc = new CReferenciaDireccion();
+					objRefereDirecc.setCreferenciadireccion(new Integer(objMedicoBean.getCtipoDireccion()));
+				objDireccion.setCreferenciadireccion(objRefereDirecc);
+				objDireccion.setStelefono(objMedicoBean.getStelefono().trim() + "");
+				objDireccion.setUser_id(new Integer(objMedicoBean.getUserid()));
+				objDireccion.setUser_id_change(new Integer(objMedicoBean.getUserid()));
+				iObjSesion.save(objDireccion);            		        	        		        		
         	} else {
-//    			iObjLog.debug("Marca MedicosDao.setMedicoActualizacion Actualizacion Medico");         		
-//				strQuery = "select cDM " +					
-//				   " from CDireccionMedico cDM " +					
-//				   " where cDM.cmedico= " + objMedicoHB.getCmedico().intValue();
-//				objQuery2 = iObjSesion.createQuery(strQuery);
-//				objListaDirecciones = objQuery2.list(); 
-//				objDireccion = (CDireccionMedico)objListaDirecciones.get(0);			
-//					CCodigoPostal objCodigoPostal =  new CCodigoPostal();
-//					objCodigoPostal.setCcodigopostal(new Integer(objMedicoBean.getKcodigopostal()));
-//				objDireccion.setCcodigopostal(objCodigoPostal);
-//				objDireccion.setSdireccion(objMedicoBean.getSdireccion().trim() + "");
-//				objDireccion.setStelefono(objMedicoBean.getStelefono().trim() + "");
-//				iObjSesion.update(objDireccion);            		        	        		
-//        		iObjSesion.update(objMedicoHB);            		        		
+    			iObjLog.debug("Marca MedicosDao.setMedicoActualizacion Actualizacion Medico");         		
+				strQuery = "select cDM " +					
+				   " from CDireccionMedico cDM " +					
+				   " where cDM.cmedico= " + objMedicoHB.getCmedico().intValue();
+				objQuery2 = iObjSesion.createQuery(strQuery);
+				objListaDirecciones = objQuery2.list(); 
+				
+				if(objListaDirecciones.size()>0){
+					
+					objDireccion = (CDireccionMedico)objListaDirecciones.get(0);			
+					CCodigoPostal objCodigoPostal =  new CCodigoPostal();
+					objCodigoPostal.setCcodigopostal(new Integer(objMedicoBean.getKcodigopostal()));
+					
+					CReferenciaDireccion cReferenciaDireccion = new CReferenciaDireccion();
+					cReferenciaDireccion.setCreferenciadireccion(new Integer(objMedicoBean.getCtipoDireccion()));
+					objDireccion.setCcodigopostal(objCodigoPostal);
+					objDireccion.setCreferenciadireccion(cReferenciaDireccion);
+					objDireccion.setSdireccion(objMedicoBean.getSdireccion().trim() + "");
+					objDireccion.setStelefono(objMedicoBean.getStelefono().trim() + "");
+					CEstadoRegistro cestadoRegistro = new CEstadoRegistro();
+					cestadoRegistro.setCestadoregistro(new Integer(objMedicoBean.getCestadoregistro()));
+					objDireccion.setCestadoregistro(cestadoRegistro);
+					objDireccion.setUser_id(new Integer(objMedicoBean.getUserid()));
+					objDireccion.setUser_id_change(new Integer(objMedicoBean.getUserid()));
+					
+					iObjSesion.update(objDireccion);            		        	        		
+					iObjSesion.update(objMedicoHB);            		        		
+				}else{
+					objDireccion = new CDireccionMedico();			
+					CCodigoPostal objCodigoPostal =  new CCodigoPostal();
+					objCodigoPostal.setCcodigopostal(new Integer(objMedicoBean.getKcodigopostal()));
+					objDireccion.setCcodigopostal(objCodigoPostal);
+					objDireccion.setSdireccion(objMedicoBean.getSdireccion().trim() + "");
+						CEstadoRegistro objEstadoRegistro = new CEstadoRegistro();
+						objEstadoRegistro.setCestadoregistro(new Integer(objMedicoBean.getCestadoregistro()));
+					objDireccion.setCestadoregistro(objEstadoRegistro);
+					objDireccion.setCmedico(objMedicoHB);
+						CReferenciaDireccion objRefereDirecc = new CReferenciaDireccion();
+						objRefereDirecc.setCreferenciadireccion(new Integer(objMedicoBean.getCtipoDireccion()));
+					objDireccion.setCreferenciadireccion(objRefereDirecc);
+					objDireccion.setStelefono(objMedicoBean.getStelefono().trim() + "");
+					
+					
+					objDireccion.setUser_id(new Integer(objMedicoBean.getUserid()));
+					objDireccion.setUser_id_change(new Integer(objMedicoBean.getUserid()));
+					iObjSesion.save(objDireccion);   
+				}
+				
         	}
     		iObjSesion.flush();            	
 //            HibernateUtil.commitTrans();	 

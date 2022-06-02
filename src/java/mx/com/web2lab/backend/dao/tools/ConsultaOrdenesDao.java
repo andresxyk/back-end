@@ -735,7 +735,7 @@ public class ConsultaOrdenesDao {
 					strQuery =  "UPDATE t_orden_sucursal_fac 													\n" +
 								"SET drecibido=sysdate,															\n" +
 								"	cestadoregistro=" + objBuscarOrdenesViajeBean.getIntcestadoregistro() + "	\n" +
-								"WHERE cestadoregistro not in (39) and 											\n" +
+								"WHERE cestadoregistro not in (35,39,56) and 											\n" +
 								"		kordensucursalfac in (													\n" +
 								"	SELECT kordensucursalfac													\n" +
 								"	FROM T_ORDEN_SUCURSAL_FAC													\n" +
@@ -744,7 +744,7 @@ public class ConsultaOrdenesDao {
 					strQuery =  "UPDATE t_orden_sucursal_fac 													\n" +
 								"SET drecibido=sysdate,															\n" +
 								"	cestadoregistro=" + objBuscarOrdenesViajeBean.getIntcestadoregistro() + "	\n" +
-								"WHERE  cestadoregistro not in (39) and											\n" +
+								"WHERE  cestadoregistro not in (35,39,56) and											\n" +
 								"		kfactura in (-1,0) 				and 									\n" +
 								"		kordensucursalfac= (SELECT get_max_t_orden_suc_fac ("+ objBuscarOrdenesViajeBean.getKadmision() +"))  	\n"; 
         		}
@@ -756,7 +756,7 @@ public class ConsultaOrdenesDao {
 					strQuery =  "UPDATE t_orden_sucursal_fac 											\n" +
 								"SET       drecibido=sysdate,											\n" +
 								"       uconsecutivo=" + objBuscarOrdenesViajeBean.getIntbloque() +    "\n" +
-								"WHERE cestadoregistro not in (39) and									\n" +
+								"WHERE cestadoregistro not in (35,39,56) and									\n" +
 								"		kordensucursalfac in (											\n" +
 								"	SELECT kordensucursalfac											\n" +
 								"	FROM T_ORDEN_SUCURSAL_FAC											\n" +
@@ -765,7 +765,7 @@ public class ConsultaOrdenesDao {
 					strQuery =  "UPDATE t_orden_sucursal_fac 											\n" +
 								"SET 	  drecibido=sysdate,											\n" +
 								"      uconsecutivo=" + objBuscarOrdenesViajeBean.getIntbloque() +    " \n" +
-								"WHERE  cestadoregistro not in (39) and									\n" +
+								"WHERE  cestadoregistro not in (35,39,56) and									\n" +
 								"		kfactura in (-1,0) 			and 								\n" +
 								"		kordensucursalfac= (SELECT get_max_t_orden_suc_fac ("+ objBuscarOrdenesViajeBean.getKadmision() +"))  	\n"; 
         		}
@@ -1074,14 +1074,16 @@ public class ConsultaOrdenesDao {
 								"WHERE kordensucursalfac in (													\n" +
 								"	SELECT kordensucursalfac													\n" +
 								"	FROM T_ORDEN_SUCURSAL_FAC													\n" +
-								"	WHERE kviajefac=" + objBuscarOrdenesViajeBean.getKviaje() + ")";
+								"	WHERE kviajefac=" + objBuscarOrdenesViajeBean.getKviaje() + ")              \n" +
+								"		and cestadoregistro not in (35,39,56)	"; 
         		} else if (objBuscarOrdenesViajeBean.getKadmision() > 0) {
 					strQuery =  "UPDATE t_orden_sucursal_fac 													\n" +
 								"SET drecibido=sysdate,															\n" +
 								"	cestadoregistro=" + objBuscarOrdenesViajeBean.getIntcestadoregistro() + ",	\n" +
 								"   uconsecutivo=" + objBuscarOrdenesViajeBean.getIntbloque() +    "\n" +
 								"WHERE  kfactura in (-1,0) 				and 									\n" +
-								"		kordensucursalfac= (SELECT get_max_t_orden_suc_fac ("+ objBuscarOrdenesViajeBean.getKadmision() +"))  	\n"; 
+								"		kordensucursalfac= (SELECT get_max_t_orden_suc_fac ("+ objBuscarOrdenesViajeBean.getKadmision() +"))  	\n" +
+								"		and cestadoregistro not in (35,39,56)	"; 
         		}
 				iObjLog.debug("UPDATE ConsultaOrdenesDao.buscarOrdenesViaje:  " + strQuery);
 				objStmt.execute(strQuery);    			

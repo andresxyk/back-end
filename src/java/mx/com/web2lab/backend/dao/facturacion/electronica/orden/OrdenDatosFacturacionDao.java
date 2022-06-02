@@ -59,6 +59,8 @@ public class OrdenDatosFacturacionDao {
 					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS AZTECA' " ;
 				}else if (cmarca == 5){
 					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS SWISSLAB' " ;
+				}else if (cmarca == 15){
+					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS LIACSA' " ;
 				}else if (cmarca == 7){
 					if(serie.equals("AJP")){
 						strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS JENNER PRADO' " ;						

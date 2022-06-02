@@ -254,7 +254,7 @@ public class TAntiguedadCxc implements Serializable {
     	return 	"				<fo:table-row>																				\n" +     			
 				"        				<fo:table-cell  padding='1pt'>      												\n" +
 				"        					<fo:block text-align='center' font-family='sans-serif' font-size='7pt'>  	    \n" + 
-				"				       			<fo:basic-link external-destination=\"url('http://192.237.150.66:9085/FacturasElectronicas_Olab/PDF/FacturacionElectronica_" + this.getSserie() + ".pdf')\" font-family='sans-serif' font-size='7pt' text-decoration=\"underline\"> 			\n" + 
+				"				       			<fo:basic-link external-destination=\"url('http://192.237.150.66:9085/FacturasElectronicas_Olab/XMLTMP/PDF/FacturacionElectronica_" + this.getSserie() + ".pdf')\" font-family='sans-serif' font-size='7pt' text-decoration=\"underline\"> 			\n" + 
                 "                       			<fo:external-graphic width='8pt' height='8pt' content-width='8pt' content-height='8pt' overflow='hidden' src = '" + sHttpPath + "icoPdf.png' /> \n" +  
 				"				       			</fo:basic-link>															\n" +
 				"							</fo:block>    																	\n" + 		
@@ -336,7 +336,7 @@ public class TAntiguedadCxc implements Serializable {
     	return 	"				<fo:table-row>																				\n" +     			
 				"        				<fo:table-cell  padding='1pt'>      												\n" +
 				"        					<fo:block text-align='center' font-family='sans-serif' font-size='7pt'>  	    \n" + 
-				"				       			<fo:basic-link external-destination=\"url('http://192.237.150.66:9085/FacturasElectronicas_Olab/PDF/FacturacionElectronica_" + this.getSserie() + ".pdf')\" font-family='sans-serif' font-size='7pt' text-decoration=\"underline\"> 			\n" + 
+				"				       			<fo:basic-link external-destination=\"url('http://192.237.150.66:9085/FacturasElectronicas_Olab/XMLTMP/PDF/FacturacionElectronica_" + this.getSserie() + ".pdf')\" font-family='sans-serif' font-size='7pt' text-decoration=\"underline\"> 			\n" + 
                 "                       			<fo:external-graphic width='8pt' height='8pt' content-width='8pt' content-height='8pt' overflow='hidden' src = '" + sHttpPath + "icoPdf.png' /> \n" +  
 				"				       			</fo:basic-link>															\n" +
 				"							</fo:block>    																	\n" + 		

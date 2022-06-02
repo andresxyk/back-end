@@ -33,7 +33,7 @@ public class FacturaElectronicaEmpresaFOPDao {
 	        sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_Olab");
         } else if (objFactura.getCmarca() == 4) {
             sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_Azteca");
-        }  else if (objFactura.getCmarca() == 5) {
+        }  else if (objFactura.getCmarca() == 5 || objFactura.getCmarca() == 15) {
             sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_Swisslab");
         }  else if (objFactura.getCmarca() == 7) {
         	if(objFactura.getSserie().equals("AJP")){
@@ -47,7 +47,7 @@ public class FacturaElectronicaEmpresaFOPDao {
         	strLogoFactura = "OlabSmall.jpg";
         	strRFC = "RFCTJOriardFactura.jpg";
         	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE ESTUDIOS CLINICOS TJ ORIARD,S.A. DE C.V. EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
-        } else if(objFactura.getCmarca() == 5){
+        } else if(objFactura.getCmarca() == 5 || objFactura.getCmarca() == 15){
         	strLogoFactura = "AztecaSmall.jpg";
         	strRFC = "RFCTAztecaFactura.jpg";
         	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE LABORATORIO QUIMICO CLINICO AZTECA S.A.P.I. DE C.V. EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";

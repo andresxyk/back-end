@@ -98,6 +98,30 @@
         column="ucategoriamedico"
         length="8"
     />
+     <property
+        name="user_id"
+        type="int"
+        column="user_id"
+        length="8"
+    />
+    <property
+        name="user_id_change"
+        type="int"
+        column="user_id_change"
+        length="8"
+    />
+    <property
+        name="smarcasventa"
+        type="java.lang.String"
+        column="smarcasventa"
+        length="15"
+    />
+    <property
+        name="susuarioweb"
+        type="java.lang.String"
+        column="susuarioweb"
+        length="20"
+    />
 
     <!-- associations -->
     <!-- bi-directional many-to-one association to CEstadoRegistro -->

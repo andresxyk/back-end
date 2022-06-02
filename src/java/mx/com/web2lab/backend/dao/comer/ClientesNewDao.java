@@ -13,13 +13,16 @@ import java.util.List;
 import mx.com.web2lab.backend.beans.ap.OrdenExamenBean;
 import mx.com.web2lab.backend.beans.comer.ClienteBean;
 import mx.com.web2lab.backend.beans.comer.ConvenioBean;
+import mx.com.web2lab.backend.beans.comer.CopagoBean;
 import mx.com.web2lab.backend.beans.comer.ExamenConvenioBean;
 import mx.com.web2lab.backend.beans.comer.MetricasClieConBean;
+import mx.com.web2lab.backend.beans.facturacion.DatosFiscalesBean;
 import mx.com.web2lab.backend.dao.ap.GeneracionPasswordDao;
 import mx.com.web2lab.backend.dao.catalogos.CatalogosPKGCatalogosDao;
 import mx.com.web2lab.backend.dao.facturacion.mayoreo.FacturacionMayoreoDao;
 import mx.com.web2lab.backend.dao.mail.MailDao;
 import mx.com.web2lab.backend.dao.tools.AdministracionFOP_PDF;
+import mx.com.web2lab.backend.dao.tools.CodigoPostalDao;
 import mx.com.web2lab.backend.dao.tools.ReporteEstadoCuentaCxC;
 import mx.com.web2lab.backend.hbm.ConfiguracionProperties;
 import mx.com.web2lab.backend.hbm.HibernateUtil;
@@ -141,6 +144,55 @@ public class ClientesNewDao {
         	HibernateUtil.closeSession();
 		}		
 	}	
+	
+	
+	public CopagoBean getInfoCopago(int convenio, int tipoCopago) throws Exception{
+		iObjSesion = HibernateUtil.getSession();
+		String strQuery = "";
+		Connection objConn = null;
+		Statement objStmt = null;
+		ResultSet objrst  = null;
+		CopagoBean bean = new CopagoBean();
+		try {			
+			iObjLog.debug("Entrando ClientesDao.getInfoCopago  " + convenio);
+    		objConn = iObjSesion.connection();
+    		objStmt = objConn.createStatement();
+    		
+    		String complemento = "";
+    		if(tipoCopago == 1){
+    			complemento = "and PCOPAGO <> 0  ";
+    		}else{
+    			complemento = "and mcopago <> 0 ";
+    		}
+    		
+    				
+			strQuery =  "select cc.cconvenio, ec.pcopago, mcopago, bcopagopaciente  "  +
+					"from c_convenio cc inner join e_convenio ec on cc.cconvenio = ec.cconvenio  "  +
+					"where ctipoconvenio = 21  "  +
+					"and cc.cconvenio = "+convenio+"  "  +
+					complemento  ;
+			
+			objrst = objStmt.executeQuery(strQuery);
+			while (objrst.next()) {
+				bean.setCconvenio(objrst.getInt("cconvenio"));
+				bean.setPcopago(objrst.getDouble("pcopago"));
+				bean.setMcopago(objrst.getDouble("mcopago"));
+				bean.setBcopagopaciente(objrst.getBoolean("bcopagopaciente"));
+			}
+			objrst.close();			
+			iObjLog.debug("Saliendo ClientesDao.getInfoCopago  " + convenio);
+			return bean;
+		} catch (Exception aObjExcepcion) { 
+			iObjLog.error("ERROR ClientesDao.getInfoCopago: ", aObjExcepcion);
+			throw aObjExcepcion;
+        } finally{
+    		objrst  = null;
+    		objStmt = null;
+        	HibernateUtil.closeSession();
+		}		
+	}
+	
+	
 
 	public String showEstadistica(int uTipoControl) throws Exception {
 		iObjSesion = HibernateUtil.getSession();
@@ -257,6 +309,11 @@ public class ClientesNewDao {
 		String strQuery = "";
 		List lstClientes = new ArrayList();
 		CCliente objClienteHB = new CCliente();; 
+		CodigoPostalDao objCodigoPostalDao = new CodigoPostalDao(iObjSesion);
+		DatosFiscalesBean objDatosFiscalesBean = new DatosFiscalesBean();
+		
+    	CCodigoPostal objCP = new CCodigoPostal();
+		
 		try {			
             HibernateUtil.beginTrans();
         	if (objClienteBean.getCcliente() > 0) {			
@@ -285,11 +342,18 @@ public class ClientesNewDao {
 						objClienteHB = (CCliente)lstClientes.get(0);
 					}
 				}			        		
-        	}        	
-        	CCodigoPostal objCP = new CCodigoPostal();
-	        	objCP.setCcodigopostal(new Integer(objClienteBean.getCcodigopostal()));
+        	}   
+        	objDatosFiscalesBean.setcPostal(objClienteBean.getScodigopostal());
+        	objDatosFiscalesBean.setStrCiudad(objClienteBean.getSestado());
+        	objDatosFiscalesBean.setStrColonia(objClienteBean.getScolonia());
+        	objDatosFiscalesBean.setStrDelegacionMunicipio(objClienteBean.getSdelegacionmunicipio());
+        	objDatosFiscalesBean.setStrEstado(objClienteBean.getSestado());
+        	        	
+        	objCP.setCcodigopostal(new Integer(objCodigoPostalDao.newDatosSepomex(objDatosFiscalesBean)));
+//	        	objCP.setCcodigopostal(new Integer(objClienteBean.getCcodigopostal()));
 				iObjLog.debug("Consulta ClientesDao.setClienteActualizacion.....Beans CodigoPostal.." + objClienteBean.getCcodigopostal());        	
 	        	objClienteHB.setCcodigopostal(objCP);
+	        	
         	CEstadoRegistro objEstadoRegistro = new CEstadoRegistro();
 	        	objEstadoRegistro.setCestadoregistro(new Integer(10));
 	        	objClienteHB.setCestadoregistro(objEstadoRegistro);
@@ -305,10 +369,10 @@ public class ClientesNewDao {
         	objClienteHB.setSmnemonico(objClienteBean.getSmnemonico());
         	objClienteHB.setUserid(new BigDecimal(4333));
         	objClienteHB.setCmarca(objClienteBean.getCmarca());
+        	objClienteHB.setCzonaventa(objClienteBean.getCzonaventa());
 			iObjLog.debug("Consulta ClientesDao.setClienteActualizacion.....Beans creados");
         	if (objClienteBean.getCcliente() == 0) {
             	objClienteHB.setDregistro(new Date());
-            	objClienteHB.setCzonaventa(0);
         		iObjSesion.save(objClienteHB);
         	} else {
         		iObjSesion.update(objClienteHB);            		
@@ -322,6 +386,9 @@ public class ClientesNewDao {
 			iObjLog.error("ERROR ClientesDao.setClienteActualizacion: ", aObjExcepcion);
 			throw aObjExcepcion;
         } finally{
+        	objDatosFiscalesBean = null;
+        	objCodigoPostalDao = null;
+        	objCP = null;
         	HibernateUtil.closeSession();
 		}		
 	}	
@@ -537,6 +604,47 @@ public class ClientesNewDao {
 	    			objGeneracionPasswordDao = null;
 	    			bolActualizacionCorreoElectronico = true;
                 }
+                if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 21) {
+                	if (objConvenioBean.getCmarca() == 1) {
+                    	objConvenioHB.setCagrupacion(new Integer(12));
+                	} else if (objConvenioBean.getCmarca() == 4) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 5) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 7) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	}
+                } else if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 22) {
+                	if (objConvenioBean.getCmarca() == 1) {
+                    	objConvenioHB.setCagrupacion(new Integer(8));
+                	} else if (objConvenioBean.getCmarca() == 4) {
+                    	objConvenioHB.setCagrupacion(new Integer(5));
+                	} else if (objConvenioBean.getCmarca() == 5) {
+                    	objConvenioHB.setCagrupacion(new Integer(5));
+                	} else if (objConvenioBean.getCmarca() == 7) {
+                    	objConvenioHB.setCagrupacion(new Integer(5));
+                	}
+                } else if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 23) {
+                	if (objConvenioBean.getCmarca() == 1) {
+                    	objConvenioHB.setCagrupacion(new Integer(12));
+                	} else if (objConvenioBean.getCmarca() == 4) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 5) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 7) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	}
+                } else if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 24) {
+                	if (objConvenioBean.getCmarca() == 1) {
+                    	objConvenioHB.setCagrupacion(new Integer(12));
+                	} else if (objConvenioBean.getCmarca() == 4) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 5) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 7) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	}
+                }
             	iObjSesion.update(objConvenioHB);            	
     			if ((objConvenioBean.getScorreoelectronico().trim().length() > 4) && (bolActualizacionCorreoElectronico)) {
             		MailDao objMailDao = new MailDao();
@@ -562,7 +670,63 @@ public class ClientesNewDao {
 	        		objConvenioHB.setSpasswordconsulta(" ");
 	        		objConvenioHB.setScorreoelectronico(" ");
                 }
-//                objConvenioHB.setCzonaventa(0);
+                if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 21) {
+                	if (objConvenioBean.getCmarca() == 1) {
+                    	objConvenioHB.setCagrupacion(new Integer(12));
+                	} else if (objConvenioBean.getCmarca() == 4) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 5) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 7) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 15) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 17) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	}
+                } else if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 22) {
+                	if (objConvenioBean.getCmarca() == 1) {
+                    	objConvenioHB.setCagrupacion(new Integer(8));
+                	} else if (objConvenioBean.getCmarca() == 4) {
+                    	objConvenioHB.setCagrupacion(new Integer(5));
+                	} else if (objConvenioBean.getCmarca() == 5) {
+                    	objConvenioHB.setCagrupacion(new Integer(5));
+                	} else if (objConvenioBean.getCmarca() == 7) {
+                    	objConvenioHB.setCagrupacion(new Integer(5));
+                	} else if (objConvenioBean.getCmarca() == 15) {
+                    	objConvenioHB.setCagrupacion(new Integer(5));
+                	} else if (objConvenioBean.getCmarca() == 17) {
+                    	objConvenioHB.setCagrupacion(new Integer(5));
+                	}
+                } else if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 23) {
+                	if (objConvenioBean.getCmarca() == 1) {
+                    	objConvenioHB.setCagrupacion(new Integer(12));
+                	} else if (objConvenioBean.getCmarca() == 4) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 5) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 7) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 15) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 17) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	}
+                } else if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 24) {
+                	if (objConvenioBean.getCmarca() == 1) {
+                    	objConvenioHB.setCagrupacion(new Integer(12));
+                	} else if (objConvenioBean.getCmarca() == 4) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 5) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 7) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 15) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 17) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	}
+                }                	
             	iObjSesion.save(objConvenioHB);
     			if (objConvenioBean.getScorreoelectronico().trim().length() > 4) {
             		MailDao objMailDao = new MailDao();
@@ -573,6 +737,23 @@ public class ClientesNewDao {
     		objConvenioBean.setCconvenio(objConvenioHB.getCconvenio());        		    		
             if (bolConvenioUpdate) {
         		objEConvenioHB.setCestadoregistro(objEstadoRegistro);
+        		
+        		
+
+        		if(objConvenioBean.getCtipoconvenio() == 21){
+        			if(objConvenioBean.getTipocopago() == 1){
+        				objEConvenioHB.setBcopagopaciente(true);
+        				objEConvenioHB.setMcopago(new BigDecimal("0"));
+        				objEConvenioHB.setPcopago(new BigDecimal(objConvenioBean.getMontoCopago()));
+        			}
+        			if(objConvenioBean.getTipocopago() == 2){
+        				objEConvenioHB.setBcopagopaciente(true);
+        				objEConvenioHB.setMcopago(new BigDecimal(objConvenioBean.getMontoCopago()));
+        				objEConvenioHB.setPcopago(new BigDecimal("0"));
+        			}
+        		}
+        		
+        		
 //        		if (objConvenioBean.getDinicio() != null) {
 //        			objEConvenioHB.setDinicio(objConvenioBean.getDinicio());
 //        		} else {
@@ -585,6 +766,61 @@ public class ClientesNewDao {
 //        		}
             	iObjSesion.update(objEConvenioHB);            	
             } else {
+            	
+            	
+            	
+            	
+            	if (objConvenioBean.getCmarca() == 1) {
+            		if(objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 21 || 
+            				objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 22){
+            			objListaCorporativa.setClistacorporativa(new Integer(3));            			
+            		}else if(objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 23 || 
+            				objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 24){
+            			objListaCorporativa.setClistacorporativa(new Integer(7));   
+            		}
+            	} else if (objConvenioBean.getCmarca() == 4) {
+            		if(objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 21 ||
+            				objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 22){
+            			objListaCorporativa.setClistacorporativa(new Integer(8));            			
+            		}else if(objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 23 ||
+            				objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 24){
+            			objListaCorporativa.setClistacorporativa(new Integer(12)); 
+            		}
+            		
+            	} else if (objConvenioBean.getCmarca() == 5) {
+            		if(objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 21 ||
+            				objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 22){
+            			objListaCorporativa.setClistacorporativa(new Integer(19));            			
+            		}else if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 23 || 
+            				objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 24){
+            			objListaCorporativa.setClistacorporativa(new Integer(20));
+            		}
+            		
+            	} else if (objConvenioBean.getCmarca() == 7) {
+            		if(objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 21 ||
+            				objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 22){
+            			objListaCorporativa.setClistacorporativa(new Integer(21));            			
+            		}else if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 23 || 
+            				objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 24){
+            			objListaCorporativa.setClistacorporativa(new Integer(22));    
+            		}            		
+            	} else if (objConvenioBean.getCmarca() == 15) {
+            		if(objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 21 || 
+            				objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 22){
+            			objListaCorporativa.setClistacorporativa(new Integer(23));            			
+            		}else if(objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 23 || 
+            				objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 24){
+            			objListaCorporativa.setClistacorporativa(new Integer(24)); 
+            		}
+            	}  else if (objConvenioBean.getCmarca() == 17) {
+            		if(objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 21 || 
+            				objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 22){
+            			objListaCorporativa.setClistacorporativa(new Integer(25));            			
+            		}else if(objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 23 || 
+            				objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 24){
+            			objListaCorporativa.setClistacorporativa(new Integer(26)); 
+            		}
+            	}
         		objEConvenioHB.setCconvenio(objConvenioHB);
         		objEConvenioHB.setCestadoregistro(objEstadoRegistro);
         		objEConvenioHB.setClistacorporativa(objListaCorporativa);
@@ -592,9 +828,26 @@ public class ClientesNewDao {
         		objEConvenioHB.setDinicio(objConvenioBean.getDinicio());
         		objEConvenioHB.setDtermino(objConvenioBean.getDtermino());
         			CMarca objCMarca = new CMarca();
-        			objCMarca.setCmarca(new Integer(1));
+        			objCMarca.setCmarca(new Integer(objConvenioBean.getCmarca()));
         		objEConvenioHB.setCmarca(objCMarca);
-        		iObjSesion.save(objEConvenioHB);
+        		
+
+        		if(objConvenioBean.getCtipoconvenio() == 21){
+        			if(objConvenioBean.getTipocopago() == 1){
+        				objEConvenioHB.setBcopagopaciente(true);
+        				objEConvenioHB.setMcopago(new BigDecimal("0"));
+        				objEConvenioHB.setPcopago(new BigDecimal(objConvenioBean.getMontoCopago()));
+        			}
+        			if(objConvenioBean.getTipocopago() == 2){
+        				objEConvenioHB.setBcopagopaciente(true);
+        				objEConvenioHB.setMcopago(new BigDecimal(objConvenioBean.getMontoCopago()));
+        				objEConvenioHB.setPcopago(new BigDecimal("0"));
+        			}
+        		}
+        		
+        		
+        		
+        		iObjSesion.save(objEConvenioHB); 
             }
     		iObjLog.debug("Consulta ClientesDao.setConvenioActualizacion.....Beans creados");
     		iObjSesion.flush();            	
@@ -669,7 +922,7 @@ public class ClientesNewDao {
         	HibernateUtil.closeSession();
 		}		
 	}	
-	
+	 
 	public List buscarCliente(ClienteBean objClienteParamBean) throws Exception {
 		iObjLog.debug("Entrando ClientesDao.buscarCliente:" + objClienteParamBean.toString());
 			iObjSesion = HibernateUtil.getSession();
@@ -685,12 +938,15 @@ public class ClientesNewDao {
 	            if (objClienteParamBean.getCcliente() > 0) {
 	        		strQuery =  "select bPF " +					
 								" from CCliente bPF " +					
-								" where bPF.ccliente = " +  objClienteParamBean.getCcliente();
+								" where bPF.ccliente = " +  objClienteParamBean.getCcliente() +
+								" and bPF.cmarca in (" + objClienteParamBean.getSmarcauser()+")";
+	        					
 	        		bolBuscarFacturas = true;
 	            } else if ((objClienteParamBean.getSrfc().trim().length() > 0) || (objClienteParamBean.getSrazonsocial().trim().length() > 0) || (objClienteParamBean.getSmnemonico().trim().length() > 0)) {
 	        		strQuery =  "select bPF " +					
 								" from CCliente bPF " +					
-								" where bPF.srfc=bPF.srfc ";	   	        		
+								" where bPF.srfc=bPF.srfc "+
+								" and bPF.cmarca in (" + objClienteParamBean.getSmarcauser()+")";	   	        		
 					if (objClienteParamBean.getSrazonsocial().trim().length() > 0) {
 						iObjLog.debug("Entrando ClientesDao.buscarCliente:Entrando...Razon Social  " +  objClienteParamBean.getSrazonsocial().trim());
 						strQuery += " AND bPF.srazonsocial like ('%" + objClienteParamBean.getSrazonsocial().trim() + "%') ";
@@ -730,7 +986,9 @@ public class ClientesNewDao {
 							objClienteBean.setScodigopostal(objClienteHB.getCcodigopostal().getCpostal());
 							objClienteBean.setScolonia(objClienteHB.getCcodigopostal().getScolonia());
 							objClienteBean.setSdelegacionmunicipio(objClienteHB.getCcodigopostal().getSdelegacionmunicipio());
-							objClienteBean.setSestado(objClienteHB.getCcodigopostal().getSestado());						
+							objClienteBean.setSestado(objClienteHB.getCcodigopostal().getSestado());		
+							objClienteBean.setCmarca(objClienteHB.getCmarca());
+							objClienteBean.setCzonaventa(objClienteHB.getCzonaventa());
 							Set objMapaConvenios = (Set) objClienteHB.getCconvenios();
 							Iterator iteConvenios = objMapaConvenios.iterator();
 							CConvenio objConvenio = null;
@@ -1402,6 +1660,26 @@ public class ClientesNewDao {
 //							objConvenioBean.setSterminovigencia(new Formatos().getFechaNumeros(objEConvenio.getDtermino()));
 						}						
 						objConvenioBean.setCtipoconvenio(objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue());
+						
+
+						if(objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 21){
+							CopagoBean copagoBeanPorc = getInfoCopago(objConvenioParamBean.getCconvenio().intValue(), 1);
+							CopagoBean copagoBeanMont = getInfoCopago(objConvenioParamBean.getCconvenio().intValue(), 2);
+							if(copagoBeanPorc!= null){
+								if(copagoBeanPorc.getCconvenio()>0){
+									objConvenioBean.setTipocopago(1);
+									objConvenioBean.setMontoCopago(String.valueOf(copagoBeanPorc.getPcopago()));
+								}
+							}
+							if(copagoBeanMont!= null){
+								if(copagoBeanMont.getCconvenio()>0){
+									objConvenioBean.setTipocopago(2);
+									objConvenioBean.setMontoCopago(String.valueOf(copagoBeanMont.getMcopago()));
+								}
+							}
+						}				
+						
+						
 						objConvenioBean.setStipoconvenio(objConvenioHB.getCtipoconvenio().getCdescripciontipoconvenio());					
 						String strClasificacionComercial = "";
 						if (objConvenioHB.getEconvenioclasificacions() != null) {
@@ -1496,7 +1774,7 @@ public class ClientesNewDao {
 			        	objConvenioHB = null;
 			        	objConvenioBean = null;
 				}
-				lstConvenios.clear();
+				lstConvenios.clear(); 
 				lstConvenios = null;
 				strQuery = null;
 			}
@@ -1722,8 +2000,9 @@ public class ClientesNewDao {
 								"</td>" + 
 							"</tr>"	+					 
 						 "</table>" +	
-						  "<div id='gridGridClienteConvenios' " + strJavaScript + ">" +                
-						 "<table border='0' align='center' style='width: 100%' class='tabla'>" +
+						  "<div id='gridGridClienteConvenios' " + strJavaScript + ">" + 
+						 "<div id='paginador'></div>"+
+						 "<table id='tblDatos' border='0' align='center' style='width: 100%' class='tabla'>" +
 							"<tr>" + 
 								"<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
 								"	<b><font color='black'>#" + 
@@ -1751,9 +2030,10 @@ public class ClientesNewDao {
 				int y = 0; 
 				for (int i = 0; i < lstConvenios.size() ; i++)
 				{
-					if (y >= 50) {
-						break;
-					}
+
+//					if (y >= 50) {
+//						break;
+//					}
 					objConvenio = (ConvenioBean)lstConvenios.get(i);						
 					y = i + 1;
 					strReturn += ("<tr>" + 
@@ -1867,7 +2147,7 @@ public class ClientesNewDao {
 					  "</td>"+
 					  "<td>"+
 						  "<input type='text' id='txtFechaDepositoGlobal' size='12' value='' style='background:#E6E6FA' onKeyup='javascript:agregaDiag(this);' onChange='javascript:this.value=validaFormatoFecha(this.value);validafechafrm(document.frmAdminClientes.txtFechaDepositoGlobal);' onFocus='javascript:validafechafrm(document.frmAdminClientes.txtFechaDepositoGlobal);'/>"+		
-						  "<a href='javascript:doNothing()' onclick='javascript:setDateField(document.frmAdminClientes.txtFechaDepositoGlobal); top.newWin =  ventanaNormal('/web2labportal/javascript/calendar.html','cal','WIDTH=230,HEIGHT=230')>"+
+						  "<a href='javascript:doNothing()' onclick='javascript:setDateField(document.frmAdminClientes.txtFechaDepositoGlobal); top.newWin =  ventanaNormal('$content.getURI('javascript/calendar.html')','cal','WIDTH=230,HEIGHT=230')>"+
 						  	"<img alt='Seleccione una fecha' id='imgFechaDeposito' border='0' src='/web2labportal/images/icono_calend.gif' />"+						  
 						  "</a>"+	
 					  "</td>"+			
@@ -1933,7 +2213,7 @@ public class ClientesNewDao {
 						"<td>"+
 						"</td>"+
 						"<td>"+
-							"<input type='checkbox' id='chkCrearComplento' checked>Crear Complemento de Pago"+
+							"<input type='checkbox' id='chkCrearComplento' onClick='showCheckSustitucion();'>Crear Complemento de Pago"+
 						"</td>"+
 					"</tr>"+
 					"<tr>"+
@@ -1983,6 +2263,31 @@ public class ClientesNewDao {
 							"</div>"+
 						"</td>"+
 					"</tr>"+
+					"<tr>"+
+						"<td>"+
+						"</td>"+
+						"<td>"+
+							"<div id='divCheckSustitucion' style='display:none'>"+
+								"<input type='checkbox' id='chkAgregarSustitucion' onClick='showCamposSustitucion();'>Sustitucion"+
+							"</div>	"+
+						"</td>"+
+					"</tr>"+
+					"<tr>"+
+						"<td>"+
+							"<input type='hidden' id='hdenkfacturaSustitucion' value=''>"+
+							"<input type='hidden' id='hdenUuidSustitucion' value=''>"+
+						"</td>"+
+						"<td>"+
+							"<div id='divCamposSustitucion' style='display:none'>"+
+								"<b>Folio interno:</b>"+
+								"<input type='text' id='txtUfoliofacturaSustitucion' style='background:#E6E6FA' size='15' disabled>"+
+								"<a id='popupBuscar' href='javascript:doNothing()' onclick=\"showSubModalSustitucion();\">"+
+									"<img alt='Buscar Sustitucion' id='imgBuscar' border='0' src=\"/web2labportal/images/icoBuscar.png\" width=\"25\" height=\"23\" />"+  
+								"</a>"+
+							"</div>"+
+						"</td>"+
+					"</tr>"+
+					
 				  "<tr>"+
 					  "<td>"+
 					  "</td>"+

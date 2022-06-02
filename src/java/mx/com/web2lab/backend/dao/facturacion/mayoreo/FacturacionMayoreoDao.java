@@ -295,6 +295,15 @@ public class FacturacionMayoreoDao {
 		return strNemonico + strReturn + intFactura;
 	}
 	
+	public static String llenaIdNC(String strNemonico,String intFactura,int MaxLength) {
+		String strReturn = "";		
+		int intTotal = (intFactura.length());
+		for(int i = intTotal;i < MaxLength;i++) {
+			strReturn += "0";
+		}		
+		return strNemonico + strReturn + intFactura;
+	}
+	
 	public static String pathXmlTimbrado(int csucursal){
 		String url="";
 		switch (csucursal) {
@@ -312,6 +321,9 @@ public class FacturacionMayoreoDao {
 			break;
 		case 1015:
 			url="/mnt/gda/apache-tomcat/webapps/ROOT/FacturasElectronicas_Jenner/Lean/XML/FacturacionElectronica_";
+			break;
+		case 1017:
+			url="/mnt/gda/apache-tomcat/webapps/ROOT/FacturasElectronicas_Swisslab/XML/FacturacionElectronica_";
 			break;
 		default:
 			break;
@@ -751,7 +763,7 @@ public class FacturacionMayoreoDao {
 					}
 					strReturn += ("<tr>" + 
 										"<td align='center' style='font-weight: normal; font-size: xx-small; color: " + strColor +"; font-style: normal; font-variant: normal;'> " + 
-										"	<a href=\"javascript:visualizarFactura('http://192.237.150.66:9085/FacturasElectronicas_Olab/PDF/FacturacionElectronica_" + objTAntiguedadCxcHB.getSserie() + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small; color: " + strColor + "; font-style: normal; font-variant: normal;'>"  +  
+										"	<a href=\"javascript:visualizarFactura('http://192.237.150.66:9085/FacturasElectronicas_Olab/XMLTMP/PDF/FacturacionElectronica_" + objTAntiguedadCxcHB.getSserie() + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small; color: " + strColor + "; font-style: normal; font-variant: normal;'>"  +  
 				    		            "		<img alt='Factura - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
 										"	</a>" + 													
 										"</td>" + strReadOnlyNOPago +
@@ -1055,7 +1067,7 @@ public class FacturacionMayoreoDao {
 					}
 					strReturn += ("<tr>" + 
 										"<td align='center' style='font-weight: normal; font-size: xx-small; color: " + strColor +"; font-style: normal; font-variant: normal;'> " + 
-										"	<a href=\"javascript:visualizarFactura('http://192.237.150.66:9085/FacturasElectronicas_Olab/PDF/FacturacionElectronica_" + objTAntiguedadCxcHB.getSserie() + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small; color: " + strColor + "; font-style: normal; font-variant: normal;'>"  +  
+										"	<a href=\"javascript:visualizarFactura('http://192.237.150.66:9085/FacturasElectronicas_Olab/XMLTMP/PDF/FacturacionElectronica_" + objTAntiguedadCxcHB.getSserie() + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small; color: " + strColor + "; font-style: normal; font-variant: normal;'>"  +  
 				    		            "		<img alt='Factura - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
 										"	</a>" + 													
 										"</td>" + strReadOnlyNOPago +
