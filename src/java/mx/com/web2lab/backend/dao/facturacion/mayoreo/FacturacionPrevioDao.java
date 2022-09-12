@@ -372,7 +372,7 @@ public class FacturacionPrevioDao {
 			objStmt = null;
         	HibernateUtil.closeSession();
 		}		
-		return dto;
+		return dto; 
    	}
 	
 	

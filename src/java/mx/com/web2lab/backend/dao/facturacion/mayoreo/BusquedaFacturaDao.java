@@ -108,22 +108,32 @@ public class BusquedaFacturaDao {
 		iObjLog.debug("Entrando BusquedaFActuraDao.getBusquedaFactura:" + strfoliosFacturas);
 		iObjSesion = HibernateUtil.getSession();
 		Query objQuery = null;
+		Query objQueryNC = null;
 		String strQuery = "";
+		String strQueryNC = "";
 		String strReturn="";
 		
 		List objListaFacturas = new ArrayList();
+		List objListaNotasCredito = new ArrayList();
 		List objFacturasEncontradas = new ArrayList();
+		List objNotasEncontradas = new ArrayList();
 		TFactura objTFactura = new TFactura();
+		TNotaCredito objTNotaCredito = new TNotaCredito();
 		
 		
-		try{
-	            if (strfoliosFacturas.length()>0) { 		   
+		try{ 
+	            if (strfoliosFacturas.length()>0) { 
+	            	strQueryNC =" select Tnc"+
+			        		  " from TNotaCredito Tnc " +					
+							  " where Tnc.ufoliofactura in("+strfoliosFacturas+")";  	            	
 				    strQuery =" select Tf"+
 			        		  " from TFactura Tf " +					
 							  " where Tf.ufoliofactura in("+strfoliosFacturas+") and Tf.csucursal>36 and Tf.csucursal not in(100,1016)";    					
 				    HibernateUtil.beginTrans();
 				    objQuery = iObjSesion.createQuery(strQuery);
+				    objQueryNC = iObjSesion.createQuery(strQueryNC);
 				    objListaFacturas = objQuery.list();
+				    objListaNotasCredito = objQueryNC.list();
 				    if (objListaFacturas.isEmpty() == false) {
 				        for (int inti=0;inti<objListaFacturas.size();inti++){
 				        	objTFactura = (TFactura)objListaFacturas.get(inti);
@@ -131,8 +141,16 @@ public class BusquedaFacturaDao {
 				        	objFacturasEncontradas.add(objTFactura);
 				        }
 				    }
+				    if (objListaNotasCredito.isEmpty() == false) {
+				        for (int inti=0;inti<objListaNotasCredito.size();inti++){
+				        	objTNotaCredito = (TNotaCredito)objListaNotasCredito.get(inti);
+				        	iObjLog.debug("Nota encontrada " + objTNotaCredito.getKnotacredito());
+				        	objNotasEncontradas.add(objTNotaCredito);
+				        }
+				    }
 				    iObjLog.debug("Factura encontradas " + objFacturasEncontradas.size());
-				    strReturn=this.pintarFacturas(objFacturasEncontradas);
+				    iObjLog.debug("Notas encontradas " + objNotasEncontradas.size()); 
+				    strReturn=this.pintarFacturas(objFacturasEncontradas, objNotasEncontradas);
 	            }    		
             iObjLog.debug("Saliendo BusquedaFacturaDao.getBusquedaFactura...  " + strReturn);
 			return strReturn;
@@ -760,12 +778,12 @@ public class BusquedaFacturaDao {
 				"</td >"+
 				"<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
 
-				"	<a href=\"javascript:visualizarFactura('http://10.20.26.6:9085/"+pathPDF+"/FacturacionElectronica_" + this.llenaIdFactura("ACC",new Integer(bean.getUfoliofactura().intValue()).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+				"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathPDF+"/FacturacionElectronica_" + this.llenaIdFactura("ACC",new Integer(bean.getUfoliofactura().intValue()).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 
 	            "		<img alt='Factura - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
 				"	</a>" +
 
-				"	<a href=\"javascript:visualizarFactura('http://10.20.26.6:9085/"+pathXML+"/FacturacionElectronica_" + this.llenaIdFactura("ACC",new Integer(bean.getUfoliofactura().intValue()).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+				"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathXML+"/FacturacionElectronica_" + this.llenaIdFactura("ACC",new Integer(bean.getUfoliofactura().intValue()).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 
 	            "		<img alt='Factura - XML' id=\"imgXML\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoXml.png' />" +
 				"	</a>" +
@@ -791,15 +809,140 @@ public class BusquedaFacturaDao {
      BY Tomar en cuenta el registro
 	 * @throws Exception 
      */
-	public String pintarFacturas(List objListaFacturas) throws Exception{
+	public String pintarFacturas(List objListaFacturas, List objListaNotasCredito) throws Exception{
 		String strReturn="";
 		String strEstadoFactura="PAGADA";
 		TFactura objTFactura = new TFactura();
+		TNotaCredito objTNotaCredito = new TNotaCredito();
 		CEstadoRegistroDao objCestadoRegistro = new CEstadoRegistroDao();
 		
 		iObjLog.debug("Entrando BusquedaFacturaDao.pintarFacturas...  " + objListaFacturas.size());
+		iObjLog.debug("Entrando BusquedaFacturaDao.pintarFacturas...  " + objListaNotasCredito.size());
+		
+		String headNotas = "";
+		if(objListaNotasCredito.size() > 0){
+			headNotas = "<tr>" +
+						    "<th colspan='6' nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
+							"	<b><font color='black'>Notas de Crédito" + 
+							"	</font></b>" +
+							"</th>" +
+						  " </tr>" +
+						  "<tr>" + 
+							"<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
+							"	<b><font color='black'>Nota de Crédito" + 
+							"	</font></b>" +
+							"</th>" +
+							"<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
+							"	<b><font color='black'>Monto Nota de Crédito IVA" + 
+							"	</font></b>" +
+							"</th>" + 
+							"<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
+							"	<b><font color='black'>Fecha Nota de Crédito" + 
+							"</th>" + 
+							"<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
+							"	<b><font color='black'>Estado de la Nota de Crédito" + 
+							"</th>" +
+							"<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
+							"	<b><font color='black'>Archivos" + 
+							"</th>" + 
+							"<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
+							"	<b><font color='black'>" + 
+							"</th>" + 
+						" </tr>" ;
+			
+			for(int i = 0; i < objListaNotasCredito.size() ; i++) {
+				objTNotaCredito  = (TNotaCredito) objListaNotasCredito.get(i);
+				String [] arrPrado = {"117","118","126","127","128","129","130","132","134","138","139","140","141","142","143","196","198","199","200","1014"};
+				List listPrado = Arrays.asList(arrPrado);
+				String [] arrLean = {"115","116","119","120","121","122","123","124","125","131","133","135","136","137","177","146","197","1015"};
+				List listLean = Arrays.asList(arrLean);
+				String pathPDF = "";
+				String pathXML = "";
+				
+
+				switch (getMarca(objTNotaCredito.getCconvenio())) {
+				case 1: pathPDF = "FacturasElectronicas_Olab/XMLTMP/PDF";
+							pathXML = "FacturasElectronicas_Olab/XML";
+					break;
+				case 4: pathPDF = "FacturasElectronicas_Azteca/XMLTMP/PDF";
+							pathXML = "FacturasElectronicas_Azteca/XML";
+					break;
+				case 5: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
+							pathXML = "FacturasElectronicas_Swisslab/XML";
+					break;
+				case 15: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
+				pathXML = "FacturasElectronicas_Swisslab/XML";
+				break;
+				case 7: 
+						if(listPrado.contains(String.valueOf(objTNotaCredito.getCsucursal()))){
+							pathPDF = "FacturasElectronicas_Jenner/Prado/XMLTMP/PDF";
+							pathXML = "FacturasElectronicas_Jenner/Prado/XML";
+						}else if(listLean.contains(String.valueOf(objTNotaCredito.getCsucursal()))){
+							pathPDF = "FacturasElectronicas_Jenner/Lean/XMLTMP/PDF";
+							pathXML = "FacturasElectronicas_Jenner/Lean/XML";
+						}
+					break;
+				default:
+					break;
+				}
+				
+				try {	
+					
+					if(objTNotaCredito.getCestadoregistro()==33){
+						strEstadoFactura="EMITIDA";
+					}else if(objTNotaCredito.getCestadoregistro()==34){
+						strEstadoFactura="CANCELADA";
+					}
+									
+					headNotas+=	"<tr>"+
+									"<td align=\"center\">" + 
+									"	<font color='black'>" + this.llenaIdNotaCredito(objTNotaCredito.getSserie(),new Integer(objTNotaCredito.getUfoliofactura()).toString(),9)+
+									"	</font>" +
+									"</td>"+
+									"<td align=\"center\">" + 
+									"	<font color='black'>$" + objFormatos.formateaNumero(objTNotaCredito.getMtotal())+
+									"	</font>" + 
+									"</td >"+
+									"<td align=\"center\">" + 
+									"	<font color='black'>" + objFormatos.getFechaCompleta(objTNotaCredito.getDregistro())+
+									"	</font>" +
+									"</td >"+
+									"<td align=\"center\">" + 
+									"	<font color='black'>" + objCestadoRegistro.getSEstadoRegistro(objTNotaCredito.getCestadoregistro())+
+									"	</font>" +
+									"</td >"+
+									"<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
+
+									"	<a href=\"javascript:visualizarNotaCredito('http://10.20.20.12:9085/"+pathPDF+"/NotaCredito_" + this.llenaIdNotaCredito(objTNotaCredito.getSserie(),new Integer(objTNotaCredito.getUfoliofactura()).toString(),9) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+
+			    		            "		<img alt='Nota de Credito - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
+									"	</a>" +
+
+									"	<a href=\"javascript:visualizarNotaCredito('http://10.20.20.12:9085/"+pathXML+"/NotaCredito_" + this.llenaIdNotaCredito(objTNotaCredito.getSserie(),new Integer(objTNotaCredito.getUfoliofactura()).toString(),9) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+
+			    		            "		<img alt='Nota de Credito - XML' id=\"imgXML\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoXml.png' />" +
+									"	</a>" +
+									"</td>" +								
+									"<td align=\"center\">" + 
+									"	"+
+									"</td>"+
+								"</tr>";
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+			}
+			
+		}
 		
 		strReturn="<table border='0' align='center' style='width: 883px' class='tabla'>" + 
+				headNotas+
+				  "<tr>" +
+				    "<th colspan='6' nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
+					"	<b><font color='black'>Facturas" + 
+					"	</font></b>" +
+					"</th>" +
+				  " </tr>" +
 				  "<tr>" + 
 					"<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
 					"	<b><font color='black'>Factura" + 
@@ -822,6 +965,10 @@ public class BusquedaFacturaDao {
 					"	<b><font color='black'>Soporte Factura" + 
 					"</th>" + 
 				" </tr>" ;
+		
+		
+		
+		
 		for(int i = 0; i < objListaFacturas.size() ; i++) {
 			objTFactura  = (TFactura) objListaFacturas.get(i);
 			String [] arrPrado = {"117","118","126","127","128","129","130","132","134","138","139","140","141","142","143","196","198","199","200","1014"};
@@ -885,12 +1032,12 @@ public class BusquedaFacturaDao {
 								"</td >"+
 								"<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
 
-								"	<a href=\"javascript:visualizarFactura('http://10.20.26.6:9085/"+pathPDF+"/FacturacionElectronica_" + this.llenaIdFactura(objTFactura.getSserie(),new Integer(objTFactura.getUfoliofactura()).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+								"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathPDF+"/FacturacionElectronica_" + this.llenaIdFactura(objTFactura.getSserie(),new Integer(objTFactura.getUfoliofactura()).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 
 		    		            "		<img alt='Factura - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
 								"	</a>" +
 
-								"	<a href=\"javascript:visualizarFactura('http://10.20.26.6:9085/"+pathXML+"/FacturacionElectronica_" + this.llenaIdFactura(objTFactura.getSserie(),new Integer(objTFactura.getUfoliofactura()).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+								"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathXML+"/FacturacionElectronica_" + this.llenaIdFactura(objTFactura.getSserie(),new Integer(objTFactura.getUfoliofactura()).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 
 		    		            "		<img alt='Factura - XML' id=\"imgXML\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoXml.png' />" +
 								"	</a>" +
@@ -954,6 +1101,15 @@ public class BusquedaFacturaDao {
 	 
 	
 	static String llenaIdFactura(String strNemonico,String intFactura,int MaxLength) {
+		String strReturn = "";
+		int intTotal = (strNemonico.length() + intFactura.length());
+		for(int i = intTotal;i <= MaxLength;i++) {
+			strReturn += "0";
+		}		
+		return strNemonico + strReturn+intFactura;
+	}
+	
+	static String llenaIdNotaCredito(String strNemonico,String intFactura,int MaxLength) {
 		String strReturn = "";
 		int intTotal = (strNemonico.length() + intFactura.length());
 		for(int i = intTotal;i <= MaxLength;i++) {
