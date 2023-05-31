@@ -325,6 +325,12 @@ public class FacturacionMayoreoDao {
 		case 1017:
 			url="/mnt/gda/apache-tomcat/webapps/ROOT/FacturasElectronicas_Swisslab/XML/FacturacionElectronica_";
 			break;
+		case 1020:
+			url="/mnt/gda/apache-tomcat/webapps/ROOT/FacturasElectronicas_FamilyLabs/XML/FacturacionElectronica_";
+			break;
+		case 1021:
+			url="/mnt/gda/apache-tomcat/webapps/ROOT/FacturasElectronicas_Exakta/XML/FacturacionElectronica_";
+			break;
 		default:
 			break;
 		}

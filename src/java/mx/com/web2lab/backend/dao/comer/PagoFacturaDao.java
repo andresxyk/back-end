@@ -897,6 +897,12 @@ public class PagoFacturaDao {
 			case 8: pathPDF = "FacturasElectronicas_Jenner/Lean/XMLTMP/PDF";
 						pathXML = "FacturasElectronicas_Jenner/Lean/XML";
 				break;
+			case 19: pathPDF = "FacturasElectronicas_FamilyLabs/XMLTMP/PDF";
+			pathXML = "FacturasElectronicas_FamilyLabs/XML";
+				break;
+			case 20: pathPDF = "FacturasElectronicas_Exakta/XMLTMP/PDF";
+			pathXML = "FacturasElectronicas_Exakta/XML";
+				break;
 			default:
 				break;
 			}
@@ -956,6 +962,12 @@ public class PagoFacturaDao {
 						break;
 					case 8: pathPDF = "FacturasElectronicas_Jenner/Lean/XMLTMP/PDF";
 								pathXML = "FacturasElectronicas_Jenner/Lean/XML";
+						break;
+					case 19: pathPDF = "FacturasElectronicas_FamilyLabs/XMLTMP/PDF";
+								pathXML = "FacturasElectronicas_FamilyLabs/XML";
+						break;
+					case 20: pathPDF = "FacturasElectronicas_Exakta/XMLTMP/PDF";
+							pathXML = "FacturasElectronicas_Exakta/XML";
 						break;
 					default:
 						break;
@@ -1021,6 +1033,12 @@ public class PagoFacturaDao {
 					case 8: pathPDF = "FacturasElectronicas_Jenner/Lean/XMLTMP/PDF";
 								pathXML = "FacturasElectronicas_Jenner/Lean/XML";
 						break;
+					case 19: pathPDF = "FacturasElectronicas_FamilyLabs/XMLTMP/PDF";
+								pathXML = "FacturasElectronicas_FamilyLabs/XML";
+						break;
+					case 20: pathPDF = "FacturasElectronicas_Exakta/XMLTMP/PDF";
+								pathXML = "FacturasElectronicas_Exakta/XML";
+							break;
 					default:
 						break; 
 					}

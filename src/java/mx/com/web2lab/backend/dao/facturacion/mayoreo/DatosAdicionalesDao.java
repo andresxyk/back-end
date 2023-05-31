@@ -3,7 +3,9 @@ package mx.com.web2lab.backend.dao.facturacion.mayoreo;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import mx.com.web2lab.backend.beans.ap.OrdenBean;
@@ -86,7 +88,7 @@ private static Log iObjLog = LogFactory.getLog(FacturacionPrevioDao.class);
 		String strReturndatosOrden="";
 		
 		
-		Integer strtipobusqueda;
+		Integer strtipobusqueda = null;
 		boolean bmostrarsniveldatoadicional=false;
 		
 		ClientesNewDao objClientesNewDAO = new ClientesNewDao();
@@ -174,20 +176,30 @@ private static Log iObjLog = LogFactory.getLog(FacturacionPrevioDao.class);
 						}else if(objDatosAdicionalesBean.getStipodatoadicional().equals("DATE")) {
 							strscript="onKeyPress=\"javascript:agregaDiag(this);\" onChange=\"javascript:this.value=validaFormatoFecha(this.value);\"";
 						}
+						System.out.println("objDatosAdicionalesBean.getSdatoadicional():"+objDatosAdicionalesBean.getSdatoadicional());
+						String strValue = "";
+						if(strnameniveldatoadicional.equals("00")){
+							System.err.println("entra aqui en 00");
+							if(objDatosAdicionalesBean.getSdatoadicional().equals("FECHA ENTREGA")){
+								System.err.println("es FECHA ENTREGA");
+								strscript+=" readOnly='True' ";
+								strValue = getFechaPromesaResultado(strtipobusqueda);
+							}							
+						}
 						strReturn+= "<tr>"+
 									"</tr>"+
-									"<tr>"+
+									"<tr>"+ 
 									"<td>" + 
 									"	<b><font color='black'>" + objDatosAdicionalesBean.getSdatoadicional()+
 									"	</font></b>" +
 									"</td>"+
 									"<td>"+
-									" <input type=\"text\" name=\""+objDatosAdicionalesBean.getCdatoadicional()+"\" "+strscript+" size=\"12\" >"+
+									" <input type=\"text\" name=\""+objDatosAdicionalesBean.getCdatoadicional()+"\" "+strscript+" value='"+strValue+"' size=\"12\" >"+
 									"	</font></b>" +
 									"</td>"+
 									"</tr>"; 
 					}
-				strReturn+= "<tr>"+
+				strReturn+= "<tr>"+ 
 							"</tr>"+
 						    "	<tr colspan='2'>"+
 							"		<td>" + 
@@ -530,5 +542,40 @@ private static Log iObjLog = LogFactory.getLog(FacturacionPrevioDao.class);
 	    		objStmt = null;
 	        	HibernateUtil.closeSession();
 			}		
-		}	
+		}
+	 
+	 public String getFechaPromesaResultado(Integer kordensucursal) throws Exception {
+			iObjLog.debug("Entrando DatosAdicionalesDao.getFechaPromesaResultado:" + kordensucursal);
+			iObjSesion = HibernateUtil.getSession();
+			String strQuery = "";
+			String strFechaReturn = "";
+			Date strReturn = null;
+			java.sql.Connection objConn = null;
+			java.sql.ResultSet objRst = null;
+			java.sql.Statement objStmt = null;
+	    	try{
+	            HibernateUtil.beginTrans();
+	            objConn = iObjSesion.connection();
+	            objStmt = objConn.createStatement();
+        		strQuery =  "select dresultadoentrega from t_orden_sucursal \r\n" +
+        					"where kordensucursal = " +  kordensucursal;
+	            if (strQuery != "") {
+	            	objRst = objStmt.executeQuery(strQuery);
+	            	while (objRst.next()) {
+						strReturn =  objRst.getDate("dresultadoentrega");            		
+	            	}
+	            }
+				iObjLog.debug("Saliendo DatosAdicionalesDao.getFechaPromesaResultado...  " + strReturn);
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				strFechaReturn = sdf.format(strReturn);
+				return strFechaReturn;
+			} catch (Exception aObjExcepcion) { 
+				iObjLog.error("ERROR DatosAdicionalesDao.getFechaPromesaResultado: ", aObjExcepcion);
+				throw aObjExcepcion;
+	        } finally{
+	    		objRst = null;
+	    		objStmt = null;
+	        	HibernateUtil.closeSession();
+			}		
+		}
 }

@@ -137,6 +137,12 @@ public class MedicosDao {
 									if(splitMarcas[i].equals("15")){
 										objMedicoBeanReturn.setMarcaliacsa(true);
 									}
+									if(splitMarcas[i].equals("19")){
+										objMedicoBeanReturn.setMarcafamilylabsnorte(true);
+									}
+									if(splitMarcas[i].equals("20")){
+										objMedicoBeanReturn.setMarcaexakta(true);
+									}
 								}								
 								
 								iObjLog.debug("Consulta MedicosDao.buscarMedicos:Operacion...  " + objMedico.getUtipooperacion() );

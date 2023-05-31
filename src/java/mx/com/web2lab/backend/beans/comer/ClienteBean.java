@@ -81,7 +81,30 @@ public class ClienteBean implements Serializable {
     
     private int czonaventa = 0;
 
+    /** persistent field */
+    private int cregimenfiscal;
     
+    /** persistent field */
+    private int cusocfdi;
+
+    public int getCregimenfiscal() {
+		return cregimenfiscal;
+	}
+
+
+	public void setCregimenfiscal(int cregimenfiscal) {
+		this.cregimenfiscal = cregimenfiscal;
+	}
+
+
+	public int getCusocfdi() {
+		return cusocfdi;
+	}
+
+
+	public void setCusocfdi(int cusocfdi) {
+		this.cusocfdi = cusocfdi;
+	}
     
 	public String getSmarcauser() {
 		return smarcauser;
@@ -311,7 +334,11 @@ public class ClienteBean implements Serializable {
 			this.smarca = "LIACSA";
 		} else if (this.cmarca == 17) {
 			this.smarca = "DIAGNOSTIX";
-		}	
+		} else if (this.cmarca == 19) {
+			this.smarca = "FAMILY LABS NORTE";
+		} else if (this.cmarca == 20) {
+			this.smarca = "EXAKTA";
+		}
 		return smarca;
 	}
 

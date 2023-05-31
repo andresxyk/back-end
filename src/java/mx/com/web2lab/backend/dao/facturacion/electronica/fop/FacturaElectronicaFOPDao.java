@@ -36,7 +36,11 @@ public class FacturaElectronicaFOPDao {
         	}else if(objFactura.getSserie().equals("AJL")){
         		sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_JennerLean"); 
         	}        	
-        }
+        } else if (objFactura.getCmarca() == 19){
+        	 sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_FamilyLabs");
+        } else if (objFactura.getCmarca() == 20){
+       	 sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_Exakta");
+       }
         String strLogoFactura = "";
         String strRFC = "";
         String strDebemos = "";
@@ -161,6 +165,14 @@ public class FacturaElectronicaFOPDao {
 		        	strLogoFactura = "AztecaSmall.jpg";
 		        	strRFC = "RFCTAztecaFactura.jpg";
 		        	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE LABORATORIO QUIMICO CLINICO AZTECA S.A.P.I. DE C.V. EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
+		        } else if (objFactura.getCmarca() == 19){
+		        	strLogoFactura = "FamilyLabsSmall.jpg";
+		        	strRFC = "RFCTFamilyLabsFactura.jpg";
+		        	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE LABORATORIO FAMILYLABS EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
+		        } else if (objFactura.getCmarca() == 20){
+		        	strLogoFactura = "ExaktaSmall.jpg";
+		        	strRFC = "RFCTExaktaFactura.jpg";
+		        	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE LABORATORIO EXAKTA EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
 		        }
 				
 				strFileFop ="<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +

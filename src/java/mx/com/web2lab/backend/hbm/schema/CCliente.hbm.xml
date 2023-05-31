@@ -90,6 +90,22 @@
         not-null="true"
         length="8"
     />
+    
+    <property
+        name="cregimenfiscal"
+        type="int"
+        column="cregimenfiscal"
+        not-null="true"
+        length="8"
+    />
+    
+    <property
+        name="cusocfdi"
+        type="int"
+        column="cusocfdi"
+        not-null="true"
+        length="8"
+    />
 
     <!-- associations -->
     <!-- bi-directional many-to-one association to CCodigoPostal -->

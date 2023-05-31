@@ -56,8 +56,34 @@ public class CCliente implements Serializable {
 
     /** persistent field */
     private Set cconvenios;
+    
+    /** persistent field */
+    private int cregimenfiscal;
+    
+    /** persistent field */
+    private int cusocfdi;
 
-    /** full constructor */
+    public int getCregimenfiscal() {
+		return cregimenfiscal;
+	}
+
+
+	public void setCregimenfiscal(int cregimenfiscal) {
+		this.cregimenfiscal = cregimenfiscal;
+	}
+
+
+	public int getCusocfdi() {
+		return cusocfdi;
+	}
+
+
+	public void setCusocfdi(int cusocfdi) {
+		this.cusocfdi = cusocfdi;
+	}
+
+
+	/** full constructor */
     public CCliente(java.lang.Integer ccliente, java.lang.String srazonsocial, java.lang.String srfc, java.lang.String sdireccion, java.lang.String sobservaciones, java.math.BigDecimal userid, java.util.Date dregistro, java.lang.String smnemonico, mx.com.web2lab.backend.hbm.om.ap.CCodigoPostal ccodigopostal, mx.com.web2lab.backend.hbm.om.ap.CTipoCliente ctipocliente, mx.com.web2lab.backend.hbm.om.ap.CTipoPersona ctipopersona, mx.com.web2lab.backend.hbm.om.ap.CEstadoRegistro cestadoregistro, int cgirocliente,int czonaventa,int cmarca, Set cconvenios) {
         this.ccliente = ccliente;
         this.srazonsocial = srazonsocial;

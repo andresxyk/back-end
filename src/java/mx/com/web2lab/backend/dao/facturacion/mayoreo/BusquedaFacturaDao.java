@@ -760,6 +760,14 @@ public class BusquedaFacturaDao {
 				pathPDF = "FacturasElectronicas_Jenner/Lean/XMLTMP/PDF";
 				pathXML = "FacturasElectronicas_Jenner/Lean/XML";			
 		break;
+		case 19: 			
+				pathPDF = "FacturasElectronicas_FamilyLabs/XMLTMP/PDF";
+				pathXML = "FacturasElectronicas_FamilyLabs/XML";			
+		break;
+		case 20: 			
+			pathPDF = "FacturasElectronicas_Exakta/XMLTMP/PDF";
+			pathXML = "FacturasElectronicas_Exakta/XML";			
+			break;
 		default:
 			break;
 		}
@@ -882,6 +890,12 @@ public class BusquedaFacturaDao {
 							pathXML = "FacturasElectronicas_Jenner/Lean/XML";
 						}
 					break;
+				case 19: pathPDF = "FacturasElectronicas_FamilyLabs/XMLTMP/PDF";
+					pathXML = "FacturasElectronicas_FamilyLabs/XML";
+					break;
+				case 20: pathPDF = "FacturasElectronicas_Exakta/XMLTMP/PDF";
+					pathXML = "FacturasElectronicas_Exakta/XML";
+					break;
 				default:
 					break;
 				}
@@ -912,13 +926,14 @@ public class BusquedaFacturaDao {
 									"	</font>" +
 									"</td >"+
 									"<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
-
-									"	<a href=\"javascript:visualizarNotaCredito('http://10.20.20.12:9085/"+pathPDF+"/NotaCredito_" + this.llenaIdNotaCredito(objTNotaCredito.getSserie(),new Integer(objTNotaCredito.getUfoliofactura()).toString(),9) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+									
+									"	<a href=\"javascript:visualizarNotaCredito('http://10.3.0.8:9085/"+pathPDF+"/NotaCredito_" + this.llenaIdNotaCredito(objTNotaCredito.getSserie(),new Integer(objTNotaCredito.getUfoliofactura()).toString(),9) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  + 
+//									"	<a href=\"javascript:visualizarNotaCredito('http://10.20.20.12:9085/"+pathPDF+"/NotaCredito_" + this.llenaIdNotaCredito(objTNotaCredito.getSserie(),new Integer(objTNotaCredito.getUfoliofactura()).toString(),9) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 
 			    		            "		<img alt='Nota de Credito - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
 									"	</a>" +
-
-									"	<a href=\"javascript:visualizarNotaCredito('http://10.20.20.12:9085/"+pathXML+"/NotaCredito_" + this.llenaIdNotaCredito(objTNotaCredito.getSserie(),new Integer(objTNotaCredito.getUfoliofactura()).toString(),9) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+									"	<a href=\"javascript:visualizarNotaCredito('http://10.3.0.8:9085/"+pathXML+"/NotaCredito_" + this.llenaIdNotaCredito(objTNotaCredito.getSserie(),new Integer(objTNotaCredito.getUfoliofactura()).toString(),9) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  + 
+//									"	<a href=\"javascript:visualizarNotaCredito('http://10.20.20.12:9085/"+pathXML+"/NotaCredito_" + this.llenaIdNotaCredito(objTNotaCredito.getSserie(),new Integer(objTNotaCredito.getUfoliofactura()).toString(),9) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 
 			    		            "		<img alt='Nota de Credito - XML' id=\"imgXML\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoXml.png' />" +
 									"	</a>" +
@@ -1001,6 +1016,12 @@ public class BusquedaFacturaDao {
 						pathXML = "FacturasElectronicas_Jenner/Lean/XML";
 					}
 				break;
+			case 19: pathPDF = "FacturasElectronicas_FamilyLabs/XMLTMP/PDF";
+				pathXML = "FacturasElectronicas_FamilyLabs/XML";
+				break;
+			case 20: pathPDF = "FacturasElectronicas_Exakta/XMLTMP/PDF";
+				pathXML = "FacturasElectronicas_Exakta/XML";
+				break;
 			default:
 				break;
 			}
@@ -1012,7 +1033,7 @@ public class BusquedaFacturaDao {
 				}else if(objTFactura.getCestadoregistro()==34){
 					strEstadoFactura="CANCELADA";
 				}
-								
+								 
 				strReturn+=	"<tr>"+
 								"<td align=\"center\">" + 
 								"	<font color='black'>" + this.llenaIdFactura(objTFactura.getSserie(),new Integer(objTFactura.getUfoliofactura()).toString(),8)+
