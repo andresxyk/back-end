@@ -39,8 +39,10 @@ public class FacturaElectronicaFOPDao {
         } else if (objFactura.getCmarca() == 19){
         	 sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_FamilyLabs");
         } else if (objFactura.getCmarca() == 20){
-       	 sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_Exakta");
-       }
+        	sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_Exakta");
+        } else if (objFactura.getCmarca() == 21){
+        	sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_AsesoresSur");
+        }
         String strLogoFactura = "";
         String strRFC = "";
         String strDebemos = "";
@@ -173,6 +175,10 @@ public class FacturaElectronicaFOPDao {
 		        	strLogoFactura = "ExaktaSmall.jpg";
 		        	strRFC = "RFCTExaktaFactura.jpg";
 		        	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE LABORATORIO EXAKTA EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
+		        } else if (objFactura.getCmarca() == 21){
+		        	strLogoFactura = "AsesoresSurSmall.jpg";
+		        	strRFC = "RFCTAsesoresSurFactura.jpg";
+		        	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE LABORATORIO ASESORES DEL SUR EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
 		        }
 				
 				strFileFop ="<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +

@@ -44,8 +44,10 @@ public class FacturaElectronicaEmpresaFOPDao {
         } else if (objFactura.getCmarca() == 19){
         	 sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_FamilyLabs");
         } else if (objFactura.getCmarca() == 20){
-       	 sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_Exakta");
-       }
+	       	 sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_Exakta");
+	    } else if (objFactura.getCmarca() == 21){
+	       	 sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_AsesoresSur");
+	    }
         
         if (objFactura.getCmarca() == 1) {
         	strLogoFactura = "OlabSmall.jpg";
@@ -71,6 +73,10 @@ public class FacturaElectronicaEmpresaFOPDao {
         	strLogoFactura = "ExaktaSmall.jpg";
         	strRFC = "RFCTExaktaFactura.jpg";
         	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE EXAKTA EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
+        } else if(objFactura.getCmarca() == 21){
+        	strLogoFactura = "AsesoresSurSmall.jpg";
+        	strRFC = "RFCTAsesoresSurFactura.jpg";
+        	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE ASESORES DEL SUR EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
         }
         
         

@@ -73,6 +73,8 @@ public class OrdenDatosFacturacionDao {
 					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS FAMILYLABS NORTE' " ;
 				}else if (cmarca == 20){
 					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS EXAKTA' " ;
+				}else if (cmarca == 21){
+					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS ASESORES SUR' " ;
 				}
 				
 			}			
@@ -279,6 +281,8 @@ public class OrdenDatosFacturacionDao {
 						csucursal=1020;
 					} else if (cmarca==20){
 						csucursal=1021;
+					} else if (cmarca==21){
+						csucursal=1022;
 					}
 					
 					this.initConnectionDB();

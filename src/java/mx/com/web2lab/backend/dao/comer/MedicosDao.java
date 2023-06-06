@@ -143,6 +143,9 @@ public class MedicosDao {
 									if(splitMarcas[i].equals("20")){
 										objMedicoBeanReturn.setMarcaexakta(true);
 									}
+									if(splitMarcas[i].equals("21")){
+										objMedicoBeanReturn.setMarcaasesoressur(true);
+									}
 								}								
 								
 								iObjLog.debug("Consulta MedicosDao.buscarMedicos:Operacion...  " + objMedico.getUtipooperacion() );

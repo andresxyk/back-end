@@ -331,6 +331,9 @@ public class FacturacionMayoreoDao {
 		case 1021:
 			url="/mnt/gda/apache-tomcat/webapps/ROOT/FacturasElectronicas_Exakta/XML/FacturacionElectronica_";
 			break;
+		case 1022:
+			url="/mnt/gda/apache-tomcat/webapps/ROOT/FacturasElectronicas_AsesoresSur/XML/FacturacionElectronica_";
+			break;
 		default:
 			break;
 		}

@@ -31,6 +31,7 @@ import mx.com.web2lab.backend.dao.facturacion.electronica.security.SelloDigitalD
 import mx.com.web2lab.backend.dao.facturacion.tool.DatosFiscalesDao;
 import mx.com.web2lab.backend.dao.tools.CEstadoRegistroDao;
 import mx.com.web2lab.backend.dao.tools.SucursalDao;
+import mx.com.web2lab.backend.hbm.ConfiguracionProperties;
 import mx.com.web2lab.backend.hbm.HibernateUtil;
 
 import mx.com.web2lab.backend.hbm.om.ap.CConvenio;
@@ -64,10 +65,13 @@ public class BusquedaFacturaDao {
 	    
 	private Session iObjSesion = null;
 	
+	private String hostServerApache = null;
+	
 	private Formatos objFormatos = new Formatos();
 	
 	public BusquedaFacturaDao(){
 		iObjSesion = HibernateUtil.getSession();
+		hostServerApache = ConfiguracionProperties.getPropiedad("host.server.apache");
 	}
 	
 	public int getMarca(int cconvenio) throws Exception{
@@ -768,6 +772,10 @@ public class BusquedaFacturaDao {
 			pathPDF = "FacturasElectronicas_Exakta/XMLTMP/PDF";
 			pathXML = "FacturasElectronicas_Exakta/XML";			
 			break;
+		case 21: 			
+			pathPDF = "FacturasElectronicas_AsesoresSur/XMLTMP/PDF";
+			pathXML = "FacturasElectronicas_AsesoresSur/XML";			
+			break;
 		default:
 			break;
 		}
@@ -786,12 +794,12 @@ public class BusquedaFacturaDao {
 				"</td >"+
 				"<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
 
-				"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathPDF+"/FacturacionElectronica_" + this.llenaIdFactura("ACC",new Integer(bean.getUfoliofactura().intValue()).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+				"	<a href=\"javascript:visualizarFactura('http://"+hostServerApache+"/"+pathPDF+"/FacturacionElectronica_" + this.llenaIdFactura("ACC",new Integer(bean.getUfoliofactura().intValue()).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 
 	            "		<img alt='Factura - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
 				"	</a>" +
 
-				"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathXML+"/FacturacionElectronica_" + this.llenaIdFactura("ACC",new Integer(bean.getUfoliofactura().intValue()).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+				"	<a href=\"javascript:visualizarFactura('http://"+hostServerApache+"/"+pathXML+"/FacturacionElectronica_" + this.llenaIdFactura("ACC",new Integer(bean.getUfoliofactura().intValue()).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 
 	            "		<img alt='Factura - XML' id=\"imgXML\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoXml.png' />" +
 				"	</a>" +
@@ -896,6 +904,9 @@ public class BusquedaFacturaDao {
 				case 20: pathPDF = "FacturasElectronicas_Exakta/XMLTMP/PDF";
 					pathXML = "FacturasElectronicas_Exakta/XML";
 					break;
+				case 21: pathPDF = "FacturasElectronicas_AsesoresSur/XMLTMP/PDF";
+					pathXML = "FacturasElectronicas_AsesoresSur/XML";
+				break;
 				default:
 					break;
 				}
@@ -927,13 +938,11 @@ public class BusquedaFacturaDao {
 									"</td >"+
 									"<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
 									
-									"	<a href=\"javascript:visualizarNotaCredito('http://10.3.0.8:9085/"+pathPDF+"/NotaCredito_" + this.llenaIdNotaCredito(objTNotaCredito.getSserie(),new Integer(objTNotaCredito.getUfoliofactura()).toString(),9) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  + 
-//									"	<a href=\"javascript:visualizarNotaCredito('http://10.20.20.12:9085/"+pathPDF+"/NotaCredito_" + this.llenaIdNotaCredito(objTNotaCredito.getSserie(),new Integer(objTNotaCredito.getUfoliofactura()).toString(),9) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+									"	<a href=\"javascript:visualizarNotaCredito('http://"+hostServerApache+"/"+pathPDF+"/NotaCredito_" + this.llenaIdNotaCredito(objTNotaCredito.getSserie(),new Integer(objTNotaCredito.getUfoliofactura()).toString(),9) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  + 
 
 			    		            "		<img alt='Nota de Credito - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
 									"	</a>" +
-									"	<a href=\"javascript:visualizarNotaCredito('http://10.3.0.8:9085/"+pathXML+"/NotaCredito_" + this.llenaIdNotaCredito(objTNotaCredito.getSserie(),new Integer(objTNotaCredito.getUfoliofactura()).toString(),9) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  + 
-//									"	<a href=\"javascript:visualizarNotaCredito('http://10.20.20.12:9085/"+pathXML+"/NotaCredito_" + this.llenaIdNotaCredito(objTNotaCredito.getSserie(),new Integer(objTNotaCredito.getUfoliofactura()).toString(),9) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+									"	<a href=\"javascript:visualizarNotaCredito('http://"+hostServerApache+"/"+pathXML+"/NotaCredito_" + this.llenaIdNotaCredito(objTNotaCredito.getSserie(),new Integer(objTNotaCredito.getUfoliofactura()).toString(),9) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  + 
 
 			    		            "		<img alt='Nota de Credito - XML' id=\"imgXML\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoXml.png' />" +
 									"	</a>" +
@@ -1022,6 +1031,9 @@ public class BusquedaFacturaDao {
 			case 20: pathPDF = "FacturasElectronicas_Exakta/XMLTMP/PDF";
 				pathXML = "FacturasElectronicas_Exakta/XML";
 				break;
+			case 21: pathPDF = "FacturasElectronicas_AsesoresSur/XMLTMP/PDF";
+				pathXML = "FacturasElectronicas_AsesoresSur/XML";
+				break;
 			default:
 				break;
 			}
@@ -1053,12 +1065,12 @@ public class BusquedaFacturaDao {
 								"</td >"+
 								"<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
 
-								"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathPDF+"/FacturacionElectronica_" + this.llenaIdFactura(objTFactura.getSserie(),new Integer(objTFactura.getUfoliofactura()).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+								"	<a href=\"javascript:visualizarFactura('http://"+hostServerApache+"/"+pathPDF+"/FacturacionElectronica_" + this.llenaIdFactura(objTFactura.getSserie(),new Integer(objTFactura.getUfoliofactura()).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 
 		    		            "		<img alt='Factura - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
 								"	</a>" +
 
-								"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathXML+"/FacturacionElectronica_" + this.llenaIdFactura(objTFactura.getSserie(),new Integer(objTFactura.getUfoliofactura()).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+								"	<a href=\"javascript:visualizarFactura('http://"+hostServerApache+"/"+pathXML+"/FacturacionElectronica_" + this.llenaIdFactura(objTFactura.getSserie(),new Integer(objTFactura.getUfoliofactura()).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 
 		    		            "		<img alt='Factura - XML' id=\"imgXML\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoXml.png' />" +
 								"	</a>" +

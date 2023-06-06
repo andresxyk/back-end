@@ -120,6 +120,8 @@ public class MedicoBean implements Serializable {
     
     private boolean marcafamilylabsnorte = false;
     
+    private boolean marcaasesoressur = false;
+    
     private boolean marcaexakta = false;
     
     private String smarcasventa;
@@ -132,6 +134,14 @@ public class MedicoBean implements Serializable {
     
     
    
+
+	public boolean isMarcaasesoressur() {
+		return marcaasesoressur;
+	}
+
+	public void setMarcaasesoressur(boolean marcaasesoressur) {
+		this.marcaasesoressur = marcaasesoressur;
+	}
 
 	public boolean isMarcaexakta() {
 		return marcaexakta;
