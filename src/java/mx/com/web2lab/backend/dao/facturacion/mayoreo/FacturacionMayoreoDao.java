@@ -334,6 +334,18 @@ public class FacturacionMayoreoDao {
 		case 1022:
 			url="/mnt/gda/apache-tomcat/webapps/ROOT/FacturasElectronicas_AsesoresSur/XML/FacturacionElectronica_";
 			break;
+		case 1026:
+			url="/mnt/gda/apache-tomcat/webapps/ROOT/FacturasElectronicas_Moreira/XML/FacturacionElectronica_";
+			break;
+		case 1023:
+			url="/mnt/gda/apache-tomcat/webapps/ROOT/FacturasElectronicas_Polab/XML/FacturacionElectronica_";
+			break;
+		case 1024:
+			url="/mnt/gda/apache-tomcat/webapps/ROOT/FacturasElectronicas_BiomedicaReferencia/XML/FacturacionElectronica_";
+			break;
+		case 1025:
+			url="/mnt/gda/apache-tomcat/webapps/ROOT/FacturasElectronicas_Promedic/XML/FacturacionElectronica_";
+			break;
 		default:
 			break;
 		}

@@ -74,8 +74,17 @@ public class OrdenDatosFacturacionDao {
 				}else if (cmarca == 20){
 					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS EXAKTA' " ;
 				}else if (cmarca == 21){
-					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS ASESORES SUR' " ;
+					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS ASESORES DEL SUR' " ;
+				}else if (cmarca == 16){
+					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS MOREIRA' " ;
+				}else if (cmarca == 22){
+					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS POLAB' " ;
+				}else if (cmarca == 25){
+					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS BIOMEDICA' " ;
+				}else if (cmarca == 26){
+					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS PROMEDIC' " ;
 				}
+				
 				
 			}			
 			iObjLog.debug("Entrando OrdenDatosFacturacionDao.buscarFacturaHB:Entrando...  " + strQuery);
@@ -283,6 +292,14 @@ public class OrdenDatosFacturacionDao {
 						csucursal=1021;
 					} else if (cmarca==21){
 						csucursal=1022;
+					} else if (cmarca==16){
+						csucursal=1026;
+					} else if (cmarca==22){
+						csucursal=1023;
+					} else if (cmarca==25){
+						csucursal=1024;
+					} else if (cmarca==26){
+						csucursal=1025;
 					}
 					
 					this.initConnectionDB();

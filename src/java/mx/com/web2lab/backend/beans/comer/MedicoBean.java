@@ -124,16 +124,64 @@ public class MedicoBean implements Serializable {
     
     private boolean marcaexakta = false;
     
+    private boolean marcamoreira = false;
+    
+    private boolean marcapolab = false;
+    
+    private boolean marcabiomedicareferencia = false;
+    
+    private boolean marcapromedic = false;
+    
     private String smarcasventa;
    
     private String susuarioweb;
     
     private int cestadoregistro;
     
-    
+    private boolean bsustentable;
     
     
    
+
+	public boolean isMarcamoreira() {
+		return marcamoreira;
+	}
+
+	public void setMarcamoreira(boolean marcamoreira) {
+		this.marcamoreira = marcamoreira;
+	}
+
+	public boolean isMarcapolab() {
+		return marcapolab;
+	}
+
+	public void setMarcapolab(boolean marcapolab) {
+		this.marcapolab = marcapolab;
+	}
+
+	public boolean isMarcabiomedicareferencia() {
+		return marcabiomedicareferencia;
+	}
+
+	public void setMarcabiomedicareferencia(boolean marcabiomedicareferencia) {
+		this.marcabiomedicareferencia = marcabiomedicareferencia;
+	}
+
+	public boolean isMarcapromedic() {
+		return marcapromedic;
+	}
+
+	public void setMarcapromedic(boolean marcapromedic) {
+		this.marcapromedic = marcapromedic;
+	}
+
+	public boolean isBsustentable() {
+		return bsustentable;
+	}
+
+	public void setBsustentable(boolean bsustentable) {
+		this.bsustentable = bsustentable;
+	}
 
 	public boolean isMarcaasesoressur() {
 		return marcaasesoressur;

@@ -72,6 +72,20 @@ public class PagoFacturaDao {
 			keycontrolfolio=161;
 		}else if(marca == 15){
 			keycontrolfolio=161;
+		}else if(marca == 19){
+			keycontrolfolio=161;
+		}else if(marca == 20){
+			keycontrolfolio=161;
+		}else if(marca == 21){
+			keycontrolfolio=161;
+		}else if(marca == 16){
+			keycontrolfolio=161;
+		}else if(marca == 22){
+			keycontrolfolio=161;
+		}else if(marca == 25){
+			keycontrolfolio=161;
+		}else if(marca == 26){
+			keycontrolfolio=161;
 		}
 		String forPago="";
 		if(formaPago.length()==1){
@@ -892,9 +906,9 @@ public class PagoFacturaDao {
 			case 6: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
 						pathXML = "FacturasElectronicas_Swisslab/XML";
 				break;
-			case 16: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
-						pathXML = "FacturasElectronicas_Swisslab/XML";
-			break;
+			case 16: pathPDF = "FacturasElectronicas_Moreira/XMLTMP/PDF";
+						pathXML = "FacturasElectronicas_Moreira/XML";
+						break;
 			case 7: pathPDF = "FacturasElectronicas_Jenner/Prado/XMLTMP/PDF";
 						pathXML = "FacturasElectronicas_Jenner/Prado/XML";
 				break;
@@ -902,13 +916,22 @@ public class PagoFacturaDao {
 						pathXML = "FacturasElectronicas_Jenner/Lean/XML";
 				break;
 			case 19: pathPDF = "FacturasElectronicas_FamilyLabs/XMLTMP/PDF";
-			pathXML = "FacturasElectronicas_FamilyLabs/XML";
+					pathXML = "FacturasElectronicas_FamilyLabs/XML";
 				break;
 			case 20: pathPDF = "FacturasElectronicas_Exakta/XMLTMP/PDF";
-			pathXML = "FacturasElectronicas_Exakta/XML";
+					pathXML = "FacturasElectronicas_Exakta/XML";
 				break;
 			case 21: pathPDF = "FacturasElectronicas_AsesoresSur/XMLTMP/PDF";
 					pathXML = "FacturasElectronicas_AsesoresSur/XML";
+				break;
+			case 22: pathPDF = "FacturasElectronicas_Polab/XMLTMP/PDF";
+					pathXML = "FacturasElectronicas_Polab/XML";
+				break;
+			case 25: pathPDF = "FacturasElectronicas_BiomedicaReferencia/XMLTMP/PDF";
+					pathXML = "FacturasElectronicas_BiomedicaReferencia/XML";
+				break;
+			case 26: pathPDF = "FacturasElectronicas_Promedic/XMLTMP/PDF";
+					pathXML = "FacturasElectronicas_Promedic/XML";
 				break;
 			default:
 				break;
@@ -961,9 +984,9 @@ public class PagoFacturaDao {
 					case 6: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
 								pathXML = "FacturasElectronicas_Swisslab/XML";
 						break;
-					case 16: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
-					pathXML = "FacturasElectronicas_Swisslab/XML";
-					break;
+					case 16: pathPDF = "FacturasElectronicas_Moreira/XMLTMP/PDF";
+						pathXML = "FacturasElectronicas_Moreira/XML";
+						break;
 					case 7: pathPDF = "FacturasElectronicas_Jenner/Prado/XMLTMP/PDF";
 								pathXML = "FacturasElectronicas_Jenner/Prado/XML";
 						break;
@@ -978,6 +1001,15 @@ public class PagoFacturaDao {
 						break;
 					case 21: pathPDF = "FacturasElectronicas_AsesoresSur/XMLTMP/PDF";
 							pathXML = "FacturasElectronicas_AsesoresSur/XML";
+						break;
+					case 22: pathPDF = "FacturasElectronicas_Polab/XMLTMP/PDF";
+							pathXML = "FacturasElectronicas_Polab/XML";
+						break;
+					case 25: pathPDF = "FacturasElectronicas_BiomedicaReferencia/XMLTMP/PDF";
+							pathXML = "FacturasElectronicas_BiomedicaReferencia/XML";
+						break;
+					case 26: pathPDF = "FacturasElectronicas_Promedic/XMLTMP/PDF";
+							pathXML = "FacturasElectronicas_Promedic/XML";
 						break;
 					default:
 						break;
@@ -1034,8 +1066,8 @@ public class PagoFacturaDao {
 					case 6: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
 								pathXML = "FacturasElectronicas_Swisslab/XML";
 						break;
-					case 16: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
-					pathXML = "FacturasElectronicas_Swisslab/XML";
+					case 16: pathPDF = "FacturasElectronicas_Moreira/XMLTMP/PDF";
+					pathXML = "FacturasElectronicas_Moreira/XML";
 					break;
 					case 7: pathPDF = "FacturasElectronicas_Jenner/Prado/XMLTMP/PDF";
 								pathXML = "FacturasElectronicas_Jenner/Prado/XML";
@@ -1051,6 +1083,15 @@ public class PagoFacturaDao {
 							break;
 					case 21: pathPDF = "FacturasElectronicas_AsesoresSur/XMLTMP/PDF";
 							pathXML = "FacturasElectronicas_AsesoresSur/XML";
+						break;
+					case 22: pathPDF = "FacturasElectronicas_Polab/XMLTMP/PDF";
+							pathXML = "FacturasElectronicas_Polab/XML";
+						break;
+					case 25: pathPDF = "FacturasElectronicas_BiomedicaReferencia/XMLTMP/PDF";
+							pathXML = "FacturasElectronicas_BiomedicaReferencia/XML";
+						break;
+					case 26: pathPDF = "FacturasElectronicas_Promedic/XMLTMP/PDF";
+							pathXML = "FacturasElectronicas_Promedic/XML";
 						break;
 					default:
 						break; 

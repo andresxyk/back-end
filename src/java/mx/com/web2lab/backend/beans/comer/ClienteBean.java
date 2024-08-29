@@ -340,6 +340,14 @@ public class ClienteBean implements Serializable {
 			this.smarca = "EXAKTA";
 		} else if (this.cmarca == 21) {
 			this.smarca = "ASESORES DEL SUR";
+		} else if (this.cmarca == 16) {
+			this.smarca = "MOREIRA";
+		} else if (this.cmarca == 22) {
+			this.smarca = "POLAB";
+		} else if (this.cmarca == 25) {
+			this.smarca = "BIOMEDICA DE REFERENCIA";
+		} else if (this.cmarca == 26) {
+			this.smarca = "PROMEDIC";
 		}
 		return smarca;
 	}

@@ -47,6 +47,14 @@ public class FacturaElectronicaEmpresaFOPDao {
 	       	 sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_Exakta");
 	    } else if (objFactura.getCmarca() == 21){
 	       	 sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_AsesoresSur");
+	    } else if (objFactura.getCmarca() == 16){
+	       	 sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_Moreira");
+	    } else if (objFactura.getCmarca() == 22){
+	       	 sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_Polab");
+	    } else if (objFactura.getCmarca() == 25){
+	       	 sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_BiomedicaReferencia");
+	    } else if (objFactura.getCmarca() == 26){
+	       	 sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_Promedic");
 	    }
         
         if (objFactura.getCmarca() == 1) {
@@ -77,6 +85,22 @@ public class FacturaElectronicaEmpresaFOPDao {
         	strLogoFactura = "AsesoresSurSmall.jpg";
         	strRFC = "RFCTAsesoresSurFactura.jpg";
         	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE ASESORES DEL SUR EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
+        } else if(objFactura.getCmarca() == 16){
+        	strLogoFactura = "MoreiraSmall.jpg";
+        	strRFC = "RFCTMoreiraFactura.jpg";
+        	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE MOREIRA EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
+        } else if(objFactura.getCmarca() == 22){
+        	strLogoFactura = "PolabSmall.jpg";
+        	strRFC = "RFCTPolabFactura.jpg";
+        	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE POLAB EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
+        } else if(objFactura.getCmarca() == 25){
+        	strLogoFactura = "BiomedicaReferenciaSmall.jpg";
+        	strRFC = "RFCTBiomedicaReferenciaFactura.jpg";
+        	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE BIOMEDICA DE REFERENCIA EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
+        } else if(objFactura.getCmarca() == 26){
+        	strLogoFactura = "PromedicSmall.jpg";
+        	strRFC = "RFCTPromedicFactura.jpg";
+        	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE PROMEDIC EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
         }
         
         
