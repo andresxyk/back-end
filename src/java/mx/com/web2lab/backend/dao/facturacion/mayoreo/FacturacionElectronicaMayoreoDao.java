@@ -99,6 +99,8 @@ public class FacturacionElectronicaMayoreoDao {
 			csucursal="1024";
 		}else if (marca==26){
 			csucursal="1025";
+		}else if (marca==9){
+			csucursal="9999";
 		}
 		
     	try{
@@ -371,6 +373,8 @@ public class FacturacionElectronicaMayoreoDao {
 			csucursal="1024";
 		}else if (marca==26){
 			csucursal="1025";
+		}else if (marca==9){
+			csucursal="9999";
 		}
 		
 		

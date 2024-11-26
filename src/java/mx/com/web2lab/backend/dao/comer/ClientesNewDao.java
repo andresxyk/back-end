@@ -372,6 +372,7 @@ public class ClientesNewDao {
         	objClienteHB.setCzonaventa(objClienteBean.getCzonaventa());
         	objClienteHB.setCregimenfiscal(objClienteBean.getCregimenfiscal());
         	objClienteHB.setCusocfdi(objClienteBean.getCusocfdi());
+        	objClienteHB.setUdiascredito(objClienteBean.getUdiascredito());
 			iObjLog.debug("Consulta ClientesDao.setClienteActualizacion.....Beans creados");
         	if (objClienteBean.getCcliente() == 0) {
             	objClienteHB.setDregistro(new Date());
@@ -629,6 +630,8 @@ public class ClientesNewDao {
                     	objConvenioHB.setCagrupacion(new Integer(9));
                 	} else if (objConvenioBean.getCmarca() == 26) {
                     	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 9) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
                 	}
                 } else if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 22) {
                 	if (objConvenioBean.getCmarca() == 1) {
@@ -652,6 +655,8 @@ public class ClientesNewDao {
                 	} else if (objConvenioBean.getCmarca() == 25) {
                     	objConvenioHB.setCagrupacion(new Integer(5));
                 	} else if (objConvenioBean.getCmarca() == 26) {
+                    	objConvenioHB.setCagrupacion(new Integer(5));
+                	} else if (objConvenioBean.getCmarca() == 9) {
                     	objConvenioHB.setCagrupacion(new Integer(5));
                 	}
                 } else if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 23) {
@@ -677,6 +682,8 @@ public class ClientesNewDao {
                     	objConvenioHB.setCagrupacion(new Integer(9));
                 	} else if (objConvenioBean.getCmarca() == 26) {
                     	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 9) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
                 	}
                 } else if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 24) {
                 	if (objConvenioBean.getCmarca() == 1) {
@@ -700,6 +707,8 @@ public class ClientesNewDao {
                 	} else if (objConvenioBean.getCmarca() == 25) {
                     	objConvenioHB.setCagrupacion(new Integer(9));
                 	} else if (objConvenioBean.getCmarca() == 26) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 9) {
                     	objConvenioHB.setCagrupacion(new Integer(9));
                 	}
                 }
@@ -755,6 +764,8 @@ public class ClientesNewDao {
                     	objConvenioHB.setCagrupacion(new Integer(9));
                 	} else if (objConvenioBean.getCmarca() == 26) {
                     	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 9) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
                 	}
                 } else if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 22) {
                 	if (objConvenioBean.getCmarca() == 1) {
@@ -782,6 +793,8 @@ public class ClientesNewDao {
                 	} else if (objConvenioBean.getCmarca() == 25) {
                     	objConvenioHB.setCagrupacion(new Integer(5));
                 	} else if (objConvenioBean.getCmarca() == 26) {
+                    	objConvenioHB.setCagrupacion(new Integer(5));
+                	} else if (objConvenioBean.getCmarca() == 9) {
                     	objConvenioHB.setCagrupacion(new Integer(5));
                 	}
                 } else if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 23) {
@@ -811,6 +824,8 @@ public class ClientesNewDao {
                     	objConvenioHB.setCagrupacion(new Integer(9));
                 	} else if (objConvenioBean.getCmarca() == 26) {
                     	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 9) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
                 	}
                 } else if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 24) {
                 	if (objConvenioBean.getCmarca() == 1) {
@@ -838,6 +853,8 @@ public class ClientesNewDao {
                 	} else if (objConvenioBean.getCmarca() == 25) {
                     	objConvenioHB.setCagrupacion(new Integer(9));
                 	} else if (objConvenioBean.getCmarca() == 26) {
+                    	objConvenioHB.setCagrupacion(new Integer(9));
+                	} else if (objConvenioBean.getCmarca() == 9) {
                     	objConvenioHB.setCagrupacion(new Integer(9));
                 	}
                 }                	
@@ -990,6 +1007,15 @@ public class ClientesNewDao {
             				objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 24){
             			objListaCorporativa.setClistacorporativa(new Integer(38)); 
             		} 
+            	} else if (objConvenioBean.getCmarca() == 9) {
+            		if(objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 21 ||
+            				objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 22){
+            			objListaCorporativa.setClistacorporativa(new Integer(19));            			
+            		}else if (objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 23 || 
+            				objConvenioHB.getCtipoconvenio().getCtipoconvenio().intValue() == 24){
+            			objListaCorporativa.setClistacorporativa(new Integer(20));
+            		}
+            		
             	}
         		objEConvenioHB.setCconvenio(objConvenioHB);
         		objEConvenioHB.setCestadoregistro(objEstadoRegistro);
@@ -1161,6 +1187,7 @@ public class ClientesNewDao {
 							objClienteBean.setCzonaventa(objClienteHB.getCzonaventa());
 							objClienteBean.setCregimenfiscal(objClienteHB.getCregimenfiscal());
 							objClienteBean.setCusocfdi(objClienteHB.getCusocfdi());
+							objClienteBean.setUdiascredito(objClienteHB.getUdiascredito());
 							
 							Set objMapaConvenios = (Set) objClienteHB.getCconvenios();
 							Iterator iteConvenios = objMapaConvenios.iterator();

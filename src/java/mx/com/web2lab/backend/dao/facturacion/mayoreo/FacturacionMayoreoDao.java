@@ -346,6 +346,9 @@ public class FacturacionMayoreoDao {
 		case 1025:
 			url="/mnt/gda/apache-tomcat/webapps/ROOT/FacturasElectronicas_Promedic/XML/FacturacionElectronica_";
 			break;
+		case 9999:
+			url="/mnt/gda/apache-tomcat/webapps/ROOT/FacturasElectronicas_SwissHospital/XML/FacturacionElectronica_";
+			break;
 		default:
 			break;
 		}

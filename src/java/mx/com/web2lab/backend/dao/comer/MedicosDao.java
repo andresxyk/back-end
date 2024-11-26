@@ -159,6 +159,9 @@ public class MedicosDao {
 									if(splitMarcas[i].equals("26")){
 										objMedicoBeanReturn.setMarcapromedic(true);
 									}
+									if(splitMarcas[i].equals("9")){
+										objMedicoBeanReturn.setMarcaswisshospital(true);
+									}
 								}								
 								
 								iObjLog.debug("Consulta MedicosDao.buscarMedicos:Operacion...  " + objMedico.getUtipooperacion() );

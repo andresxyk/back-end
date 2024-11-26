@@ -55,6 +55,8 @@ public class FacturaElectronicaEmpresaFOPDao {
 	       	 sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_BiomedicaReferencia");
 	    } else if (objFactura.getCmarca() == 26){
 	       	 sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_Promedic");
+	    } else if (objFactura.getCmarca() == 9){
+	       	 sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_SwissHospital");
 	    }
         
         if (objFactura.getCmarca() == 1) {
@@ -100,6 +102,10 @@ public class FacturaElectronicaEmpresaFOPDao {
         } else if(objFactura.getCmarca() == 26){
         	strLogoFactura = "PromedicSmall.jpg";
         	strRFC = "RFCTPromedicFactura.jpg";
+        	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE PROMEDIC EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
+        } else if(objFactura.getCmarca() == 9){
+        	strLogoFactura = "SwissHospiltaSmall.jpg";
+        	strRFC = "RFCTSwissHospitalFactura.jpg";
         	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE PROMEDIC EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
         }
         

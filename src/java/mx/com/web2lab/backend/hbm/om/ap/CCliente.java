@@ -62,8 +62,22 @@ public class CCliente implements Serializable {
     
     /** persistent field */
     private int cusocfdi;
+    
+    private int udiascredito;
+    
+    
 
-    public int getCregimenfiscal() {
+	public int getUdiascredito() {
+		return udiascredito;
+	}
+
+
+	public void setUdiascredito(int udiascredito) {
+		this.udiascredito = udiascredito;
+	}
+
+
+	public int getCregimenfiscal() {
 		return cregimenfiscal;
 	}
 

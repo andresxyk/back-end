@@ -381,7 +381,7 @@ public class BusquedaFacturaDao {
 		case 8:
 			csucursal = 1015;
 			break;
-		case 9:
+		case 10:
 			csucursal = 1007;
 			break;
 		case 15:
@@ -394,7 +394,7 @@ public class BusquedaFacturaDao {
 			csucursal = 1020;
 			break;
 		case 20:
-			csucursal = 1021;
+			csucursal = 1021; 
 			break;
 		case 21:
 			csucursal = 1022;
@@ -407,6 +407,9 @@ public class BusquedaFacturaDao {
 			break;
 		case 26:
 			csucursal = 1025;
+			break;
+		case 9:
+			csucursal = 9999;
 			break;
 			
 		default:
@@ -561,6 +564,8 @@ public class BusquedaFacturaDao {
 	            		csucursal = 1024;
 	            	} else if (idMarca.equals(new Integer(26))){
 	            		csucursal = 1025;
+	            	}  else if (idMarca.equals(new Integer(9))){
+	            		csucursal = 9999;
 	            	}
 	            	
 	            	
@@ -827,6 +832,9 @@ public class BusquedaFacturaDao {
 				pathPDF = "FacturasElectronicas_Promedic/XMLTMP/PDF";
 				pathXML = "FacturasElectronicas_Promedic/XML";			
 				break;
+		case 9: pathPDF = "FacturasElectronicas_SwissHospital/XMLTMP/PDF";
+				pathXML = "FacturasElectronicas_SwissHospital/XML";
+			break;
 		default:
 			break;
 		}
@@ -970,6 +978,9 @@ public class BusquedaFacturaDao {
 				case 26: pathPDF = "FacturasElectronicas_Promedic/XMLTMP/PDF";
 						pathXML = "FacturasElectronicas_Promedic/XML";
 					break;
+				case 9: pathPDF = "FacturasElectronicas_SwissHospital/XMLTMP/PDF";
+						pathXML = "FacturasElectronicas_SwissHospital/XML";
+					break;
 				default:
 					break;
 				}
@@ -1108,6 +1119,9 @@ public class BusquedaFacturaDao {
 				break;
 			case 26: pathPDF = "FacturasElectronicas_Promedic/XMLTMP/PDF";
 					pathXML = "FacturasElectronicas_Promedic/XML";
+				break;
+			case 9: pathPDF = "FacturasElectronicas_SwissHospital/XMLTMP/PDF";
+					pathXML = "FacturasElectronicas_SwissHospital/XML";
 				break;
 			default:
 				break;

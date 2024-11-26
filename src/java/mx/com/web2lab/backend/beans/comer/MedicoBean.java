@@ -132,6 +132,8 @@ public class MedicoBean implements Serializable {
     
     private boolean marcapromedic = false;
     
+    private boolean marcaswisshospital = false;
+    
     private String smarcasventa;
    
     private String susuarioweb;
@@ -142,6 +144,14 @@ public class MedicoBean implements Serializable {
     
     
    
+
+	public boolean isMarcaswisshospital() {
+		return marcaswisshospital;
+	}
+
+	public void setMarcaswisshospital(boolean marcaswisshospital) {
+		this.marcaswisshospital = marcaswisshospital;
+	}
 
 	public boolean isMarcamoreira() {
 		return marcamoreira;

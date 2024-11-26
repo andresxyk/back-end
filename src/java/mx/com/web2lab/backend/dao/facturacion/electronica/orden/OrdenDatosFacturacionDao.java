@@ -67,7 +67,7 @@ public class OrdenDatosFacturacionDao {
 					}else if(serie.equals("AJL")){
 						strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS JENNER LEAN' " ;
 					}
-				}else if (cmarca == 9){
+				}else if (cmarca == 10){
 					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'CONTABILIDAD' " ;
 				}else if (cmarca == 19){
 					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS FAMILYLABS NORTE' " ;
@@ -83,6 +83,8 @@ public class OrdenDatosFacturacionDao {
 					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS BIOMEDICA' " ;
 				}else if (cmarca == 26){
 					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS PROMEDIC' " ;
+				}else if (cmarca == 9){
+					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS SWISS HOSPITAL' " ;
 				}
 				
 				
@@ -300,6 +302,8 @@ public class OrdenDatosFacturacionDao {
 						csucursal=1024;
 					} else if (cmarca==26){
 						csucursal=1025;
+					} else if (cmarca==9){
+						csucursal=9999;
 					}
 					
 					this.initConnectionDB();

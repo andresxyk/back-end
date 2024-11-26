@@ -86,8 +86,22 @@ public class ClienteBean implements Serializable {
     
     /** persistent field */
     private int cusocfdi;
+    
+    private int udiascredito;
+    
+    
 
-    public int getCregimenfiscal() {
+	public int getUdiascredito() {
+		return udiascredito;
+	}
+
+
+	public void setUdiascredito(int udiascredito) {
+		this.udiascredito = udiascredito;
+	}
+
+
+	public int getCregimenfiscal() {
 		return cregimenfiscal;
 	}
 
@@ -348,6 +362,8 @@ public class ClienteBean implements Serializable {
 			this.smarca = "BIOMEDICA DE REFERENCIA";
 		} else if (this.cmarca == 26) {
 			this.smarca = "PROMEDIC";
+		} else if (this.cmarca == 9) {
+			this.smarca = "SWISS HOSPITAL";
 		}
 		return smarca;
 	}

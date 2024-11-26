@@ -68,7 +68,7 @@ public class PagoFacturaDao {
 			keycontrolfolio=161;
 		}else if(marca==8){
 			keycontrolfolio=161;
-		}else if(marca==9){
+		}else if(marca==10){
 			keycontrolfolio=161;
 		}else if(marca == 15){
 			keycontrolfolio=161;
@@ -85,6 +85,8 @@ public class PagoFacturaDao {
 		}else if(marca == 25){
 			keycontrolfolio=161;
 		}else if(marca == 26){
+			keycontrolfolio=161;
+		}else if(marca == 9){
 			keycontrolfolio=161;
 		}
 		String forPago="";
@@ -933,6 +935,9 @@ public class PagoFacturaDao {
 			case 26: pathPDF = "FacturasElectronicas_Promedic/XMLTMP/PDF";
 					pathXML = "FacturasElectronicas_Promedic/XML";
 				break;
+			case 9: pathPDF = "FacturasElectronicas_SwissHospital/XMLTMP/PDF";
+					pathXML = "FacturasElectronicas_SwissHospital/XML";
+				break;
 			default:
 				break;
 			}
@@ -1010,6 +1015,9 @@ public class PagoFacturaDao {
 						break;
 					case 26: pathPDF = "FacturasElectronicas_Promedic/XMLTMP/PDF";
 							pathXML = "FacturasElectronicas_Promedic/XML";
+						break;
+					case 9: pathPDF = "FacturasElectronicas_SwissHospital/XMLTMP/PDF";
+							pathXML = "FacturasElectronicas_SwissHospital/XML";
 						break;
 					default:
 						break;
@@ -1092,6 +1100,9 @@ public class PagoFacturaDao {
 						break;
 					case 26: pathPDF = "FacturasElectronicas_Promedic/XMLTMP/PDF";
 							pathXML = "FacturasElectronicas_Promedic/XML";
+						break;
+					case 9: pathPDF = "FacturasElectronicas_SwissHospital/XMLTMP/PDF";
+							pathXML = "FacturasElectronicas_SwissHospital/XML";
 						break;
 					default:
 						break; 

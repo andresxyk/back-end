@@ -106,6 +106,14 @@
         not-null="true"
         length="8"
     />
+    
+    <property
+        name="udiascredito"
+        type="int"
+        column="udiascredito"
+        not-null="true"
+        length="4"
+    />
 
     <!-- associations -->
     <!-- bi-directional many-to-one association to CCodigoPostal -->
