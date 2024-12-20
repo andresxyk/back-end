@@ -16,6 +16,7 @@ import java.util.List;
 import mx.com.web2lab.backend.beans.comer.PagoFacturaBean;
 import mx.com.web2lab.backend.beans.facturacion.TPagoComplementoBean;
 import mx.com.web2lab.backend.dao.facturacion.mayoreo.FacturacionMayoreoDao;
+import mx.com.web2lab.backend.hbm.ConfiguracionProperties;
 import mx.com.web2lab.backend.hbm.HibernateUtil;
 import mx.com.web2lab.backend.hbm.om.ap.CTipoPagoFactura;
 import mx.com.web2lab.backend.hbm.om.ap.TFactura;
@@ -35,10 +36,13 @@ public class PagoFacturaDao {
 	    
 	private Session iObjSesion = null;
 	
+	private String hostServerApache = null;
+	
 	private Formatos objFormatos = new Formatos();
 	
 	public PagoFacturaDao(){
 		iObjSesion = HibernateUtil.getSession();
+		hostServerApache = ConfiguracionProperties.getPropiedad("host.server.apache");
 	}
 	
 	
@@ -64,9 +68,25 @@ public class PagoFacturaDao {
 			keycontrolfolio=161;
 		}else if(marca==8){
 			keycontrolfolio=161;
-		}else if(marca==9){
+		}else if(marca==10){
 			keycontrolfolio=161;
 		}else if(marca == 15){
+			keycontrolfolio=161;
+		}else if(marca == 19){
+			keycontrolfolio=161;
+		}else if(marca == 20){
+			keycontrolfolio=161;
+		}else if(marca == 21){
+			keycontrolfolio=161;
+		}else if(marca == 16){
+			keycontrolfolio=161;
+		}else if(marca == 22){
+			keycontrolfolio=161;
+		}else if(marca == 25){
+			keycontrolfolio=161;
+		}else if(marca == 26){
+			keycontrolfolio=161;
+		}else if(marca == 9){
 			keycontrolfolio=161;
 		}
 		String forPago="";
@@ -888,9 +908,9 @@ public class PagoFacturaDao {
 			case 6: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
 						pathXML = "FacturasElectronicas_Swisslab/XML";
 				break;
-			case 16: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
-						pathXML = "FacturasElectronicas_Swisslab/XML";
-			break;
+			case 16: pathPDF = "FacturasElectronicas_Moreira/XMLTMP/PDF";
+						pathXML = "FacturasElectronicas_Moreira/XML";
+						break;
 			case 7: pathPDF = "FacturasElectronicas_Jenner/Prado/XMLTMP/PDF";
 						pathXML = "FacturasElectronicas_Jenner/Prado/XML";
 				break;
@@ -898,19 +918,34 @@ public class PagoFacturaDao {
 						pathXML = "FacturasElectronicas_Jenner/Lean/XML";
 				break;
 			case 19: pathPDF = "FacturasElectronicas_FamilyLabs/XMLTMP/PDF";
-			pathXML = "FacturasElectronicas_FamilyLabs/XML";
+					pathXML = "FacturasElectronicas_FamilyLabs/XML";
 				break;
 			case 20: pathPDF = "FacturasElectronicas_Exakta/XMLTMP/PDF";
-			pathXML = "FacturasElectronicas_Exakta/XML";
+					pathXML = "FacturasElectronicas_Exakta/XML";
+				break;
+			case 21: pathPDF = "FacturasElectronicas_AsesoresSur/XMLTMP/PDF";
+					pathXML = "FacturasElectronicas_AsesoresSur/XML";
+				break;
+			case 22: pathPDF = "FacturasElectronicas_Polab/XMLTMP/PDF";
+					pathXML = "FacturasElectronicas_Polab/XML";
+				break;
+			case 25: pathPDF = "FacturasElectronicas_BiomedicaReferencia/XMLTMP/PDF";
+					pathXML = "FacturasElectronicas_BiomedicaReferencia/XML";
+				break;
+			case 26: pathPDF = "FacturasElectronicas_Promedic/XMLTMP/PDF";
+					pathXML = "FacturasElectronicas_Promedic/XML";
+				break;
+			case 9: pathPDF = "FacturasElectronicas_SwissHospital/XMLTMP/PDF";
+					pathXML = "FacturasElectronicas_SwissHospital/XML";
 				break;
 			default:
 				break;
 			}
 			archivos = "<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
-					"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathPDF+"/NotaCredito_" + FacturacionMayoreoDao.llenaIdNC(notaCredito.getSserie(),String.valueOf(notaCredito.getUfoliofactura()),7) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+					"	<a href=\"javascript:visualizarFactura('http://"+hostServerApache+"/"+pathPDF+"/NotaCredito_" + FacturacionMayoreoDao.llenaIdNC(notaCredito.getSserie(),String.valueOf(notaCredito.getUfoliofactura()),7) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 		            "		<img alt='Factura - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
 					"	</a>" +
-					"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathXML+"/NotaCredito_" + FacturacionMayoreoDao.llenaIdNC(notaCredito.getSserie(),String.valueOf(notaCredito.getUfoliofactura()),7) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+					"	<a href=\"javascript:visualizarFactura('http://"+hostServerApache+"/"+pathXML+"/NotaCredito_" + FacturacionMayoreoDao.llenaIdNC(notaCredito.getSserie(),String.valueOf(notaCredito.getUfoliofactura()),7) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 		            "		<img alt='Factura - XML' id=\"imgXML\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoXml.png' />" +
 					"	</a>" +
 					"</td>";
@@ -954,9 +989,9 @@ public class PagoFacturaDao {
 					case 6: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
 								pathXML = "FacturasElectronicas_Swisslab/XML";
 						break;
-					case 16: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
-					pathXML = "FacturasElectronicas_Swisslab/XML";
-					break;
+					case 16: pathPDF = "FacturasElectronicas_Moreira/XMLTMP/PDF";
+						pathXML = "FacturasElectronicas_Moreira/XML";
+						break;
 					case 7: pathPDF = "FacturasElectronicas_Jenner/Prado/XMLTMP/PDF";
 								pathXML = "FacturasElectronicas_Jenner/Prado/XML";
 						break;
@@ -969,6 +1004,21 @@ public class PagoFacturaDao {
 					case 20: pathPDF = "FacturasElectronicas_Exakta/XMLTMP/PDF";
 							pathXML = "FacturasElectronicas_Exakta/XML";
 						break;
+					case 21: pathPDF = "FacturasElectronicas_AsesoresSur/XMLTMP/PDF";
+							pathXML = "FacturasElectronicas_AsesoresSur/XML";
+						break;
+					case 22: pathPDF = "FacturasElectronicas_Polab/XMLTMP/PDF";
+							pathXML = "FacturasElectronicas_Polab/XML";
+						break;
+					case 25: pathPDF = "FacturasElectronicas_BiomedicaReferencia/XMLTMP/PDF";
+							pathXML = "FacturasElectronicas_BiomedicaReferencia/XML";
+						break;
+					case 26: pathPDF = "FacturasElectronicas_Promedic/XMLTMP/PDF";
+							pathXML = "FacturasElectronicas_Promedic/XML";
+						break;
+					case 9: pathPDF = "FacturasElectronicas_SwissHospital/XMLTMP/PDF";
+							pathXML = "FacturasElectronicas_SwissHospital/XML";
+						break;
 					default:
 						break;
 					}
@@ -976,12 +1026,12 @@ public class PagoFacturaDao {
 						Observacion="COMPLEMENTO GENERADO";
 						archivos = "<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
 
-							"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathPDF+"/FacturacionElectronica_" + FacturacionMayoreoDao.llenaIdFactura("ACC",this.getUFolioFacturaByKfactura(pagoComplemento.getKfactura(),false).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+							"	<a href=\"javascript:visualizarFactura('http://"+hostServerApache+"/"+pathPDF+"/FacturacionElectronica_" + FacturacionMayoreoDao.llenaIdFactura("ACC",this.getUFolioFacturaByKfactura(pagoComplemento.getKfactura(),false).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 
 	    		            "		<img alt='Factura - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
 							"	</a>" +
 
-							"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathXML+"/FacturacionElectronica_" + FacturacionMayoreoDao.llenaIdFactura("ACC",this.getUFolioFacturaByKfactura(pagoComplemento.getKfactura(),false).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+							"	<a href=\"javascript:visualizarFactura('http://"+hostServerApache+"/"+pathXML+"/FacturacionElectronica_" + FacturacionMayoreoDao.llenaIdFactura("ACC",this.getUFolioFacturaByKfactura(pagoComplemento.getKfactura(),false).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 
 	    		            "		<img alt='Factura - XML' id=\"imgXML\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoXml.png' />" +
 							"	</a>" +
@@ -1024,8 +1074,8 @@ public class PagoFacturaDao {
 					case 6: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
 								pathXML = "FacturasElectronicas_Swisslab/XML";
 						break;
-					case 16: pathPDF = "FacturasElectronicas_Swisslab/XMLTMP/PDF";
-					pathXML = "FacturasElectronicas_Swisslab/XML";
+					case 16: pathPDF = "FacturasElectronicas_Moreira/XMLTMP/PDF";
+					pathXML = "FacturasElectronicas_Moreira/XML";
 					break;
 					case 7: pathPDF = "FacturasElectronicas_Jenner/Prado/XMLTMP/PDF";
 								pathXML = "FacturasElectronicas_Jenner/Prado/XML";
@@ -1039,6 +1089,21 @@ public class PagoFacturaDao {
 					case 20: pathPDF = "FacturasElectronicas_Exakta/XMLTMP/PDF";
 								pathXML = "FacturasElectronicas_Exakta/XML";
 							break;
+					case 21: pathPDF = "FacturasElectronicas_AsesoresSur/XMLTMP/PDF";
+							pathXML = "FacturasElectronicas_AsesoresSur/XML";
+						break;
+					case 22: pathPDF = "FacturasElectronicas_Polab/XMLTMP/PDF";
+							pathXML = "FacturasElectronicas_Polab/XML";
+						break;
+					case 25: pathPDF = "FacturasElectronicas_BiomedicaReferencia/XMLTMP/PDF";
+							pathXML = "FacturasElectronicas_BiomedicaReferencia/XML";
+						break;
+					case 26: pathPDF = "FacturasElectronicas_Promedic/XMLTMP/PDF";
+							pathXML = "FacturasElectronicas_Promedic/XML";
+						break;
+					case 9: pathPDF = "FacturasElectronicas_SwissHospital/XMLTMP/PDF";
+							pathXML = "FacturasElectronicas_SwissHospital/XML";
+						break;
 					default:
 						break; 
 					}
@@ -1046,12 +1111,12 @@ public class PagoFacturaDao {
 						Observacion="COMPLEMENTO GENERADO";
 						archivos="<td align='center' style='font-weight: normal; font-size: xx-small; color: black; font-style: normal; font-variant: normal;'> " + 
 
-								"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathPDF+"/FacturacionElectronica_" + FacturacionMayoreoDao.llenaIdFactura("ACC",this.getUFolioFacturaByKfactura(pagoComplementoPadre.getKfactura(),false).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+								"	<a href=\"javascript:visualizarFactura('http://"+hostServerApache+"/"+pathPDF+"/FacturacionElectronica_" + FacturacionMayoreoDao.llenaIdFactura("ACC",this.getUFolioFacturaByKfactura(pagoComplementoPadre.getKfactura(),false).toString(),8) + ".pdf');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 
 		    		            "		<img alt='Factura - PDF' id=\"imgPDF\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoPdf.png' />" +
 								"	</a>" +
 
-								"	<a href=\"javascript:visualizarFactura('http://10.3.0.8:9085/"+pathXML+"/FacturacionElectronica_" + FacturacionMayoreoDao.llenaIdFactura("ACC",this.getUFolioFacturaByKfactura(pagoComplementoPadre.getKfactura(),false).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
+								"	<a href=\"javascript:visualizarFactura('http://"+hostServerApache+"/"+pathXML+"/FacturacionElectronica_" + FacturacionMayoreoDao.llenaIdFactura("ACC",this.getUFolioFacturaByKfactura(pagoComplementoPadre.getKfactura(),false).toString(),8) + ".xml');\"  align='bottom' style='font-weight: normal; font-size: x-small;  font-style: normal; font-variant: normal;'>"  +  
 
 		    		            "		<img alt='Factura - XML' id=\"imgXML\" width=\"19\" height=\"19\" border='0' src='/web2labportal/images/icoXml.png' />" +
 								"	</a>" +

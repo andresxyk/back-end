@@ -86,8 +86,22 @@ public class ClienteBean implements Serializable {
     
     /** persistent field */
     private int cusocfdi;
+    
+    private int udiascredito;
+    
+    
 
-    public int getCregimenfiscal() {
+	public int getUdiascredito() {
+		return udiascredito;
+	}
+
+
+	public void setUdiascredito(int udiascredito) {
+		this.udiascredito = udiascredito;
+	}
+
+
+	public int getCregimenfiscal() {
 		return cregimenfiscal;
 	}
 
@@ -338,6 +352,18 @@ public class ClienteBean implements Serializable {
 			this.smarca = "FAMILY LABS NORTE";
 		} else if (this.cmarca == 20) {
 			this.smarca = "EXAKTA";
+		} else if (this.cmarca == 21) {
+			this.smarca = "ASESORES DEL SUR";
+		} else if (this.cmarca == 16) {
+			this.smarca = "MOREIRA";
+		} else if (this.cmarca == 22) {
+			this.smarca = "POLAB";
+		} else if (this.cmarca == 25) {
+			this.smarca = "BIOMEDICA DE REFERENCIA";
+		} else if (this.cmarca == 26) {
+			this.smarca = "PROMEDIC";
+		} else if (this.cmarca == 9) {
+			this.smarca = "SWISS HOSPITAL";
 		}
 		return smarca;
 	}
