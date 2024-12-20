@@ -39,8 +39,20 @@ public class FacturaElectronicaFOPDao {
         } else if (objFactura.getCmarca() == 19){
         	 sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_FamilyLabs");
         } else if (objFactura.getCmarca() == 20){
-       	 sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_Exakta");
-       }
+        	sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_Exakta");
+        } else if (objFactura.getCmarca() == 21){
+        	sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_AsesoresSur");
+        }  else if (objFactura.getCmarca() == 16){
+        	sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_Moreira");
+        }  else if (objFactura.getCmarca() == 22){
+      	    sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_Polab");
+	    } else if (objFactura.getCmarca() == 25){
+	      	sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_BiomedicaReferencia");
+	    } else if (objFactura.getCmarca() == 26){
+	      	sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_Promedic");
+	    } else if (objFactura.getCmarca() == 9){
+	      	sHttpQRPath = ConfiguracionProperties.getPropiedad("reporte.ruta.imagenesqr_SwissHospital");
+	    }
         String strLogoFactura = "";
         String strRFC = "";
         String strDebemos = "";
@@ -173,6 +185,30 @@ public class FacturaElectronicaFOPDao {
 		        	strLogoFactura = "ExaktaSmall.jpg";
 		        	strRFC = "RFCTExaktaFactura.jpg";
 		        	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE LABORATORIO EXAKTA EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
+		        } else if (objFactura.getCmarca() == 21){
+		        	strLogoFactura = "AsesoresSurSmall.jpg";
+		        	strRFC = "RFCTAsesoresSurFactura.jpg";
+		        	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE LABORATORIO ASESORES DEL SUR EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
+		        } else if (objFactura.getCmarca() == 16){
+		        	strLogoFactura = "MoreiraSmall.jpg";
+		        	strRFC = "RFCTMoreiraFactura.jpg";
+		        	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE LABORATORIO MOREIRA EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
+		        } else if (objFactura.getCmarca() == 22){
+		        	strLogoFactura = "PolabSmall.jpg";
+		        	strRFC = "RFCTPolabFactura.jpg";
+		        	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE LABORATORIO POLAB EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
+		        } else if (objFactura.getCmarca() == 25){
+		        	strLogoFactura = "BiomedicaReferenciaSmall.jpg";
+		        	strRFC = "RFCTBiomedicaReferenciaFactura.jpg";
+		        	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE LABORATORIO BIOMEDICA DE REFERENCIA EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
+		        } else if (objFactura.getCmarca() == 26){
+		        	strLogoFactura = "PromedicSmall.jpg";
+		        	strRFC = "RFCTPromedicFactura.jpg";
+		        	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE LABORATORIO PROMEDIC EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
+		        } else if (objFactura.getCmarca() == 9){
+		        	strLogoFactura = "SwissHospitalSmall.jpg";
+		        	strRFC = "RFCTSwissHospitalFactura.jpg";
+		        	strDebemos = "DEBO(EMOS) Y PAGARE(MOS) INCODICIONALMENTE A LA ORDEN DE SWISS HOSPITAL EN DONDE SE ME REQUIERA A LA VISTA LA CANTIDAD DE $";
 		        }
 				
 				strFileFop ="<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +

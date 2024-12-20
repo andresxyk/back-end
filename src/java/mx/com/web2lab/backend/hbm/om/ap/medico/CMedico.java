@@ -63,6 +63,8 @@ public class CMedico implements Serializable {
     
     private String susuarioweb;
     
+    private boolean bsustentable;
+    
     
     /** persistent field */
     private mx.com.web2lab.backend.hbm.om.ap.CEstadoRegistro cestadoregistro;
@@ -142,7 +144,15 @@ public class CMedico implements Serializable {
     
     
 
-    public String getSmarcasventa() {
+    public boolean isBsustentable() {
+		return bsustentable;
+	}
+
+	public void setBsustentable(boolean bsustentable) {
+		this.bsustentable = bsustentable;
+	}
+
+	public String getSmarcasventa() {
 		return smarcasventa;
 	}
 
