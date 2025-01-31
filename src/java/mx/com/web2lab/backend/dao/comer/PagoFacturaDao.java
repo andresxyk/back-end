@@ -554,7 +554,7 @@ public class PagoFacturaDao {
 	}			
 
 	/**
-     * Versión 25 de Marzo 2013 
+     * Versiï¿½n 25 de Marzo 2013 
      BY Tomar en cuenta el registro 
      */
        public PagoFacturaBean getDatosPagoFactura(int kFactura, boolean bolcloseConection, boolean pagos) throws Exception {
@@ -669,7 +669,7 @@ public class PagoFacturaDao {
 
 	
 	/**
-     * Versión 11 de Junio 2013 
+     * Versiï¿½n 11 de Junio 2013 
      BY Mostrar cuando esta cancelada una orden 
      */
 	public PagoFacturaBean getDatosFacturaCancelada(int kFactura, boolean bolcloseConection) throws Exception {
@@ -764,7 +764,7 @@ public class PagoFacturaDao {
     	
 	
     /**
-     * Versión 11 de Junio 2013 BY
+     * Versiï¿½n 11 de Junio 2013 BY
      */
     private String getEncabezadoCancelacion(String strTitulo) {
           return ("<table width=\"100%\" class=\"tabla\">" + 
@@ -786,7 +786,7 @@ public class PagoFacturaDao {
 
 
 	/**
-	* Versión 11 de Junio 2013 BY
+	* Versiï¿½n 11 de Junio 2013 BY
 	*/
 	private String getEncabezadoPagosCancelacion(String strTitulo) {
 		 return ("<table width=\"100%\" class=\"tabla\">" + 
@@ -1177,7 +1177,7 @@ public class PagoFacturaDao {
 	}
 	
 	/**
-     * Versión 25 de Marzo 2013 
+     * Versiï¿½n 25 de Marzo 2013 
      BY
      */
 	private String getEncabezadoPagos(String strTitulo, boolean pagos) {
@@ -1225,7 +1225,7 @@ public class PagoFacturaDao {
 		}	
 
 	/**
-     * Versión 25 de Marzo 2013 
+     * Versiï¿½n 25 de Marzo 2013 
      BY Tomar en cuenta el registro
      */
 	
@@ -1334,7 +1334,7 @@ public class PagoFacturaDao {
 						"(tac.m91a120 + tac.m121a180 + tac.m181a360 + tac.mmas361) as Mas90,						\n" +
 						"tac.sestadoregistro as estado                                                                       \n" +
 						"FROM reportes.t_antiguedad_cxc tac inner join c_cliente cc on tac.ccliente=cc.ccliente		\n" +
-						"				   inner join c_convenio ccc on tac.cconvenio=ccc.cconvenio					\n" +
+						"				   inner join c_convenio ccc on tac.cconvenio=ccc.cconvenio	where tac.msaldo >= 1				\n" +
 						"ORDER BY cliente,convenio,registro	"	;
 			iObjLog.debug("Entrando PacientesDao.buscarPacientes:Consulta...  " + strQuery);
 			objRst = objStmt.executeQuery(strQuery);
@@ -1489,7 +1489,7 @@ public class PagoFacturaDao {
    	}
 	
 	/**
-     * Versión 25 de Marzo 2013 
+     * Versiï¿½n 25 de Marzo 2013 
      BY
      */
 	
@@ -1509,7 +1509,7 @@ public class PagoFacturaDao {
 			HibernateUtil.beginTrans();			
 			strQuery = "select bOF 											\n" +					
 			   		   "from TPagoFactura bOF 								\n" +	
-			           "where bOF.tfactura.kfactura in  (" + kFactura + ") and bOF.knotacredito = 0	\n" +
+			           "where bOF.tfactura.kfactura in  (" + kFactura + ") and bOF.knotacredito = 0 and bOF.cestadoregistro = 52	\n" +
 			   		   "order by bOF.kpagofactura desc						  ";
 			iObjLog.debug("Entrando FacturacionMayoreoDao.reversarPago:Entrando...  " + strQuery);
 			objQuery = iObjSesion.createQuery(strQuery);
@@ -1585,7 +1585,7 @@ public class PagoFacturaDao {
 	}
 	
 	/**
-     * Versión 25 de Marzo 2013 
+     * Versiï¿½n 25 de Marzo 2013 
      BY
      */
 
@@ -1637,7 +1637,7 @@ public class PagoFacturaDao {
 	}
 	
 	/**
-     * Versión 25 de Marzo 2013 
+     * Versiï¿½n 25 de Marzo 2013 
      BY
      */
 	public int getCcliente(int iCconvenio) throws Exception {

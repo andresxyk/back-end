@@ -51,7 +51,10 @@ public class CatalogosPKGCatalogosDao
             if(cMarca == 691){
 	            iObjLog.debug("Entrando a CatalogosPKGCatalogosDao.obtenAll select ec.cconvenio from E" + strCatalogo + " ec where ec.cestadoregistro = 22 and ec.cconvenio.ctipoconvenio.ctipoconvenio = 22 order by ec.cconvenio.s" + strCatalogo.toLowerCase());
 	    		lstReturn = iObjSession.createQuery("select ec.cconvenio from E" + strCatalogo + " ec where ec.cestadoregistro = 22 and ec.cconvenio.ctipoconvenio.ctipoconvenio = 22 order by ec.cconvenio.s" + strCatalogo.toLowerCase()).list();       		            	
-	            iObjLog.debug("Entrando a CatalogosPKGCatalogosDao.obtenAll" + strCatalogo + " 3");
+	            System.out.println("select ec.cconvenio from E" + strCatalogo + " ec where ec.cestadoregistro = 22 and ec.cconvenio.ctipoconvenio.ctipoconvenio = 22 order by ec.cconvenio.s" + strCatalogo.toLowerCase());
+	    		iObjLog.debug("Entrando a CatalogosPKGCatalogosDao.obtenAll" + strCatalogo + " 3");
+	    		for(int i = 0; i < lstReturn.size(); i ++)
+	    			System.out.println("convenio: " + lstReturn.get(0).toString());
             } else {    
 				if (CatalogosBean.catalogoshashMap.containsKey(strCatalogo.trim())) {
 					lstReturn = (List)CatalogosBean.catalogoshashMap.get(strCatalogo.trim());
@@ -86,7 +89,7 @@ public class CatalogosPKGCatalogosDao
 		                iObjLog.debug("Entrando a CatalogosPKGCatalogosDao.obtenAll select ec.cconvenio from EConvenio ec where ec.cestadoregistro = 22 and ec.cmarca.cmarca = 2  order by ec.cconvenio.s");
 		        	} else if(cMarca == 601){
 		                iObjLog.debug("Entrando a CatalogosPKGCatalogosDao.obtenAll select ec.cconvenio from EConvenio ec where ec.cestadoregistro = 22 and ec.cconvenio.ctipoconvenio.ctipoconvenio = 22 order by ec.cconvenio.sconvenio");
-	        			lstReturn = iObjSession.createQuery("select ec.cconvenio from EConvenio ec where ec.cestadoregistro = 22 and ec.cconvenio.ctipoconvenio.ctipoconvenio = 22 order by ec.cconvenio.sconvenio").list();       		            
+	        			lstReturn = iObjSession.createQuery("select ec.cconvenio from EConvenio ec where ec.cestadoregistro = 22 and ec.cconvenio.ctipoconvenio.ctipoconvenio in (21,22) order by ec.cconvenio.sconvenio").list();       		            
 		        		iObjLog.debug("Entrando a CatalogosPKGCatalogosDao.obtenAll" + strCatalogo + " 3");
 		        	} else if(cMarca >= 602 && cMarca <= 620){
 		        		int cTipoConvenio = Integer.parseInt(strCatalogo.substring(0,1));
