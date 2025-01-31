@@ -75,6 +75,12 @@
         length="1"
     />
     <property
+        name="bsustentable"
+        type="boolean"
+        column="bsustentable"
+        length="1"
+    />
+    <property
         name="cformapagomedico"
         type="int"
         column="cformapagomedico"

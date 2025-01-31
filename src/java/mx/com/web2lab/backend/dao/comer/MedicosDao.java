@@ -118,6 +118,7 @@ public class MedicosDao {
 								objMedicoBeanReturn.setSestadomedico(objMedicoReturn.getCestadoregistro().getSestadoregistro());
 								objMedicoBeanReturn.setSrfc(objMedicoReturn.getSrfc());
 								objMedicoBeanReturn.setSusuarioweb(objMedicoReturn.getSusuarioweb());
+								objMedicoBeanReturn.setBsustentable(objMedicoReturn.isBsustentable());
 								System.out.println("Splittt::"+objMedicoReturn.getSmarcasventa());
 								String [] splitMarcas = objMedicoReturn.getSmarcasventa().split(",");
 								for (int i = 0; i < splitMarcas.length; i++) {
@@ -142,6 +143,24 @@ public class MedicosDao {
 									}
 									if(splitMarcas[i].equals("20")){
 										objMedicoBeanReturn.setMarcaexakta(true);
+									}
+									if(splitMarcas[i].equals("21")){
+										objMedicoBeanReturn.setMarcaasesoressur(true);
+									}
+									if(splitMarcas[i].equals("16")){
+										objMedicoBeanReturn.setMarcamoreira(true);
+									}
+									if(splitMarcas[i].equals("22")){
+										objMedicoBeanReturn.setMarcapolab(true);
+									}
+									if(splitMarcas[i].equals("25")){
+										objMedicoBeanReturn.setMarcabiomedicareferencia(true);
+									}
+									if(splitMarcas[i].equals("26")){
+										objMedicoBeanReturn.setMarcapromedic(true);
+									}
+									if(splitMarcas[i].equals("9")){
+										objMedicoBeanReturn.setMarcaswisshospital(true);
 									}
 								}								
 								
@@ -423,7 +442,7 @@ public class MedicosDao {
         	
         	if(!existeMedico){
         		
-	        	
+        		objMedicoHB.setBsustentable(objMedicoBean.isBsustentable());
 	        	objMedicoHB.setSmarcasventa(objMedicoBean.getSmarcasventa());
 	        	objMedicoHB.setSusuarioweb(objMedicoBean.getSusuarioweb());
 	//        	if (objMedicoBean.getKmedico() == 0) {
@@ -572,7 +591,8 @@ public class MedicosDao {
 //						objMedicoHB = (CMedico)lstMedicos.get(0);
 //					}
 //				}			        		
-//        	}        	
+//        	}        
+        	objMedicoHB.setBsustentable(objMedicoBean.isBsustentable());
         	objMedicoHB.setSmarcasventa(objMedicoBean.getSmarcasventa());
         	objMedicoHB.setSusuarioweb(objMedicoBean.getSusuarioweb());
         	if (objMedicoBean.getKmedico() == 0) {

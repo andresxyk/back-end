@@ -85,6 +85,22 @@ public class FacturacionElectronicaMayoreoDao {
 			}else if(serie.equals("AJL")){
 				csucursal="1015";
 			}
+		}else if (marca==16){
+			csucursal="1026";
+		}else if (marca==19){
+			csucursal="1020";
+		}else if (marca==20){
+			csucursal="1021";
+		}else if (marca==21){
+			csucursal="1022";
+		}else if (marca==22){
+			csucursal="1023";
+		}else if (marca==25){
+			csucursal="1024";
+		}else if (marca==26){
+			csucursal="1025";
+		}else if (marca==9){
+			csucursal="9999";
 		}
 		
     	try{
@@ -343,6 +359,22 @@ public class FacturacionElectronicaMayoreoDao {
 			}else if(serie.equals("AJL")){
 				csucursal="1015";
 			}
+		}else if (marca==16){
+			csucursal="1026";
+		}else if (marca==19){
+			csucursal="1020";
+		}else if (marca==20){
+			csucursal="1021";
+		}else if (marca==21){
+			csucursal="1022";
+		}else if (marca==22){
+			csucursal="1023";
+		}else if (marca==25){
+			csucursal="1024";
+		}else if (marca==26){
+			csucursal="1025";
+		}else if (marca==9){
+			csucursal="9999";
 		}
 		
 		
