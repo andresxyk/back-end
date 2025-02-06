@@ -1134,8 +1134,9 @@ public class ClientesNewDao {
 	            if (objClienteParamBean.getCcliente() > 0) {
 	        		strQuery =  "select bPF " +					
 								" from CCliente bPF " +					
-								" where bPF.ccliente = " +  objClienteParamBean.getCcliente() +
-								" and bPF.cmarca in (" + objClienteParamBean.getSmarcauser()+")";
+								" where bPF.ccliente = " +  objClienteParamBean.getCcliente() +" ";
+	        		if(!objClienteParamBean.getSmarcauser().equals(""))
+	        			strQuery += " and bPF.cmarca in (" + objClienteParamBean.getSmarcauser()+")";
 	        					
 	        		bolBuscarFacturas = true;
 	            } else if ((objClienteParamBean.getSrfc().trim().length() > 0) || (objClienteParamBean.getSrazonsocial().trim().length() > 0) || (objClienteParamBean.getSmnemonico().trim().length() > 0)) {
