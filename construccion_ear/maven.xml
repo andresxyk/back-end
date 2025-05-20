@@ -5,7 +5,7 @@
   xmlns:m="maven" >
   
   <postGoal name="ear">
-    <copy todir="C:/jboss/server/default/deploy" >
+    <copy todir="C:/Users/soporte/Documents/GDA/jboss-fac-dev/server/default/deploy" >
         <fileset dir="target">
             <include name="*.ear"/>
         </fileset>

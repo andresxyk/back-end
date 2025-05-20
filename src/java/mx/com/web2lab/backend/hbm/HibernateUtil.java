@@ -115,7 +115,7 @@ public class HibernateUtil{
 					!tx.wasCommitted() && 
 					!tx.wasRolledBack() )
 				log.debug("Se mando un COMMIT a la BD --> " + tx);
-//				tx.commit();
+				tx.commit();
 			transaction.set(null);
 		} catch (Exception e) {
 			log.error("commitTrans:ERROR", e);

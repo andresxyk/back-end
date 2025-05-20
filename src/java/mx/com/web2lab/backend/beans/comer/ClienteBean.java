@@ -89,7 +89,7 @@ public class ClienteBean implements Serializable {
     
     private int udiascredito;
     
-    
+    private String snombrecontacto;
 
 	public int getUdiascredito() {
 		return udiascredito;
@@ -378,6 +378,16 @@ public class ClienteBean implements Serializable {
 
 	public void setCzonaventa(int czonaventa) {
 		this.czonaventa = czonaventa;
+	}
+
+
+	public String getSnombrecontacto() {
+		return snombrecontacto;
+	}
+
+
+	public void setSnombrecontacto(String snombrecontacto) {
+		this.snombrecontacto = snombrecontacto;
 	}
 
 }

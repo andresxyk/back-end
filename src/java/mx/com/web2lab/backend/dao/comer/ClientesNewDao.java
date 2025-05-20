@@ -304,6 +304,7 @@ public class ClientesNewDao {
 	
 	
 	public ClienteBean setClienteActualizacion(ClienteBean objClienteBean) throws Exception {
+		iObjLog.info("snombrecontacto: " + objClienteBean.getSnombrecontacto());
 		iObjSesion = HibernateUtil.getSession();
 		Query objQuery = null;
 		String strQuery = "";
@@ -320,7 +321,8 @@ public class ClientesNewDao {
     			iObjLog.debug("Consulta ClientesDao.setClienteActualizacion:...Por Numero Cliente  " + objClienteBean.getCcliente());
         		strQuery =  "select bPF " +					
 							" from CCliente bPF " +					
-							" where bPF.cmarca=" +  objClienteBean.getCmarca() + " and bPF.ccliente = :cclienteparam";
+							" where bPF.ccliente = :cclienteparam";
+        					//" where bPF.cmarca=" +  objClienteBean.getCmarca() + " and bPF.ccliente = :cclienteparam";
 				objQuery = iObjSesion.createQuery(strQuery);
 				objQuery.setParameter("cclienteparam",new Integer(objClienteBean.getCcliente()));
 				lstClientes = objQuery.list();
@@ -373,15 +375,22 @@ public class ClientesNewDao {
         	objClienteHB.setCregimenfiscal(objClienteBean.getCregimenfiscal());
         	objClienteHB.setCusocfdi(objClienteBean.getCusocfdi());
         	objClienteHB.setUdiascredito(objClienteBean.getUdiascredito());
-			iObjLog.debug("Consulta ClientesDao.setClienteActualizacion.....Beans creados");
+        	objClienteHB.setSnombrecontacto(objClienteBean.getSnombrecontacto());
+        	
+			iObjLog.debug("Consulta ClientesDao.setClienteActualizacion.....Beans creados " +  objClienteHB.toString());
         	if (objClienteBean.getCcliente() == 0) {
             	objClienteHB.setDregistro(new Date());
+            	
+            	iObjLog.debug("*******************ObjetoCCLiente ccliente:" +  objClienteHB.getCcliente() + " snombrecontacto" + objClienteHB.getSnombrecontacto());
+            	
         		iObjSesion.save(objClienteHB);
         	} else {
+        		objClienteHB.setCcliente(new Integer( objClienteBean.getCcliente() ));
+        		iObjLog.debug("*******************ObjetoCCLiente ccliente:" +  objClienteHB.getCcliente() + " snombrecontacto" + objClienteHB.getSnombrecontacto());
         		iObjSesion.update(objClienteHB);            		
         	}
     		iObjSesion.flush();            	
-//            HibernateUtil.commitTrans();	 
+            HibernateUtil.commitTrans();	 
 			objClienteBean.setCcliente(objClienteHB.getCcliente().intValue());
 			iObjLog.debug("Saliendo ClientesDao.setClienteActualizacion  " + objClienteBean.toString());
 			return objClienteBean;
@@ -1142,8 +1151,8 @@ public class ClientesNewDao {
 	            } else if ((objClienteParamBean.getSrfc().trim().length() > 0) || (objClienteParamBean.getSrazonsocial().trim().length() > 0) || (objClienteParamBean.getSmnemonico().trim().length() > 0)) {
 	        		strQuery =  "select bPF " +					
 								" from CCliente bPF " +					
-								" where bPF.srfc=bPF.srfc "+
-								" and bPF.cmarca in (" + objClienteParamBean.getSmarcauser()+")";	   	        		
+								" where bPF.srfc=bPF.srfc ";//+
+								//" and bPF.cmarca in (" + objClienteParamBean.getSmarcauser()+")";	   	        		
 					if (objClienteParamBean.getSrazonsocial().trim().length() > 0) {
 						iObjLog.debug("Entrando ClientesDao.buscarCliente:Entrando...Razon Social  " +  objClienteParamBean.getSrazonsocial().trim());
 						strQuery += " AND bPF.srazonsocial like ('%" + objClienteParamBean.getSrazonsocial().trim() + "%') ";
@@ -1189,6 +1198,7 @@ public class ClientesNewDao {
 							objClienteBean.setCregimenfiscal(objClienteHB.getCregimenfiscal());
 							objClienteBean.setCusocfdi(objClienteHB.getCusocfdi());
 							objClienteBean.setUdiascredito(objClienteHB.getUdiascredito());
+							objClienteBean.setSnombrecontacto(objClienteHB.getSnombrecontacto());
 							
 							Set objMapaConvenios = (Set) objClienteHB.getCconvenios();
 							Iterator iteConvenios = objMapaConvenios.iterator();

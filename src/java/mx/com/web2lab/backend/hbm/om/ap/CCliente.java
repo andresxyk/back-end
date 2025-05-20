@@ -10,10 +10,10 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 public class CCliente implements Serializable {
 
     /** identifier field */
-    private java.lang.Integer ccliente;
+    private Integer ccliente;
 
     /** nullable persistent field */
-    private java.lang.String srazonsocial;
+    private String srazonsocial;
 
     /** nullable persistent field */
     private java.lang.String srfc;
@@ -64,6 +64,8 @@ public class CCliente implements Serializable {
     private int cusocfdi;
     
     private int udiascredito;
+    
+    private String snombrecontacto; 
     
     
 
@@ -136,19 +138,19 @@ public class CCliente implements Serializable {
         this.cconvenios = cconvenios;
     }
 
-    public java.lang.Integer getCcliente() {
+    public Integer getCcliente() {
         return this.ccliente;
     }
 
-    public void setCcliente(java.lang.Integer ccliente) {
+    public void setCcliente(Integer ccliente) {
         this.ccliente = ccliente;
     }
 
-    public java.lang.String getSrazonsocial() {
+    public String getSrazonsocial() {
         return this.srazonsocial;
     }
 
-    public void setSrazonsocial(java.lang.String srazonsocial) {
+    public void setSrazonsocial(String srazonsocial) {
         this.srazonsocial = srazonsocial;
     }
 
@@ -270,6 +272,7 @@ public class CCliente implements Serializable {
             .append("ccliente", getCcliente())
             .toString();
     }
+    
 
     public boolean equals(Object other) {
         if ( !(other instanceof CCliente) ) return false;
@@ -284,5 +287,15 @@ public class CCliente implements Serializable {
             .append(getCcliente())
             .toHashCode();
     }
+
+
+	public String getSnombrecontacto() {
+		return snombrecontacto;
+	}
+
+
+	public void setSnombrecontacto(String snombrecontacto) {
+		this.snombrecontacto = snombrecontacto;
+	}
 
 }
