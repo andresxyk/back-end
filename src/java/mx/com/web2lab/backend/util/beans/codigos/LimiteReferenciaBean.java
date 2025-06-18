@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class LimiteReferenciaBean implements Serializable {
 	
-	/** Nombre del límite*/
+	/** Nombre del l&iacute;mite*/
 	private String iStrNomLimite;
 	/** Unidad de medida*/
 	private String iStrUnidadLim;

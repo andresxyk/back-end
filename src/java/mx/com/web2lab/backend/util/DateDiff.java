@@ -25,7 +25,7 @@ public class DateDiff {
 	 * @param calUnit. Este parametro puede tener los siguientes Valores: 
 	 * <li>Calendar.MINUTE
 	 * <li>Calendar.HOUR 
-	 * <li>Calendar.DAY_OF_MONTH ó Calendar.DATE
+	 * <li>Calendar.DAY_OF_MONTH &oacute; Calendar.DATE
 	 * <li>Calendar.WEEK_OF_YEAR
 	 * <li>Calendar.MONTH
 	 * <li>Calendar.YEAR 

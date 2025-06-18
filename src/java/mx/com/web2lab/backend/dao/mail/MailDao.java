@@ -782,7 +782,7 @@ public class MailDao {
 					"	<tr>	" +
 					"		<td style=\"width: 600px; padding: 15px 30px;\">	" +
 					"			<h1 style=\"font-size: 1.25em; font-weight: bold; text-transform: uppercase;\">	" +
-					"				AL MEJOR LABORATORIO DE ANÁLISIS CLÍNICOS Y GABINETE DE MÉXICO LABORATORIO QUIMICO CLINICO AZTECA " +
+					"				AL MEJOR LABORATORIO DE AN&aacute;LISIS CL&iacute;NICOS Y GABINETE DE M&eacute;XICO LABORATORIO QUIMICO CLINICO AZTECA " +
 					"			</h1>	" +
 					"		</td>	" +
 					"	</tr>	" +
@@ -793,23 +793,23 @@ public class MailDao {
 					"	</tr>	" +
 					"	<tr>	" +
 					"		<td style=\"width: 600px; padding: 15px 30px; color: #595959;\">	" +
-					"			Agradecemos tu confianza y te recordamos que en Laboratorio Azteca \"Queremos saber cómo estás\",es por ellos que contamos con médicos y técnicos altamente especializados, tecnología de	" +
-					"			punta en nuestros equipos y una cultura de atención con servicio de primer nivel.	" +
+					"			Agradecemos tu confianza y te recordamos que en Laboratorio Azteca \"Queremos saber c&oacute;mo est&aacute;s\",es por ellos que contamos con m&eacute;dicos y t&eacute;cnicos altamente especializados, tecnolog&iacute;a de	" +
+					"			punta en nuestros equipos y una cultura de atenci&oacute;n con servicio de primer nivel.	" +
 					"		</td>	" +
 					"	</tr>	" +
 					"	<tr>	" +
 					"		<td style=\"width: 600px; padding: 15px 30px; color: #595959;\">	" +
-					"			A éste correo encontrarás la factura en formato pdf y xml	" +
+					"			A &eacute;ste correo encontrar&aacute;s la factura en formato pdf y xml	" +
 					"		</td>	" +
 					"	</tr>	" +
 					"	<tr>	" +
 					"		<td style=\"width: 600px; padding: 15px 30px; color: #595959;\">	" +
-					"			Te recordamos que solo cuentas con una refacturación y solo la podrás realizar antes de los 5 días a la fecha de este correo.	" +
+					"			Te recordamos que solo cuentas con una refacturaci&oacute;n y solo la podr&aacute;s realizar antes de los 5 d&iacute;as a la fecha de este correo.	" +
 					"		</td>	" +
 					"	</tr>	" +
 					"	<tr>	" +
 					"		<td style=\"width: 600px; padding: 15px 30px; color: #595959;\">	" +
-					"			El teléfono de nuestro centro de atención a pacientes en el tema de facturación es el 40406010 extensión 4206 en el cuál podrás obtener información a tus dudas o sugerencias.</td>	" +
+					"			El tel&eacute;fono de nuestro centro de atenci&oacute;n a pacientes en el tema de facturaci&oacute;n es el 40406010 extensi&oacute;n 4206 en el cu&aacute;l podr&aacute;s obtener informaci&oacute;n a tus dudas o sugerencias.</td>	" +
 					"	</tr>	" +
 //					"	<tr>	" +
 //					"		<td class=\"right\" style=\"width: 600px; padding: 15px 30px; font-size: 1.15em; text-align: right; color: #4d4d4d; \">	" +
@@ -825,27 +825,27 @@ public class MailDao {
 					"	<tr class=\"orange\" style=\"background-color: #EB6E27; color: white; font-size: .8em;\">	" +
 					"		<td style=\"width: 600px; padding: 15px 30px;\">	" +
 					"			En nuestro empeño por brindarle mejores servicios, \"LABORATORIO QUIMICO CLINICO AZTECA\" (en lo sucesivo Laboratorio Azteca)	" +
-					"			a través de este medio proporcionará los resultados de las pruebas de análisis clínicos practicadas	" +
-					"			en sus diferentes sucursales. Laboratorio Azteca no se hace responsable por cualquier modificación o alteración	" +
-					"			que la información aquí ofrecida pudiera sufrir por actos del paciente o terceros por lo que en caso	" +
+					"			a trav&eacute;s de este medio proporcionar&aacute; los resultados de las pruebas de an&aacute;lisis cl&iacute;nicos practicadas	" +
+					"			en sus diferentes sucursales. Laboratorio Azteca no se hace responsable por cualquier modificaci&oacute;n o alteraci&oacute;n	" +
+					"			que la informaci&oacute;n aqu&iacute; ofrecida pudiera sufrir por actos del paciente o terceros por lo que en caso	" +
 					"			de duda es responsabilidad del paciente.	" +
 					"		</td>	" +
 					"	</tr>	" +
 					"	<tr class=\"orange\" style=\"background-color: #EB6E27; color: white; font-size: .8em;\">	" +
 					"		<td style=\"width: 600px; padding: 15px 30px;\">	" +
-					"			LABORATORIO QUIMICO CLINICO AZTECA en apego a la ley de Datos Personales, NO revelará, dará, venderá, donará o transmitirá ningún tipo	" +
-					"			de información personal del paciente relacionada con los resultados de las pruebas clínicas practicadas,	" +
-					"			excepto cuando esta información sea solicitada por aurotidad competente.	" +
+					"			LABORATORIO QUIMICO CLINICO AZTECA en apego a la ley de Datos Personales, NO revelar&aacute;, dar&aacute;, vender&aacute;, donar&aacute; o transmitir&aacute; ning&uacute;n tipo	" +
+					"			de informaci&oacute;n personal del paciente relacionada con los resultados de las pruebas cl&iacute;nicas practicadas,	" +
+					"			excepto cuando esta informaci&oacute;n sea solicitada por aurotidad competente.	" +
 					"		</td>	" +
 					"	</tr>	" +
 					"	<tr class=\"orange\" style=\"background-color: #EB6E27; color: white; font-size: .8em;\">	" +
 					"		<td style=\"width: 600px; padding: 15px 30px;\">	" +
-					"			Recuerda que tu médico es la única persona con conocimiento y autoridad para interpretar los resultados de tus estudios.	" +
+					"			Recuerda que tu m&eacute;dico es la &uacute;nica persona con conocimiento y autoridad para interpretar los resultados de tus estudios.	" +
 					"		</td>	" +
 					"	</tr>	" +
 					"	<tr class=\"darkOrange\" style=\"background-color: #E01B26; color: white; text-align: center;\">	" +
 					"		<td style=\"width: 600px; padding: 15px 30px;\">	" +
-					"			Para cualquier duda o aclaración, estamos a tus órdenes en<h2 style=\"font-size: 1.5em; margin: 0; padding: 0;\">Tel. 58580900</h2>	" +
+					"			Para cualquier duda o aclaraci&oacute;n, estamos a tus &oacute;rdenes en<h2 style=\"font-size: 1.5em; margin: 0; padding: 0;\">Tel. 58580900</h2>	" +
 					"		</td>	" +
 					"	</tr>	" +
 					"</table>	" +
@@ -865,7 +865,7 @@ public class MailDao {
 					"	<tr>	" +
 					"		<td style=\"width: 600px; padding: 15px 30px;\">	" +
 					"			<h1 style=\"font-size: 1.25em; font-weight: bold; text-transform: uppercase;\">	" +
-					"				AL MEJOR LABORATORIO DE ANÁLISIS CLÍNICOS Y GABINETE DE MÉXICO	" +
+					"				AL MEJOR LABORATORIO DE AN&aacute;LISIS CL&iacute;NICOS Y GABINETE DE M&eacute;XICO	" +
 					"			</h1>	" +
 					"		</td>	" +
 					"	</tr>	" +
@@ -876,23 +876,23 @@ public class MailDao {
 					"	</tr>	" +
 					"	<tr>	" +
 					"		<td style=\"width: 600px; padding: 15px 30px; color: #595959;\">	" +
-					"			Agradecemos tu confianza y te recordamos que en Olab \"Queremos saber cómo estás\",es por ellos que contamos con médicos y técnicos altamente especializados, tecnología de	" +
-					"			punta en nuestros equipos y una cultura de atención con servicio de primer nivel.	" +
+					"			Agradecemos tu confianza y te recordamos que en Olab \"Queremos saber c&oacute;mo est&aacute;s\",es por ellos que contamos con m&eacute;dicos y t&eacute;cnicos altamente especializados, tecnolog&iacute;a de	" +
+					"			punta en nuestros equipos y una cultura de atenci&oacute;n con servicio de primer nivel.	" +
 					"		</td>	" +
 					"	</tr>	" +
 					"	<tr>	" +
 					"		<td style=\"width: 600px; padding: 15px 30px; color: #595959;\">	" +
-					"			A éste correo encontrarás la factura en formato pdf y xml	" +
+					"			A &eacute;ste correo encontrar&aacute;s la factura en formato pdf y xml	" +
 					"		</td>	" +
 					"	</tr>	" +
 					"	<tr>	" +
 					"		<td style=\"width: 600px; padding: 15px 30px; color: #595959;\">	" +
-					"			Te recordamos que solo cuentas con una refacturación y solo la podrás realizar antes de los 5 días a la fecha de este correo.	" +
+					"			Te recordamos que solo cuentas con una refacturaci&oacute;n y solo la podr&aacute;s realizar antes de los 5 d&iacute;as a la fecha de este correo.	" +
 					"		</td>	" +
 					"	</tr>	" +
 					"	<tr>	" +
 					"		<td style=\"width: 600px; padding: 15px 30px; color: #595959;\">	" +
-					"			El teléfono de nuestro centro de atención a pacientes en el tema de facturación es el 40406010 extensión 4206 en el cuál podrás obtener información a tus dudas o sugerencias.</td>	" +
+					"			El tel&eacute;fono de nuestro centro de atenci&oacute;n a pacientes en el tema de facturaci&oacute;n es el 40406010 extensi&oacute;n 4206 en el cu&aacute;l podr&aacute;s obtener informaci&oacute;n a tus dudas o sugerencias.</td>	" +
 					"	</tr>	" +
 					"	<tr>	" +
 					"		<td class=\"right\" style=\"width: 600px; padding: 15px 30px; font-size: 1.15em; text-align: right; color: #4d4d4d; \">	" +
@@ -907,28 +907,28 @@ public class MailDao {
 					"	</tr>	" +
 					"	<tr class=\"orange\" style=\"background-color: #EB6E27; color: white; font-size: .8em;\">	" +
 					"		<td style=\"width: 600px; padding: 15px 30px;\">	" +
-					"			En nuestro empeño por brindarle mejores servicios, \"OLAB Diágnosticos Médicos\" (en lo sucesivo OLAB)	" +
-					"			a través de este medio proporcionará los resultados de las pruebas de análisis clínicos practicadas	" +
-					"			en sus diferentes sucursales. OLAB no se hace responsable por cualquier modificación o alteración	" +
-					"			que la información aquí ofrecida pudiera sufrir por actos del paciente o terceros por lo que en caso	" +
+					"			En nuestro empeño por brindarle mejores servicios, \"OLAB Di&aacute;gnosticos M&eacute;dicos\" (en lo sucesivo OLAB)	" +
+					"			a trav&eacute;s de este medio proporcionar&aacute; los resultados de las pruebas de an&aacute;lisis cl&iacute;nicos practicadas	" +
+					"			en sus diferentes sucursales. OLAB no se hace responsable por cualquier modificaci&oacute;n o alteraci&oacute;n	" +
+					"			que la informaci&oacute;n aqu&iacute; ofrecida pudiera sufrir por actos del paciente o terceros por lo que en caso	" +
 					"			de duda es responsabilidad del paciente.	" +
 					"		</td>	" +
 					"	</tr>	" +
 					"	<tr class=\"orange\" style=\"background-color: #EB6E27; color: white; font-size: .8em;\">	" +
 					"		<td style=\"width: 600px; padding: 15px 30px;\">	" +
-					"			OLAB en apego a la ley de Datos Personales, NO revelará, dará, venderá, donará o transmitirá ningún tipo	" +
-					"			de información personal del paciente relacionada con los resultados de las pruebas clínicas practicadas,	" +
-					"			excepto cuando esta información sea solicitada por aurotidad competente.	" +
+					"			OLAB en apego a la ley de Datos Personales, NO revelar&aacute;, dar&aacute;, vender&aacute;, donar&aacute; o transmitir&aacute; ning&uacute;n tipo	" +
+					"			de informaci&oacute;n personal del paciente relacionada con los resultados de las pruebas cl&iacute;nicas practicadas,	" +
+					"			excepto cuando esta informaci&oacute;n sea solicitada por aurotidad competente.	" +
 					"		</td>	" +
 					"	</tr>	" +
 					"	<tr class=\"orange\" style=\"background-color: #EB6E27; color: white; font-size: .8em;\">	" +
 					"		<td style=\"width: 600px; padding: 15px 30px;\">	" +
-					"			Recuerda que tu médico es la única persona con conocimiento y autoridad para interpretar los resultados de tus estudios.	" +
+					"			Recuerda que tu m&eacute;dico es la &uacute;nica persona con conocimiento y autoridad para interpretar los resultados de tus estudios.	" +
 					"		</td>	" +
 					"	</tr>	" +
 					"	<tr class=\"darkOrange\" style=\"background-color: #E01B26; color: white; text-align: center;\">	" +
 					"		<td style=\"width: 600px; padding: 15px 30px;\">	" +
-					"			Para cualquier duda o aclaración, estamos a tus órdenes en<h2 style=\"font-size: 1.5em; margin: 0; padding: 0;\">Tel. 4040 6522</h2>	" +
+					"			Para cualquier duda o aclaraci&oacute;n, estamos a tus &oacute;rdenes en<h2 style=\"font-size: 1.5em; margin: 0; padding: 0;\">Tel. 4040 6522</h2>	" +
 					"		</td>	" +
 					"	</tr>	" +
 					"</table>	" +
@@ -1703,7 +1703,7 @@ public class MailDao {
 		"	 \n" +
 		"	<ol style='margin-top:0cm' start=3 type=1> \n" +
 		"	 <li class=MsoNormal style='mso-list:l0 level1 lfo2'>En el espacio de \n" +
-		"	     contraseña, escriba su numero<b><span lang=ES style='mso-ansi-language: \n" +
+		"	     contrase&ntilde;a, escriba su numero<b><span lang=ES style='mso-ansi-language: \n" +
 		"	     ES'>: " + objPaciente.getSpassword().trim() + "<o:p></o:p></span></b></li> \n" +
 		"	</ol> \n" +
 		"	 \n" +
@@ -2484,7 +2484,7 @@ public class MailDao {
 		"	 \n" +
 		"	<ol style='margin-top:0cm' start=3 type=1> \n" +
 		"	 <li class=MsoNormal style='mso-list:l0 level1 lfo2'>En el espacio de \n" +
-		"	     contraseña, escriba su numero<b><span lang=ES style='mso-ansi-language: \n" +
+		"	     contrase&ntilde;a, escriba su numero<b><span lang=ES style='mso-ansi-language: \n" +
 		"	     ES'>: " + objConvenio.getSpassword() + "<o:p></o:p></span></b></li> \n" +
 		"	</ol> \n" +
 		"	 \n" +

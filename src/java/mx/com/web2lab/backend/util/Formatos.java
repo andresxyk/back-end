@@ -19,7 +19,7 @@ public class Formatos  implements Serializable{
 	/** constructor default */
 	public Formatos(){
 	}
-	/**log de la aplicación */
+	/**log de la aplicaci&oacute;n */
 	private static Log iObjLog = LogFactory.getLog(Formatos.class);
 	/**
 	 * Este metodo recibe un string con el formato dd-mm-yyyy hh:mm:ss 
@@ -575,7 +575,7 @@ public class Formatos  implements Serializable{
 	}
 	
 	/**
-	 * Método que regresa una cadena que representa el objeto 
+	 * M&eacute;todo que regresa una cadena que representa el objeto 
 	 * que se pasa, dicho objeto puede ser una subclase de Number
 	 * o un String, el formato es de miles separado por coma  
 	 * @param aObjNum Object
@@ -618,7 +618,7 @@ public class Formatos  implements Serializable{
 	}
 	
 	/**
-	 * Método que regresa una cadena que representa el objeto 
+	 * M&eacute;todo que regresa una cadena que representa el objeto 
 	 * que se pasa, dicho objeto puede ser una subclase de Number
 	 * o un String, el formato es solo con dos decimales sin separador 
 	 * de miles.   
@@ -732,11 +732,11 @@ public class Formatos  implements Serializable{
 	}
 	
 	/**
-	 * Método que sustituye un string (searchString) 
+	 * M&eacute;todo que sustituye un string (searchString) 
 	 * por otro string (replaceString), dentro de 
 	 * una tercera cadena (evaluateString) y regresa 
-	 * el resultado de la operación, la sustitución es 
-	 * no es sensible a mayúsculas o minúsculas 
+	 * el resultado de la operaci&oacute;n, la sustituci&oacute;n es 
+	 * no es sensible a may&uacute;sculas o min&uacute;sculas 
 	 * @param searchString
 	 * @param replaceString
 	 * @param evaluateString
@@ -913,8 +913,8 @@ public class Formatos  implements Serializable{
 	}
 	
 	/**
-	 * Método que evalua que una cadena contenga un valor 
-	 * numérico, la cadena siempre debe contener la parte entera, 
+	 * M&eacute;todo que evalua que una cadena contenga un valor 
+	 * num&eacute;rico, la cadena siempre debe contener la parte entera, 
 	 * la parte decimal es opcional 
 	 * @param evaluateString
 	 * @return boolean 

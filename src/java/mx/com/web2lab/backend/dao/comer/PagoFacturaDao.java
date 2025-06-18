@@ -951,6 +951,8 @@ public class PagoFacturaDao {
 					"</td>";
 			
 			strReturn = ("<tr>" + 
+					"	<td align='center'><input type='checkbox' name='chkBoxFactura' id='chkBoxFactura' value='"+objPagoFacturaBean.getTfactura().getKfactura()+"-"+objPagoFacturaBean.getKpagofactura()+"'>" +  
+					"	</td>" + 
 					"	<td align='center'>" +  
 					"	</td>" + 
 					"	<td align='center'>" + 
@@ -1044,6 +1046,8 @@ public class PagoFacturaDao {
 					}
 					
 					strReturn = ("<tr>" + 
+							"	<td align='center'><input type='checkbox' name='chkBoxFactura' id='chkBoxFactura' value='"+objPagoFacturaBean.getTfactura().getKfactura()+"-"+objPagoFacturaBean.getKpagofactura()+"'>" +  
+							"	</td>" + 
 							"	<td align='center'>" + 
 									objPagoFacturaBean.getCtipopago().getStipopago() + 
 							"	</td>" + 
@@ -1129,6 +1133,8 @@ public class PagoFacturaDao {
 					}
 					
 					strReturn = ("<tr>" + 
+							"	<td align='center'><input type='checkbox' name='chkBoxFactura' id='chkBoxFactura' value='"+objPagoFacturaBean.getTfactura().getKfactura()+"-"+objPagoFacturaBean.getKpagofactura()+"'>" +  
+							"	</td>" + 
 							"	<td align='center'>" + 
 									objPagoFacturaBean.getCtipopago().getStipopago() + 
 							"	</td>" + 
@@ -1150,6 +1156,8 @@ public class PagoFacturaDao {
 				}
 			}else{
 				strReturn = ("<tr>" + 
+						"	<td align='center'><input type='checkbox' name='chkBoxFactura' id='chkBoxFactura' value='"+objPagoFacturaBean.getTfactura().getKfactura()+"-"+objPagoFacturaBean.getKpagofactura()+"'>" +  
+						"	</td>" + 
 						"	<td align='center'>" + 
 								objPagoFacturaBean.getCtipopago().getStipopago() + 
 						"	</td>" + 
@@ -1184,7 +1192,7 @@ public class PagoFacturaDao {
 		String botonReversar = "";
 		if (pagos){
 			botonReversar = "<tr>"+
-							"	<input type=\"button\" value=\"Reversar Pago\" name=\"Reversar Pago\" class=\"boton\" onclick=\"reversarPago();\">"+
+							"	<input type=\"button\" value=\"Reversar Pago\" name=\"Reversar Pago\" class=\"boton\" onclick=\"reversarPagoSeleccionado();\">"+
 							"</tr>";
 		}
 		
@@ -1198,6 +1206,7 @@ public class PagoFacturaDao {
 				"</tr>" +
 				botonReversar+
 				"<tr>" + 
+				"<th>Seleccionar</th>"+
 				"<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
 				"	<b><font color='black'>CUENTA" + 
 				"	</font></b>" +
@@ -1573,6 +1582,97 @@ public class PagoFacturaDao {
 			iObjLog.debug("Entrando FacturacionMayoreoDao.reversarPago:Saliendo...  ");
     	} catch (Exception aObjExcepcion) { 
 			iObjLog.error("ERROR FacturacionMayoreoDao.reversarPago: ", aObjExcepcion);
+			throw aObjExcepcion;			
+    	} finally{
+    		objQuery = null;
+    		objQuerySecond = null;
+    		objListaFactura = null;
+    		objTPagoFactura = null;
+    		HibernateUtil.closeSession();
+    	}		
+    	return strReturn;
+	}
+	
+	public String reversarPagoSeleccionado(String kFactura, int idUsuario, String kpagofactura) throws Exception {
+		List objListaFactura = null;
+		iObjSesion = HibernateUtil.getSession();
+		Query objQuery = null;
+		Query objQuerySecond = null;
+		String strQuery = "";
+		TPagoFactura objTPagoFactura = new TPagoFactura();
+		PagoFacturaBean objPagoFacturaBean = new PagoFacturaBean();
+		TFactura objTFactura = null;
+		String strFolioFactura = "";
+		String strReturn="";
+    	try{
+			iObjLog.debug("Entrando FacturacionMayoreoDao.reversarPagoSeleccionado:Entrando...  " + kFactura);
+			HibernateUtil.beginTrans();			
+			strQuery = "select bOF 											\n" +					
+			   		   "from TPagoFactura bOF 								\n" +	
+			           "where bOF.kpagofactura in  (" + kpagofactura + ") and bOF.tfactura.kfactura in  (" + kFactura + ") and bOF.knotacredito = 0 and bOF.cestadoregistro = 52	\n" +
+			   		   "order by bOF.kpagofactura desc						  ";
+			iObjLog.debug("Entrando FacturacionMayoreoDao.reversarPagoSeleccionado:Entrando...  " + strQuery);
+			objQuery = iObjSesion.createQuery(strQuery);
+			objListaFactura = new ArrayList();			
+			objListaFactura = objQuery.list();
+			if (objListaFactura != null) {
+				if (objListaFactura.size()>0) {
+					objPagoFacturaBean.setSgridpagos("");
+					for (int inti= 0;inti< objListaFactura.size();inti++) {
+						objTPagoFactura = (TPagoFactura)objListaFactura.get(inti);					
+						iObjLog.debug("Consulta FacturacionMayoreoDao.reversarPagoSeleccionado:Consulta...1  " + objTPagoFactura.getKpagofactura() + " Total " + objTPagoFactura.getMtotalfactura().doubleValue());
+						objPagoFacturaBean.setCestadoregistro(objTPagoFactura.getCestadoregistro());
+						objPagoFacturaBean.setCtipopago(objTPagoFactura.getCtipopago().getCtipopago().intValue());
+						objPagoFacturaBean.setDfechapago(objTPagoFactura.getDfechapago());
+						objPagoFacturaBean.setDregistro(objTPagoFactura.getDregistro());
+						objPagoFacturaBean.setKfactura(objTPagoFactura.getTfactura().getKfactura().intValue());
+						objPagoFacturaBean.setKpagofactura(objTPagoFactura.getKpagofactura());
+						objPagoFacturaBean.setManticipo(new BigDecimal(objTPagoFactura.getManticipo().doubleValue() + objTPagoFactura.getMpago().doubleValue()));
+						objPagoFacturaBean.setMpago(objTPagoFactura.getMpago());
+						objPagoFacturaBean.setMsaldo(objTPagoFactura.getMsaldo());
+						objPagoFacturaBean.setMtotalfactura(objTPagoFactura.getMtotalfactura());
+						objPagoFacturaBean.setUserId(objTPagoFactura.getUserId());
+						objPagoFacturaBean.setSformatofactura(FacturacionMayoreoDao.llenaIdFactura(objTPagoFactura.getTfactura().getSserie(), objTPagoFactura.getTfactura().getUfoliofactura() + "", 8));
+						objPagoFacturaBean.setSgridpagos("");							
+						strFolioFactura =  FacturacionMayoreoDao.llenaIdFactura(objTPagoFactura.getTfactura().getSserie(), objTPagoFactura.getTfactura().getUfoliofactura() + "", 8);
+						objTPagoFactura.setCestadoregistro(53);
+						objTPagoFactura.setUserId(idUsuario);
+						iObjSesion.update(objTPagoFactura);
+						iObjSesion.flush();
+						strReturn+="El pago de la factura "+strFolioFactura+" por $"+objFormatos.formateaNumero(objPagoFacturaBean.getMpago())+ " ha sido eliminado\n";
+					}
+					objPagoFacturaBean.setSgridpagos("");
+				}
+			}
+			
+			iObjLog.debug("Entrando FacturacionMayoreoDao.reversarPagoSeleccionado:Saldo...  " + objPagoFacturaBean.getMsaldo());
+			
+				objListaFactura.clear();
+				objListaFactura = null;
+				objListaFactura = new ArrayList();
+				strQuery = "select bOF 															\n" +					
+				   		   "from TFactura bOF 													\n" +	
+				           "where bOF.kfactura = (" + kFactura + ") 	\n" +
+				           "order by kfactura";
+				iObjLog.debug("Entrando FacturacionMayoreoDao.reversarPagoSeleccionado:Entrando...  " + strQuery);
+				objQuerySecond = iObjSesion.createQuery(strQuery);
+				objListaFactura = objQuerySecond.list();
+				if (objListaFactura != null) {
+					if (objListaFactura.size()>0) {
+						objTFactura = (TFactura)objListaFactura.get(0);
+						iObjLog.debug("Consulta FacturacionMayoreoDao.reversarPagoSeleccionado:Consulta...2  " + objTFactura.getKfactura() + " " + objTFactura.getMtotal().doubleValue());
+						if(objTFactura.getCestadoregistro() == 51){
+							objTFactura.setCestadoregistro(33);
+							objTFactura.setUserIdChange(idUsuario);
+							iObjSesion.update(objTFactura);
+							iObjSesion.flush();
+						}
+					}
+				}
+			
+			iObjLog.debug("Entrando FacturacionMayoreoDao.reversarPagoSeleccionado:Saliendo...  ");
+    	} catch (Exception aObjExcepcion) { 
+			iObjLog.error("ERROR FacturacionMayoreoDao.reversarPagoSeleccionado: ", aObjExcepcion);
 			throw aObjExcepcion;			
     	} finally{
     		objQuery = null;

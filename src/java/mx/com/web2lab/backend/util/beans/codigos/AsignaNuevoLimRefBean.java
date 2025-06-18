@@ -18,7 +18,7 @@ public class AsignaNuevoLimRefBean implements Serializable {
 	 * critico y valido de los limites de referencia*/
 	private List iObjListaBeansRangos;
 	
-	/** El generó para el limite de referencia*/
+	/** El gener&oacute; para el limite de referencia*/
 	private String iStrGenero;
 	
 	

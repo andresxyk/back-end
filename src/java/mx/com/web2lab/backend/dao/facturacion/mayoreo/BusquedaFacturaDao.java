@@ -275,14 +275,14 @@ public class BusquedaFacturaDao {
 									
 									if(strcta.length()>2) {
 									  strMetodoPago = "		<td style=\"font-weight:  bold; font-size: x-small; color: black; font-style: normal; font-variant: normal\">" +
-													  "			Método Pago:" + 
+													  "			M&eacute;todo Pago:" + 
 													  "		</td>" +
 													  "		<td>" +
 												  	  "			<input type=\"text\" id=\"txtTipoPago\"  onKeyPress=\"mayuscula();\" size=\"25\" style=\"width:220px;\" value='" + objRst.getString("stipopago") +"'>" +  
 												  	  "		</td>" ;
 									} else {
 									  strMetodoPago = "		<td style=\"font-weight:  bold; font-size: x-small; color: black; font-style: normal; font-variant: normal\">" +
-											   		  "			Método de pago:" + 
+											   		  "			M&eacute;todo de pago:" + 
 											   		  "		</td>" +
 											   		  "		<td>" +
 											   		  "			<input type=\"text\" id=\"txtTipoPago\"  onKeyPress=\"mayuscula();\" size=\"25\" style=\"width:220px;\" value='" + "99" +"'>" +  
@@ -319,7 +319,7 @@ public class BusquedaFacturaDao {
 											 			"		</td> " +
 											 			"	 	<td> " +
 											 			"			<label id=\"labelfactura\" style=\"width:125px;display:none\"> " +
-											 			"				Descripción Factura										   " +
+											 			"				Descripci&oacute;n Factura										   " +
 											 			"			</label>													   " +
 											 			"			<input type=\"text\" id=\"txtDescripcion\"  onKeyPress=\"mayuscula();\" size=\"30\" style=\"width:300px;display:none\" value=\"ESTUDIOS REALIZADOS SEGUN RELACION ADJUNTA\"> " +
 											 			"			<input type=\"button\" id=\"idCrearPdfXml\" name=\"idCrearPdfXml\" value=\"Generar PDF y XML\" onClick=\"generacionPdfXml();\" class=\"boton\"> "+
@@ -623,21 +623,21 @@ public class BusquedaFacturaDao {
 									
 									if(strcta.length()>2) {
 									  strMetodoPago = "		<td style=\"font-weight:  bold; font-size: x-small; color: black; font-style: normal; font-variant: normal\">" +
-													  "			Método Pago:" + 
+													  "			M&eacute;todo Pago:" + 
 													  "		</td>" +
 													  "		<td>" +
 												  	  "			<input type=\"text\" id=\"txtTipoPago\"  onKeyPress=\"mayuscula();\" size=\"25\" style=\"width:220px;\" value='" + objRst.getString("stipopago") +"'>" +  
 												  	  "		</td>" ;
 									} else {
 									  strMetodoPago = "		<td style=\"font-weight:  bold; font-size: x-small; color: black; font-style: normal; font-variant: normal\">" +
-											   		  "			Método de pago:" + 
+											   		  "			M&eacute;todo de pago:" + 
 											   		  "		</td>" +
 											   		  "		<td>" +
 											   		  "			<input type=\"text\" id=\"txtTipoPago\"  onKeyPress=\"mayuscula();\" size=\"25\" style=\"width:220px;\" value='" + "99" +"'>" +  
 											   		  "		</td>";
 									}
 									  strMetodoPago = "		<td style=\"font-weight:  bold; font-size: x-small; color: black; font-style: normal; font-variant: normal\">" +
-											   		  "			Método de pago:" + 
+											   		  "			M&eacute;todo de pago:" + 
 											   		  "		</td>" +
 											   		  "		<td>" +
 											   		  "			<input type=\"text\" id=\"txtTipoPago\"  onKeyPress=\"mayuscula();\" size=\"25\" style=\"width:220px;\" value='" + "99" +"'>" +  
@@ -653,7 +653,7 @@ public class BusquedaFacturaDao {
 														"			$<input type=\"text\" id=\"txtmTotal\" name=\"txtmTotal\"  onKeyPress=\"montos();\" onBlur=\"validaMonto(this.name);\" size=\"15\" style=\"width:100px;\" value='" + objRst.getString("mtotal") +"'>" +  
 														"		</td>				" +
 														"		<td>				" +
-														"			<input type=\"checkbox\" id=\"chkSustitucion\" onClick=\"showFormSustitucion();\" >Sustitución" +
+														"			<input type=\"checkbox\" id=\"chkSustitucion\" onClick=\"showFormSustitucion();\" >Sustituci&oacute;n" +
 //														" 		    &nbsp;			" +
 														"		</td>				" +
 														"		<td>				" +
@@ -694,7 +694,7 @@ public class BusquedaFacturaDao {
 											 			"		</td> " +
 											 			"	 	<td> " +
 											 			"			<label id=\"labelfactura\" style=\"width:125px;display:none\"> " +
-											 			"				Descripción Factura										   " +
+											 			"				Descripci&oacute;n Factura										   " +
 											 			"			</label>													   " +
 											 			"			<input type=\"text\" id=\"txtDescripcion\"  onKeyPress=\"mayuscula();\" size=\"30\" style=\"width:300px;display:none\" value=\"ESTUDIOS REALIZADOS SEGUN RELACION ADJUNTA\"> " +
 											 			"			<label id=\"labelordencompra\" style=\"width:125px;display:none\"> " +
@@ -880,7 +880,7 @@ public class BusquedaFacturaDao {
 	
 	
 	/**
-     * Versión 25 de Marzo 2013 
+     * Versi&oacute;n 25 de Marzo 2013 
      BY Tomar en cuenta el registro
 	 * @throws Exception 
      */
@@ -898,24 +898,24 @@ public class BusquedaFacturaDao {
 		if(objListaNotasCredito.size() > 0){
 			headNotas = "<tr>" +
 						    "<th colspan='6' nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
-							"	<b><font color='black'>Notas de Crédito" + 
+							"	<b><font color='black'>Notas de Cr&eacute;dito" + 
 							"	</font></b>" +
 							"</th>" +
 						  " </tr>" +
 						  "<tr>" + 
 							"<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
-							"	<b><font color='black'>Nota de Crédito" + 
+							"	<b><font color='black'>Nota de Cr&eacute;dito" + 
 							"	</font></b>" +
 							"</th>" +
 							"<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
-							"	<b><font color='black'>Monto Nota de Crédito IVA" + 
+							"	<b><font color='black'>Monto Nota de Cr&eacute;dito IVA" + 
 							"	</font></b>" +
 							"</th>" + 
 							"<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
-							"	<b><font color='black'>Fecha Nota de Crédito" + 
+							"	<b><font color='black'>Fecha Nota de Cr&eacute;dito" + 
 							"</th>" + 
 							"<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
-							"	<b><font color='black'>Estado de la Nota de Crédito" + 
+							"	<b><font color='black'>Estado de la Nota de Cr&eacute;dito" + 
 							"</th>" +
 							"<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
 							"	<b><font color='black'>Archivos" + 

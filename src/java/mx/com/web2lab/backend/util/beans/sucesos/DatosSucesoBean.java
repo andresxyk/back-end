@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class DatosSucesoBean implements Serializable {
 	
-	/** Número de la incidencia*/
+	/** N&uacute;mero de la incidencia*/
 	private Long iLngKIncidencia;
 	
 	/** Fecha de registro*/
@@ -21,12 +21,12 @@ public class DatosSucesoBean implements Serializable {
 	
 	/** llave del tipo de incidencia*/
 	private Integer iIntCIncidencia;
-	/** Descripción del tipo de incidencia*/
+	/** Descripci&oacute;n del tipo de incidencia*/
 	private String iStrCIncidencia;
 	
 	/** llave del estado del suceso*/
 	private Integer iIntCEstado;
-	/** Descripción del estado del suceso*/
+	/** Descripci&oacute;n del estado del suceso*/
 	private String iStrCEstado;
 	
 	/** Semaforo del suceso*/

@@ -379,7 +379,7 @@ public class ConsultaOrdenesDao {
 		return strReturn;
 	}			
 	
-/**	Version anterior al cambio se dividio en dos buscarOrdenesViajeCreateNewIndividual y buscarOrdenesViajeCreate(donde en este si se modifico el código del original)
+/**	Version anterior al cambio se dividio en dos buscarOrdenesViajeCreateNewIndividual y buscarOrdenesViajeCreate(donde en este si se modifico el c&oacute;digo del original)
 	private BuscarOrdenesViajeBean buscarOrdenesViajeCreate(BuscarOrdenesViajeBean objBuscarOrdenesViajeBean) throws Exception {
 		iObjLog.debug("Entrando ConsultaOrdenesDao.buscarOrdenesViaje:  " + 
 					  " kviaje " + objBuscarOrdenesViajeBean.getKviaje()								+

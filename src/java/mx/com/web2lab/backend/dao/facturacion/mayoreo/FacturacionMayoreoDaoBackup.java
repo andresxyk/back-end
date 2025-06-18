@@ -578,7 +578,7 @@ public class FacturacionMayoreoDaoBackup {
 					"	<b><font color='black'>De 61 a 90" + 
 					"</th>" +
 					"<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>" +
-					"	<b><font color='black'>Más de 90" + 
+					"	<b><font color='black'>M&aacute;s de 90" + 
 					"</th>" +
 				"</tr>");
 	}

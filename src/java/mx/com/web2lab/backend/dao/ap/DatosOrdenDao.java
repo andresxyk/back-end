@@ -298,14 +298,14 @@ public class DatosOrdenDao {
 								objOrdenBean = createObjectError("La orden debe estar 100% pagada para realizar la factura..");
 							}					
 //						} else {
-//							objOrdenBean = createObjectError("Solo contaba con el año corriente y lo excedió, ya no es posible facturar.");
+//							objOrdenBean = createObjectError("Solo contaba con el año corriente y lo excedi&oacute;, ya no es posible facturar.");
 //						}
 					}
 				} else {
-					objOrdenBean = createObjectError("La contraseña es incorrecta.");
+					objOrdenBean = createObjectError("La contrase&ntilde;a es incorrecta.");
 				}
 			} else {
-				objOrdenBean = createObjectError("No existe la orden que estás buscando.");
+				objOrdenBean = createObjectError("No existe la orden que est&aacute;s buscando.");
 			}				
     	} catch (Exception aObjExcepcion) { 
 			iObjLog.error("ERROR DatosOrdenDao.buscarOrdenOnly(int intKAdmision):: ", aObjExcepcion);

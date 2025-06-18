@@ -115,12 +115,39 @@
         length="4"
     />
     
-    <property
-        name="snombrecontacto"
-        type="java.lang.String"
-        column="snombrecontacto"
-        length="100"
-    />
+    
+    <property name="ssector" column="ssector" type="string"/>
+        <property name="sejecutivocobranza" column="sejecutivocobranza" type="string"/>
+        <property name="scorreoejecutivocobranza" column="scorreoejecutivocobranza" type="string"/>
+        <property name="snombreejecutivocomercial" column="snombreejecutivocomercial" type="string"/>
+        <property name="scorreoejecutivocomercial" column="scorreoejecutivocomercial" type="string"/>
+        <property name="snombrecontacto" column="snombrecontacto" type="string"/>
+        <property name="stelefonocontacto" column="stelefonocontacto" type="string"/>
+        <property name="scorreocontacto" column="scorreocontacto" type="string"/>
+        <property name="bcuentapromesapago" column="bcuentapromesapago" type="boolean"/>
+        <property name="sindicacionesadicionalescobro" column="sindicacionesadicionalescobro" type="string"/>
+        <property name="scanalenvio" column="scanalenvio" type="string"/>
+        <property name="shorariodiaentrega" column="shorariodiaentrega" type="string"/>
+        <property name="sdomicilioentrega" column="sdomicilioentrega" type="string"/>
+        <property name="sligaportal" column="sligaportal" type="string"/>
+        <property name="susuarioportal" column="susuarioportal" type="string"/>
+        <property name="scontrasenaportal" column="scontrasenaportal" type="string"/>
+        
+        <!-- Ejecutivo Comercial -->
+		<property name="sdeptoejecomer" column="sdeptoejecomer" type="string" length="100"/>
+		<property name="sdirejecomer" column="sdirejecomer" type="string" length="100"/>
+		<property name="stelejecomer" column="stelejecomer" type="string" length="100"/>
+		
+		<!-- Contacto -->
+		<property name="sdeptocontacto" column="sdeptocontacto" type="string" length="100"/>
+		<property name="sdircontacto" column="sdircontacto" type="string" length="100"/>
+		<property name="sdiashrscontacto" column="sdiashrscontacto" type="string" length="100"/>
+		<property name="dfeccierrecontacto" column="dfeccierrecontacto" type="string"/>
+		
+		<!-- Ejecutivo de Cobranza -->
+		<property name="sdeptoejecob" column="sdeptoejecob" type="string" length="100"/>
+		<property name="sdirejecob" column="sdirejecob" type="string" length="100"/>
+		<property name="stelejecob" column="stelejecob" type="string" length="100"/>
 
     <!-- associations -->
     <!-- bi-directional many-to-one association to CCodigoPostal -->

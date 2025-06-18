@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 public class SucesoBean implements Serializable {
 	
-	/** Número de la incidencia*/
+	/** N&uacute;mero de la incidencia*/
 	private Long iLngKIncidencia;
 	
 	/** llave del tipo de incidencia*/
 	private Integer iIntCIncidencia;
-	/** Descripción del tipo de incidencia*/
+	/** Descripci&oacute;n del tipo de incidencia*/
 	private String iStrCIncidencia;
 	
 	/** Descripcion del origen del suceso*/
@@ -17,7 +17,7 @@ public class SucesoBean implements Serializable {
 	
 	/** llave del estado del suceso*/
 	private Integer iIntCEstado;
-	/** Descripción del estado del suceso*/
+	/** Descripci&oacute;n del estado del suceso*/
 	private String iStrCEstado;
 
 	/** Id de la severidad del suceso*/
@@ -31,7 +31,7 @@ public class SucesoBean implements Serializable {
 	/** Motivo del suceso*/
 	private String iStrMotivo;
 	
-	/** Especifica si el suceso se generó de una muestra un a orden o generico*/
+	/** Especifica si el suceso se gener&oacute; de una muestra un a orden o generico*/
 	private String iStrOriginadoPor;
 	
 	/** Observacion del suceso*/

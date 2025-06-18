@@ -838,7 +838,7 @@ public class NotaDeCreditoDao {
 							"   </tr>"+
 							"   <tr>"+
 							"		<td align=\"center\">"+
-							"			Descripción que llevará la Nota de crédito:"+
+							"			Descripci&oacute;n que llevar&aacute; la Nota de cr&eacute;dito:"+
 							"		</td>"+
 							"	</tr>"+
 							"   <tr>"+
@@ -901,7 +901,7 @@ public class NotaDeCreditoDao {
 						   	"						</select>"+
 							"					</td>"+
 							"					<td>"+
-							"						<b>Método de Pago:</b>"+
+							"						<b>M&eacute;todo de Pago:</b>"+
 							"					</td>"+
 							"					<td>"+
 							"						<select id=\"selMetodoPago\" style=\"width: 120px\" align=\"up\">"+

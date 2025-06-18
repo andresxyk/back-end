@@ -112,7 +112,7 @@ public class PacientesDao {
         			objPaciente.setSpasswordenvio(objGeneracionPasswordDao.getPassword());
         			objGeneracionPasswordDao = null;
 //            		MailDao objMailDao = new MailDao();
-//            		objMailDao.sendEmailECE("Bienvenido a tu Expediente Clínico Electrónico de Laboratorio Olab", objPaciente);
+//            		objMailDao.sendEmailECE("Bienvenido a tu Expediente Cl&iacute;nico Electr&oacute;nico de Laboratorio Olab", objPaciente);
 //            		objMailDao = null;
             	} else {
         			objPaciente.setSpassword(" ");
@@ -122,7 +122,7 @@ public class PacientesDao {
         		iObjSesion.flush();            	
     			if ((objPaciente.getUopcionenviocorreo() >= 99) && (objPaciente.getUopcionenviocorreo() < 199)) {
 //            		MailDao objMailDao = new MailDao();
-//            		objMailDao.sendEmailECEPaciente("Bienvenido a tu Expediente Clínico Electrónico de Laboratorio Olab", objPaciente);
+//            		objMailDao.sendEmailECEPaciente("Bienvenido a tu Expediente Cl&iacute;nico Electr&oacute;nico de Laboratorio Olab", objPaciente);
 //            		objMailDao = null;
             	}        		
     			objPacienteBean.setKpacientefundacion(objPaciente.getKpaciente());
@@ -303,7 +303,7 @@ public class PacientesDao {
 				if(objListaPacientes != null) {
 					TPaciente objPaciente = (TPaciente)objListaPacientes.get(0);
             		MailDao objMailDao = new MailDao();
-            		objMailDao.sendEmailECEPaciente("Bienvenido a tu Expediente Clínico Electrónico de Laboratorio Olab", objPaciente);
+            		objMailDao.sendEmailECEPaciente("Bienvenido a tu Expediente Cl&iacute;nico Electr&oacute;nico de Laboratorio Olab", objPaciente);
             		objMailDao = null;
 				}			
 			iObjLog.debug("Saliendo PacientesDao.enviarCorreoBienvenidaECEPaciente:Saliendo...  " + objPacienteBean.toString());

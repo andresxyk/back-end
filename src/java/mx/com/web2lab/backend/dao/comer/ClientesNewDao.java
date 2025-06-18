@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -51,6 +52,7 @@ import mx.com.web2lab.backend.util.formatos.Formatos;
 
 import net.sf.hibernate.Query;
 import net.sf.hibernate.Session;
+import net.sf.hibernate.Transaction;
 import net.sf.hibernate.collection.Set;
 
 import org.apache.commons.logging.Log;
@@ -303,7 +305,7 @@ public class ClientesNewDao {
 	}	
 	
 	
-	public ClienteBean setClienteActualizacion(ClienteBean objClienteBean) throws Exception {
+	/*public ClienteBean setClienteActualizacion(ClienteBean objClienteBean) throws Exception {
 		iObjLog.info("snombrecontacto: " + objClienteBean.getSnombrecontacto());
 		iObjSesion = HibernateUtil.getSession();
 		Query objQuery = null;
@@ -316,7 +318,7 @@ public class ClientesNewDao {
     	CCodigoPostal objCP = new CCodigoPostal();
 		
 		try {			
-            HibernateUtil.beginTrans();
+            //HibernateUtil.beginTrans();
         	if (objClienteBean.getCcliente() > 0) {			
     			iObjLog.debug("Consulta ClientesDao.setClienteActualizacion:...Por Numero Cliente  " + objClienteBean.getCcliente());
         		strQuery =  "select bPF " +					
@@ -375,7 +377,35 @@ public class ClientesNewDao {
         	objClienteHB.setCregimenfiscal(objClienteBean.getCregimenfiscal());
         	objClienteHB.setCusocfdi(objClienteBean.getCusocfdi());
         	objClienteHB.setUdiascredito(objClienteBean.getUdiascredito());
+        	objClienteHB.setSsector(objClienteBean.getSsector());
+        	objClienteHB.setSejecutivocobranza(objClienteBean.getSejecutivocobranza());
+        	objClienteHB.setScorreoejecutivocobranza(objClienteBean.getScorreoejecutivocobranza());
+        	String nomEjeComer = objClienteBean.getSnombreejecutivocomercial();
+        	objClienteHB.setSnombreejecutivocomercial(nomEjeComer);
+        	objClienteHB.setScorreoejecutivocomercial(objClienteBean.getScorreoejecutivocomercial());
         	objClienteHB.setSnombrecontacto(objClienteBean.getSnombrecontacto());
+        	objClienteHB.setStelefonocontacto(objClienteBean.getStelefonocontacto());
+        	objClienteHB.setScorreocontacto(objClienteBean.getScorreocontacto());
+        	objClienteHB.setBcuentapromesapago(objClienteBean.isBcuentapromesapago());
+        	objClienteHB.setSindicacionesadicionalescobro(objClienteBean.getSindicacionesadicionalescobro());
+        	objClienteHB.setScanalenvio(objClienteBean.getScanalenvio());
+        	objClienteHB.setShorariodiaentrega(objClienteBean.getShorariodiaentrega());
+        	objClienteHB.setSdomicilioentrega(objClienteBean.getSdomicilioentrega());
+        	objClienteHB.setSligaportal(objClienteBean.getSligaportal());
+        	objClienteHB.setSusuarioportal(objClienteBean.getSusuarioportal());
+        	objClienteHB.setScontrasenaportal(objClienteBean.getScontrasenaportal());
+        	objClienteHB.setSdeptoejecomer(objClienteBean.getSdeptoejecomer());
+        	objClienteHB.setSdirejecomer(objClienteBean.getSdirejecomer());
+        	objClienteHB.setStelejecomer(objClienteBean.getStelejecomer());
+
+        	objClienteHB.setSdeptocontacto(objClienteBean.getSdeptocontacto());
+        	objClienteHB.setSdircontacto(objClienteBean.getSdircontacto());
+        	objClienteHB.setSdiashrscontacto(objClienteBean.getSdiashrscontacto());
+        	objClienteHB.setDfeccierrecontacto(objClienteBean.getDfeccierrecontacto());
+
+        	objClienteHB.setSdeptoejecob(objClienteBean.getSdeptoejecob());
+        	objClienteHB.setSdirejecob(objClienteBean.getSdirejecob());
+        	objClienteHB.setStelejecob(objClienteBean.getStelejecob());
         	
 			iObjLog.debug("Consulta ClientesDao.setClienteActualizacion.....Beans creados " +  objClienteHB.toString());
         	if (objClienteBean.getCcliente() == 0) {
@@ -390,7 +420,8 @@ public class ClientesNewDao {
         		iObjSesion.update(objClienteHB);            		
         	}
     		iObjSesion.flush();            	
-            HibernateUtil.commitTrans();	 
+            HibernateUtil.commitTrans();	
+            iObjSesion.close();
 			objClienteBean.setCcliente(objClienteHB.getCcliente().intValue());
 			iObjLog.debug("Saliendo ClientesDao.setClienteActualizacion  " + objClienteBean.toString());
 			return objClienteBean;
@@ -401,9 +432,143 @@ public class ClientesNewDao {
         	objDatosFiscalesBean = null;
         	objCodigoPostalDao = null;
         	objCP = null;
-        	HibernateUtil.closeSession();
+        	//HibernateUtil.closeSession();
 		}		
-	}	
+	}	*/
+	
+	
+	public ClienteBean setClienteActualizacion(ClienteBean objClienteBean) throws Exception {
+	    iObjLog.info("snombrecontacto: " + objClienteBean.getSnombrecontacto());
+	    Session iObjSesion = null;
+
+	    try {
+	        iObjSesion = HibernateUtil.getSession();  // Obtiene o crea la sesi&oacute;n
+	       // HibernateUtil.beginTrans();                // Inicia la transacci&oacute;n
+
+	        Query objQuery = null;
+	        String strQuery = "";
+	        List lstClientes = new ArrayList();
+	        CCliente objClienteHB = new CCliente();
+	        CodigoPostalDao objCodigoPostalDao = new CodigoPostalDao(iObjSesion);
+	        DatosFiscalesBean objDatosFiscalesBean = new DatosFiscalesBean();
+	        CCodigoPostal objCP = new CCodigoPostal();
+
+	        if (objClienteBean.getCcliente() > 0) {			
+    			iObjLog.debug("Consulta ClientesDao.setClienteActualizacion:...Por Numero Cliente  " + objClienteBean.getCcliente());
+        		strQuery =  "select bPF " +					
+							" from CCliente bPF " +					
+							" where bPF.ccliente = :cclienteparam";
+        					//" where bPF.cmarca=" +  objClienteBean.getCmarca() + " and bPF.ccliente = :cclienteparam";
+				objQuery = iObjSesion.createQuery(strQuery);
+				objQuery.setParameter("cclienteparam",new Integer(objClienteBean.getCcliente()));
+				lstClientes = objQuery.list();
+				if(lstClientes != null) {
+					if (lstClientes.size() > 0) {
+						objClienteHB = (CCliente)lstClientes.get(0);
+					}
+				}			
+        	} else {
+    			iObjLog.debug("Consulta ClientesDao.setClienteActualizacion:...Por srazonsocial o rfc " + objClienteBean.getSrazonsocial().trim() + " " + objClienteBean.getSrfc().trim());
+				strQuery =  "select bPF " +					
+							" from CCliente bPF " +					
+							" where bPF.cmarca=" +  objClienteBean.getCmarca() + " and bPF.srazonsocial like ('" + objClienteBean.getSrazonsocial().trim() + "%') " +
+							" AND bPF.srfc like ('" + objClienteBean.getSrfc().trim() + "%') ";
+				objQuery = iObjSesion.createQuery(strQuery);
+				lstClientes = objQuery.list();
+				if(lstClientes != null) {
+					if (lstClientes.size() > 0) {
+						objClienteHB = (CCliente)lstClientes.get(0);
+					}
+				}			        		
+        	}   
+        	objDatosFiscalesBean.setcPostal(objClienteBean.getScodigopostal());
+        	objDatosFiscalesBean.setStrCiudad(objClienteBean.getSestado());
+        	objDatosFiscalesBean.setStrColonia(objClienteBean.getScolonia());
+        	objDatosFiscalesBean.setStrDelegacionMunicipio(objClienteBean.getSdelegacionmunicipio());
+        	objDatosFiscalesBean.setStrEstado(objClienteBean.getSestado());
+        	        	
+        	objCP.setCcodigopostal(new Integer(objCodigoPostalDao.newDatosSepomex(objDatosFiscalesBean)));
+//	        	objCP.setCcodigopostal(new Integer(objClienteBean.getCcodigopostal()));
+				iObjLog.debug("Consulta ClientesDao.setClienteActualizacion.....Beans CodigoPostal.." + objClienteBean.getCcodigopostal());        	
+	        	objClienteHB.setCcodigopostal(objCP);
+	        	
+        	CEstadoRegistro objEstadoRegistro = new CEstadoRegistro();
+	        	objEstadoRegistro.setCestadoregistro(new Integer(10));
+	        	objClienteHB.setCestadoregistro(objEstadoRegistro);
+				iObjLog.debug("Consulta ClientesDao.setClienteActualizacion.....Beans Tipo Cliente.." + objClienteBean.getCtipocliente());
+        	objClienteHB.setCtipocliente(new CTipoCliente(new Integer(objClienteBean.getCtipocliente()),"",null));
+
+	        objClienteHB.setCgirocliente(objClienteBean.getCgirocliente());
+
+	        iObjLog.debug("Consulta ClientesDao.setClienteActualizacion... Beans Tipo Persona: " + objClienteBean.getCtipopersona());
+	        objClienteHB.setCtipopersona(new CTipoPersona(new Integer(objClienteBean.getCtipopersona()), "", null));
+
+	        objClienteHB.setSdireccion(objClienteBean.getSdireccion());
+	        objClienteHB.setSobservaciones(objClienteBean.getSobservaciones());
+	        objClienteHB.setSrazonsocial(objClienteBean.getSrazonsocial());
+	        objClienteHB.setSrfc(objClienteBean.getSrfc());
+	        objClienteHB.setSmnemonico(objClienteBean.getSmnemonico());
+	        objClienteHB.setUserid(new BigDecimal(4333));
+	        objClienteHB.setCmarca(objClienteBean.getCmarca());
+	        objClienteHB.setCzonaventa(objClienteBean.getCzonaventa());
+	        objClienteHB.setCregimenfiscal(objClienteBean.getCregimenfiscal());
+	        objClienteHB.setCusocfdi(objClienteBean.getCusocfdi());
+	        objClienteHB.setUdiascredito(objClienteBean.getUdiascredito());
+	        objClienteHB.setSsector(objClienteBean.getSsector());
+	        objClienteHB.setSejecutivocobranza(objClienteBean.getSejecutivocobranza());
+	        objClienteHB.setScorreoejecutivocobranza(objClienteBean.getScorreoejecutivocobranza());
+
+	        objClienteHB.setSnombreejecutivocomercial(objClienteBean.getSnombreejecutivocomercial());
+	        objClienteHB.setScorreoejecutivocomercial(objClienteBean.getScorreoejecutivocomercial());
+	        objClienteHB.setSnombrecontacto(objClienteBean.getSnombrecontacto());
+	        objClienteHB.setStelefonocontacto(objClienteBean.getStelefonocontacto());
+	        objClienteHB.setScorreocontacto(objClienteBean.getScorreocontacto());
+	        objClienteHB.setBcuentapromesapago(objClienteBean.isBcuentapromesapago());
+	        objClienteHB.setSindicacionesadicionalescobro(objClienteBean.getSindicacionesadicionalescobro());
+	        objClienteHB.setScanalenvio(objClienteBean.getScanalenvio());
+	        objClienteHB.setShorariodiaentrega(objClienteBean.getShorariodiaentrega());
+	        objClienteHB.setSdomicilioentrega(objClienteBean.getSdomicilioentrega());
+	        objClienteHB.setSligaportal(objClienteBean.getSligaportal());
+	        objClienteHB.setSusuarioportal(objClienteBean.getSusuarioportal());
+	        objClienteHB.setScontrasenaportal(objClienteBean.getScontrasenaportal());
+	        objClienteHB.setSdeptoejecomer(objClienteBean.getSdeptoejecomer());
+	        objClienteHB.setSdirejecomer(objClienteBean.getSdirejecomer());
+	        objClienteHB.setStelejecomer(objClienteBean.getStelejecomer());
+
+	        objClienteHB.setSdeptocontacto(objClienteBean.getSdeptocontacto());
+	        objClienteHB.setSdircontacto(objClienteBean.getSdircontacto());
+	        objClienteHB.setSdiashrscontacto(objClienteBean.getSdiashrscontacto());
+	        objClienteHB.setDfeccierrecontacto(objClienteBean.getDfeccierrecontacto());
+
+	        objClienteHB.setSdeptoejecob(objClienteBean.getSdeptoejecob());
+	        objClienteHB.setSdirejecob(objClienteBean.getSdirejecob());
+	        objClienteHB.setStelejecob(objClienteBean.getStelejecob());
+
+	        // Guardar o actualizar seg&uacute;n corresponda
+	        if (objClienteBean.getCcliente() == 0) {
+	            objClienteHB.setDregistro(new Date());
+	            iObjSesion.save(objClienteHB);
+	        } else {
+	            objClienteHB.setCcliente(new Integer(objClienteBean.getCcliente()));
+	            iObjSesion.update(objClienteHB);
+	        }
+
+	        iObjSesion.flush();
+	       // HibernateUtil.commitTrans();
+
+	        objClienteBean.setCcliente(objClienteHB.getCcliente().intValue());
+
+	        return objClienteBean;
+
+	    } catch (Exception e) {
+	        HibernateUtil.rollbackTrans();
+	        throw e;
+	    } finally {
+	        HibernateUtil.closeSession();
+	    }
+	}
+
+
 
 	public String altaPorcentajeClasificacionConvenio(int uConvenio,int uClasificacion, double pDescuento) throws Exception {
 		iObjSesion = HibernateUtil.getSession();
@@ -724,7 +889,7 @@ public class ClientesNewDao {
             	iObjSesion.update(objConvenioHB);            	
     			if ((objConvenioBean.getScorreoelectronico().trim().length() > 4) && (bolActualizacionCorreoElectronico)) {
             		MailDao objMailDao = new MailDao();
-            		objMailDao.sendEmailECEEmpresaGDA2016("Bienvenido al Expediente Clínico Electrónico de Laboratorio Olab", objConvenioHB);
+            		objMailDao.sendEmailECEEmpresaGDA2016("Bienvenido al Expediente Cl&iacute;nico Electr&oacute;nico de Laboratorio Olab", objConvenioHB);
             		objMailDao = null;
             	}        		
             } else {
@@ -870,7 +1035,7 @@ public class ClientesNewDao {
             	iObjSesion.save(objConvenioHB);
     			if (objConvenioBean.getScorreoelectronico().trim().length() > 4) {
             		MailDao objMailDao = new MailDao();
-            		objMailDao.sendEmailECEEmpresaGDA2016("Bienvenido al Expediente Clínico Electrónico de Laboratorio Olab", objConvenioHB);
+            		objMailDao.sendEmailECEEmpresaGDA2016("Bienvenido al Expediente Cl&iacute;nico Electr&oacute;nico de Laboratorio Olab", objConvenioHB);
             		objMailDao = null;
             	}        		
             }
@@ -1106,14 +1271,14 @@ public class ClientesNewDao {
 	            	iObjSesion.update(objConvenioHB);            	
 	        		iObjSesion.flush();            	
 	        		MailDao objMailDao = new MailDao();
-	        		objMailDao.sendEmailECEEmpresaGDA2016("Bienvenido al Expediente Clínico Electrónico de Laboratorio Olab", objConvenioHB);
+	        		objMailDao.sendEmailECEEmpresaGDA2016("Bienvenido al Expediente Cl&iacute;nico Electr&oacute;nico de Laboratorio Olab", objConvenioHB);
 	        		objMailDao = null;
-	        		strQuery = "Éxito en el envió del correo electrónico";
+	        		strQuery = "&eacute;xito en el envi&oacute; del correo electr&oacute;nico";
                 } else {
-	        		strQuery = "No fue posible el envió del correo electrónico";                	
+	        		strQuery = "No fue posible el envi&oacute; del correo electr&oacute;nico";                	
                 }
             } else {
-        		strQuery = "No fue posible el envió del correo electrónico";                	
+        		strQuery = "No fue posible el envi&oacute; del correo electr&oacute;nico";                	
             }
 			iObjLog.debug("Saliendo ClientesDao.setConvenioActualizacionECEEmpresa  " + objConvenioBean.toString());
 			return strQuery;
@@ -1151,8 +1316,8 @@ public class ClientesNewDao {
 	            } else if ((objClienteParamBean.getSrfc().trim().length() > 0) || (objClienteParamBean.getSrazonsocial().trim().length() > 0) || (objClienteParamBean.getSmnemonico().trim().length() > 0)) {
 	        		strQuery =  "select bPF " +					
 								" from CCliente bPF " +					
-								" where bPF.srfc=bPF.srfc ";//+
-								//" and bPF.cmarca in (" + objClienteParamBean.getSmarcauser()+")";	   	        		
+								" where bPF.srfc=bPF.srfc " +
+								" and bPF.cmarca in (" + objClienteParamBean.getSmarcauser()+")";	   	        		
 					if (objClienteParamBean.getSrazonsocial().trim().length() > 0) {
 						iObjLog.debug("Entrando ClientesDao.buscarCliente:Entrando...Razon Social  " +  objClienteParamBean.getSrazonsocial().trim());
 						strQuery += " AND bPF.srazonsocial like ('%" + objClienteParamBean.getSrazonsocial().trim() + "%') ";
@@ -1199,6 +1364,27 @@ public class ClientesNewDao {
 							objClienteBean.setCusocfdi(objClienteHB.getCusocfdi());
 							objClienteBean.setUdiascredito(objClienteHB.getUdiascredito());
 							objClienteBean.setSnombrecontacto(objClienteHB.getSnombrecontacto());
+							
+							objClienteBean.setSdeptoejecomer(objClienteHB.getSdeptoejecomer());
+							objClienteBean.setSdirejecomer(objClienteHB.getSdirejecomer());
+							objClienteBean.setStelejecomer(objClienteHB.getStelejecomer());
+
+							objClienteBean.setSdeptocontacto(objClienteHB.getSdeptocontacto());
+							objClienteBean.setSdircontacto(objClienteHB.getSdircontacto());
+							objClienteBean.setSdiashrscontacto(objClienteHB.getSdiashrscontacto());
+							
+							objClienteBean.setDfeccierrecontacto(objClienteHB.getDfeccierrecontacto());
+
+							objClienteBean.setSdeptoejecob(objClienteHB.getSdeptoejecob());
+							objClienteBean.setSdirejecob(objClienteHB.getSdirejecob());
+							objClienteBean.setStelejecob(objClienteHB.getStelejecob());
+							
+							objClienteBean.setScorreoejecutivocomercial(objClienteHB.getScorreoejecutivocomercial());
+							objClienteBean.setScorreocontacto(objClienteHB.getScorreocontacto());
+							objClienteBean.setStelefonocontacto(objClienteHB.getStelefonocontacto());
+							objClienteBean.setSejecutivocobranza(objClienteHB.getSejecutivocobranza());
+							objClienteBean.setScorreoejecutivocobranza(objClienteHB.getScorreoejecutivocobranza());
+							objClienteBean.setSnombreejecutivocomercial(objClienteHB.getSnombreejecutivocomercial());
 							
 							Set objMapaConvenios = (Set) objClienteHB.getCconvenios();
 							Iterator iteConvenios = objMapaConvenios.iterator();
@@ -1472,7 +1658,7 @@ public class ClientesNewDao {
 	}		
 	
 	/**
-     * Versión 25 de Marzo 2013 
+     * Versi&oacute;n 25 de Marzo 2013 
      BY
      */
 	
@@ -2396,24 +2582,24 @@ public class ClientesNewDao {
 									"<option value='0'>Seleccionar</option>"+
 								    "<option value='1'>01 - Efectivo</option>"+
 								    "<option value='2'>02 - Cheque nominativo</option>"+
-								   	"<option value='3'>03 - Transferencia electrónica de fondos</option>"+
-								   	"<option value='4'>04 - Tarjeta de crédito</option>"+
-								   	"<option value='5'>05 - Monedero electrónico</option>"+ 
-								   	"<option value='6'>06 - Dinero electrónico</option>"+
+								   	"<option value='3'>03 - Transferencia electr&oacute;nica de fondos</option>"+
+								   	"<option value='4'>04 - Tarjeta de cr&eacute;dito</option>"+
+								   	"<option value='5'>05 - Monedero electr&oacute;nico</option>"+ 
+								   	"<option value='6'>06 - Dinero electr&oacute;nico</option>"+
 								    "<option value='8'>08 - Vales de despensa</option>"+
-								   	"<option value='12'>12 - Dación en pago</option>"+
-								   	"<option value='13'>13 - Pago por subrogación</option>"+
-								   	"<option value='14'>14 - Pago por consignación</option>"+ 
-								   	"<option value='15'>15 - Condonación</option>"+
-								    "<option value='17'>17 - Compensación</option>"+
-								   	"<option value='23'>23 - Novación</option>"+
-								   	"<option value='24'>24 - Confusión</option>"+
-								   	"<option value='25'>25 - Remisión de deuda</option>"+
-								   	"<option value='26'>26 - Prescripción o caducidad</option>"+
-								   	"<option value='27'>27 - A satisfacción del acreedor</option>"+
-								   	"<option value='28'>28 - Tarjeta de débito</option>"+
+								   	"<option value='12'>12 - Daci&oacute;n en pago</option>"+
+								   	"<option value='13'>13 - Pago por subrogaci&oacute;n</option>"+
+								   	"<option value='14'>14 - Pago por consignaci&oacute;n</option>"+ 
+								   	"<option value='15'>15 - Condonaci&oacute;n</option>"+
+								    "<option value='17'>17 - Compensaci&oacute;n</option>"+
+								   	"<option value='23'>23 - Novaci&oacute;n</option>"+
+								   	"<option value='24'>24 - Confusi&oacute;n</option>"+
+								   	"<option value='25'>25 - Remisi&oacute;n de deuda</option>"+
+								   	"<option value='26'>26 - Prescripci&oacute;n o caducidad</option>"+
+								   	"<option value='27'>27 - A satisfacci&oacute;n del acreedor</option>"+
+								   	"<option value='28'>28 - Tarjeta de d&eacute;bito</option>"+
 								   	"<option value='29'>29 - Tarjeta de servicios</option>"+
-								   	"<option value='30'>30 - Aplicación de anticipos</option>"+
+								   	"<option value='30'>30 - Aplicaci&oacute;n de anticipos</option>"+
 								   	"<option value='31'>31 - Intermediario pagos</option>"+
 								   	"<option value='99'>99 - Por definir</option>"+
 					     "</select>"+

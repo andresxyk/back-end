@@ -325,17 +325,17 @@ public class DatosReportesDao {
 							"      </fo:block-container> 																								\n" +
 							"      <fo:block-container height='4cm' width='14cm' top='" + TopDouble[20] + "cm' left='6.5cm' position='absolute'> 		\n" +  
 							"       	<fo:block text-align='start' line-height='18pt' font-family='Times' font-weight='bold'  font-size='8pt'> 		\n" +  
-							"                         	www.facturacionolab.mx Contraseña: " + objResultSet.getString("serviciointernet") + "													\n" +  
+							"                         	www.facturacionolab.mx contrase&ntilde;a: " + objResultSet.getString("serviciointernet") + "													\n" +  
 							"		    </fo:block> 																									\n" +
 							"      </fo:block-container> 																								\n" +
 							"      <fo:block-container height='4cm' width='16cm' top='" + TopDouble[21] + "cm' left='0.9cm' position='absolute'> 		\n" +  
 							"       	<fo:block text-align='start' line-height='18pt' font-family='Times'  font-size='7pt'> 							\n" +  
-							"                         	En caso de dudas llamar a los teléfonos 40406054 40406044 40406074, en un Horario L-V 7:00-19:00, Sab 7:00-14:00 y Dom 8:00-12:00	\n" +  
+							"                         	En caso de dudas llamar a los tel&eacute;fonos 40406054 40406044 40406074, en un Horario L-V 7:00-19:00, Sab 7:00-14:00 y Dom 8:00-12:00	\n" +  
 							"		    </fo:block> 																									\n" +
 							"      </fo:block-container> 																								\n"+
 							"      <fo:block-container height='4cm' width='16cm' top='" + TopDouble[22] + "cm' left='0.9cm' position='absolute'> 		\n" +  
 							"       	<fo:block text-align='start' line-height='18pt' font-family='Times'  font-size='7pt'> 							\n" +  
-							"                         	Usted tiene 20 días naturales a partir de la fecha de emisión de su orden de servicio para liquidarla al 100% y elaborar su factura.\n" +  
+							"                         	Usted tiene 20 d&iacute;as naturales a partir de la fecha de emisi&oacute;n de su orden de servicio para liquidarla al 100% y elaborar su factura.\n" +  
 							"		    </fo:block> 																									\n" +
 							"      </fo:block-container> 																								\n";		
 		if (bolPrintBarCode) {
@@ -407,7 +407,7 @@ public class DatosReportesDao {
 				"  || NVL(trim(cc.sestado), ' ')) sciudadf, " +
 				"  initcap(NVL(trim(cc.sdelegacionmunicipio),' ')) sdelmunf, " +
 				"  NVL(trim(tp.stelefono),' ') stelefonof, " +
-				"  initcap ( NVL(tp.sdireccion, 'Sin Dirección ') " +
+				"  initcap ( NVL(tp.sdireccion, 'Sin Direcci&oacute;n ') " +
 				"  || ' ' " +
 				"  || NVL(ccp.sasentamiento,' ') " +
 				"  || ' ' " +
@@ -421,8 +421,8 @@ public class DatosReportesDao {
 				"  NVL(trim(tp.stelefono),' ') stelefono, " +
 				"  ' ' srfc, " +
 				"  ' ' scurp, " +
-				"  NVL(DECODE(tos.cmedico,5228,'A Quién Corresponda', 'Dr(a).' " +
-				"  || tos.smedico), 'A Quién Corresponda') smedico, " +
+				"  NVL(DECODE(tos.cmedico,5228,'A Qui&eacute;n Corresponda', 'Dr(a).' " +
+				"  || tos.smedico), 'A Qui&eacute;n Corresponda') smedico, " +
 				"  cm.cclave clvmedico, " +
 				"  tos.dregistro, " +
 				"  TO_CHAR(tos.dregistro,'hh24:mi') dhoracaptura, " +
@@ -546,7 +546,7 @@ public class DatosReportesDao {
 				"  || NVL(trim(cc.sestado), ' ')) sciudadf, " +
 				"  initcap(NVL(trim(cc.sdelegacionmunicipio),' ')) sdelmunf, " +
 				"  NVL(trim(tp.stelefono),' ') stelefonof, " +
-				"  initcap ( NVL(tp.sdireccion, 'Sin Dirección ') " +
+				"  initcap ( NVL(tp.sdireccion, 'Sin Direcci&oacute;n ') " +
 				"  || ' ' " +
 				"  || NVL(ccp.sasentamiento,' ') " +
 				"  || ' ' " +
@@ -560,8 +560,8 @@ public class DatosReportesDao {
 				"  NVL(trim(tp.stelefono),' ') stelefono, " +
 				"  ' ' srfc, " +
 				"  ' ' scurp, " +
-				"  NVL(DECODE(tos.cmedico,5228,'A Quién Corresponda', 'Dr(a).' " +
-				"  || tos.smedico), 'A Quién Corresponda') smedico, " +
+				"  NVL(DECODE(tos.cmedico,5228,'A Qui&eacute;n Corresponda', 'Dr(a).' " +
+				"  || tos.smedico), 'A Qui&eacute;n Corresponda') smedico, " +
 				"  cm.cclave clvmedico, " +
 				"  tos.dregistro, " +
 				"  TO_CHAR(tos.dregistro,'hh24:mi') dhoracaptura, " +
@@ -684,7 +684,7 @@ public class DatosReportesDao {
 				"  || NVL(trim(cc.sestado), ' ')) sciudadf, " +
 				"  initcap(NVL(trim(cc.sdelegacionmunicipio),' ')) sdelmunf, " +
 				"  NVL(trim(tp.stelefono),' ') stelefonof, " +
-				"  initcap ( NVL(tp.sdireccion, 'Sin Dirección ') " +
+				"  initcap ( NVL(tp.sdireccion, 'Sin Direcci&oacute;n ') " +
 				"  || ' ' " +
 				"  || NVL(ccp.sasentamiento,' ') " +
 				"  || ' ' " +
@@ -698,8 +698,8 @@ public class DatosReportesDao {
 				"  NVL(trim(tp.stelefono),' ') stelefono, " +
 				"  ' ' srfc, " +
 				"  ' ' scurp, " +
-				"  NVL(DECODE(tos.cmedico,5228,'A Quién Corresponda', 'Dr(a).' " +
-				"  || tos.smedico), 'A Quién Corresponda') smedico, " +
+				"  NVL(DECODE(tos.cmedico,5228,'A Qui&eacute;n Corresponda', 'Dr(a).' " +
+				"  || tos.smedico), 'A Qui&eacute;n Corresponda') smedico, " +
 				"  cm.cclave clvmedico, " +
 				"  tos.dregistro, " +
 				"  TO_CHAR(tos.dregistro,'hh24:mi') dhoracaptura, " +

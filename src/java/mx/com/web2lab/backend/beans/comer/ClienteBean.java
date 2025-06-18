@@ -3,6 +3,7 @@ package mx.com.web2lab.backend.beans.comer;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /** @author Hibernate CodeGenerator */
@@ -89,7 +90,107 @@ public class ClienteBean implements Serializable {
     
     private int udiascredito;
     
+    private String ssector;
+    private String sejecutivocobranza;
+    private String scorreoejecutivocobranza;
+    private String snombreejecutivocomercial;
+    private String scorreoejecutivocomercial;
     private String snombrecontacto;
+    private String stelefonocontacto;
+    private String scorreocontacto;
+    private boolean bcuentapromesapago;
+    private String sindicacionesadicionalescobro;
+    private String scanalenvio;
+    private String shorariodiaentrega;
+    private String sdomicilioentrega;
+    private String sligaportal;
+    private String susuarioportal;
+    private String scontrasenaportal; 
+    
+    private String sdeptoejecomer;
+    private String sdirejecomer;
+    private String stelejecomer;
+
+    private String sdeptocontacto;
+    private String sdircontacto;
+    private String sdiashrscontacto;
+    private String dfeccierrecontacto;
+
+    private String sdeptoejecob;
+    private String sdirejecob;
+    private String stelejecob;
+
+    // Getters y Setters
+
+    public String getSdeptoejecomer() {
+        return sdeptoejecomer;
+    }
+    public void setSdeptoejecomer(String sdeptoejecomer) {
+        this.sdeptoejecomer = sdeptoejecomer;
+    }
+
+    public String getSdirejecomer() {
+        return sdirejecomer;
+    }
+    public void setSdirejecomer(String sdirejecomer) {
+        this.sdirejecomer = sdirejecomer;
+    }
+
+    public String getStelejecomer() {
+        return stelejecomer;
+    }
+    public void setStelejecomer(String stelejecomer) {
+        this.stelejecomer = stelejecomer;
+    }
+
+    public String getSdeptocontacto() {
+        return sdeptocontacto;
+    }
+    public void setSdeptocontacto(String sdeptocontacto) {
+        this.sdeptocontacto = sdeptocontacto;
+    }
+
+    public String getSdircontacto() {
+        return sdircontacto;
+    }
+    public void setSdircontacto(String sdircontacto) {
+        this.sdircontacto = sdircontacto;
+    }
+
+    public String getSdiashrscontacto() {
+        return sdiashrscontacto;
+    }
+    public void setSdiashrscontacto(String sdiashrscontacto) {
+        this.sdiashrscontacto = sdiashrscontacto;
+    }
+
+    public String getDfeccierrecontacto() {
+        return dfeccierrecontacto;
+    }
+    public void setDfeccierrecontacto(String dfeccierrecontacto) {
+        this.dfeccierrecontacto = dfeccierrecontacto;
+    }
+
+    public String getSdeptoejecob() {
+        return sdeptoejecob;
+    }
+    public void setSdeptoejecob(String sdeptoejecob) {
+        this.sdeptoejecob = sdeptoejecob;
+    }
+
+    public String getSdirejecob() {
+        return sdirejecob;
+    }
+    public void setSdirejecob(String sdirejecob) {
+        this.sdirejecob = sdirejecob;
+    }
+
+    public String getStelejecob() {
+        return stelejecob;
+    }
+    public void setStelejecob(String stelejecob) {
+        this.stelejecob = stelejecob;
+    }
 
 	public int getUdiascredito() {
 		return udiascredito;
@@ -388,6 +489,161 @@ public class ClienteBean implements Serializable {
 
 	public void setSnombrecontacto(String snombrecontacto) {
 		this.snombrecontacto = snombrecontacto;
+	}
+
+
+	public String getSsector() {
+		return ssector;
+	}
+
+
+	public void setSsector(String ssector) {
+		this.ssector = ssector;
+	}
+
+
+	public String getSejecutivocobranza() {
+		return sejecutivocobranza;
+	}
+
+
+	public void setSejecutivocobranza(String sejecutivocobranza) {
+		this.sejecutivocobranza = sejecutivocobranza;
+	}
+
+
+	public String getScorreoejecutivocobranza() {
+		return scorreoejecutivocobranza;
+	}
+
+
+	public void setScorreoejecutivocobranza(String scorreoejecutivocobranza) {
+		this.scorreoejecutivocobranza = scorreoejecutivocobranza;
+	}
+
+
+	public String getSnombreejecutivocomercial() {
+		return snombreejecutivocomercial;
+	}
+
+
+	public void setSnombreejecutivocomercial(String snombreejecutivocomercial) {
+		this.snombreejecutivocomercial = snombreejecutivocomercial;
+	}
+
+
+	public String getScorreoejecutivocomercial() {
+		return scorreoejecutivocomercial;
+	}
+
+
+	public void setScorreoejecutivocomercial(String scorreoejecutivocomercial) {
+		this.scorreoejecutivocomercial = scorreoejecutivocomercial;
+	}
+
+
+	public String getStelefonocontacto() {
+		return stelefonocontacto;
+	}
+
+
+	public void setStelefonocontacto(String stelefonocontacto) {
+		this.stelefonocontacto = stelefonocontacto;
+	}
+
+
+	public String getScorreocontacto() {
+		return scorreocontacto;
+	}
+
+
+	public void setScorreocontacto(String scorreocontacto) {
+		this.scorreocontacto = scorreocontacto;
+	}
+
+
+	public boolean isBcuentapromesapago() {
+		return bcuentapromesapago;
+	}
+
+
+	public void setBcuentapromesapago(boolean bcuentapromesapago) {
+		this.bcuentapromesapago = bcuentapromesapago;
+	}
+
+
+	public String getSindicacionesadicionalescobro() {
+		return sindicacionesadicionalescobro;
+	}
+
+
+	public void setSindicacionesadicionalescobro(String sindicacionesadicionalescobro) {
+		this.sindicacionesadicionalescobro = sindicacionesadicionalescobro;
+	}
+
+
+	public String getScanalenvio() {
+		return scanalenvio;
+	}
+
+
+	public void setScanalenvio(String scanalenvio) {
+		this.scanalenvio = scanalenvio;
+	}
+
+
+	public String getShorariodiaentrega() {
+		return shorariodiaentrega;
+	}
+
+
+	public void setShorariodiaentrega(String shorariodiaentrega) {
+		this.shorariodiaentrega = shorariodiaentrega;
+	}
+
+
+	public String getSdomicilioentrega() {
+		return sdomicilioentrega;
+	}
+
+
+	public void setSdomicilioentrega(String sdomicilioentrega) {
+		this.sdomicilioentrega = sdomicilioentrega;
+	}
+
+
+	public String getSligaportal() {
+		return sligaportal;
+	}
+
+
+	public void setSligaportal(String sligaportal) {
+		this.sligaportal = sligaportal;
+	}
+
+
+	public String getSusuarioportal() {
+		return susuarioportal;
+	}
+
+
+	public void setSusuarioportal(String susuarioportal) {
+		this.susuarioportal = susuarioportal;
+	}
+
+
+	public String getScontrasenaportal() {
+		return scontrasenaportal;
+	}
+
+
+	public void setScontrasenaportal(String scontrasenaportal) {
+		this.scontrasenaportal = scontrasenaportal;
+	}
+
+
+	public void setLstFacturasCxC(List lstFacturasCxC) {
+		this.lstFacturasCxC = lstFacturasCxC;
 	}
 
 }

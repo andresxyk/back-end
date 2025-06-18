@@ -54,7 +54,7 @@ public class MonitoreoBitacoraDao {
 		        	      "</th> "+																																	 
 						  "<tr>"+																																	  
 						  "		<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>"+				 
-						  "			<b><font color='black'>NúmeroTicket																					" +			  
+						  "			<b><font color='black'>N&uacute;meroTicket																					" +			  
 						  "			</font></b>																														 " +
 						  "		</th>																																 " +
 						  "		<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>				 " +
@@ -65,16 +65,16 @@ public class MonitoreoBitacoraDao {
 						  "			<b><font color='black'>Entrada Paciente																							  " +
 						  "		</th>																																  " +
 						  "		<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>				 " +
-						  "			<b><font color='black'>Comienza Recepción																						  " +
+						  "			<b><font color='black'>Comienza Recepci&oacute;n																						  " +
 						  "		</th>																																 " +
 						  "		<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>				 " +
-						  "			<b><font color='black'>Total Llegada-Recepción																					  " +
+						  "			<b><font color='black'>Total Llegada-Recepci&oacute;n																					  " +
 						  "		</th>																																 " +
 						  "		<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>				 " +
-						  "			<b><font color='black'>Termina Recepción																						  " +
+						  "			<b><font color='black'>Termina Recepci&oacute;n																						  " +
 						  "		</th>																																 " +
 						  "		<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>				 " +
-						  "			<b><font color='black'>Total Atención-Recepción																					  " +
+						  "			<b><font color='black'>Total Atenci&oacute;n-Recepci&oacute;n																					  " +
 						  "		</th>																																 " +
 						  "		<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>				 " +
 						  "			<b><font color='black'>Termina Ticket																							  " +
@@ -83,7 +83,7 @@ public class MonitoreoBitacoraDao {
 						  "			<b><font color='black'>Servicio																									  " +
 						  "		</th>																																 " +
 						  "		<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>				 " +
-						  "			<b><font color='black'>Módulo																									  " +
+						  "			<b><font color='black'>M&oacute;dulo																									  " +
 						  "		</th>																																 " +
 						  "		<th nowrap style='font-weight: normal; font-size: x-small; color: black; font-style: normal; font-variant: normal;'>				 " +
 						  "			<b><font color='black'>Recepcionista																							  " +

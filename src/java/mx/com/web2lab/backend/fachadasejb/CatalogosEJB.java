@@ -49,10 +49,10 @@ public class CatalogosEJB implements SessionBean {
         try
         {
             Session session = HibernateUtil.getSession();
-            HibernateUtil.beginTrans();
+            //HibernateUtil.beginTrans();
             CatalogosPKGCatalogosDao objCatalogosPKGCatalogosDao = new CatalogosPKGCatalogosDao(session);
             retorno = objCatalogosPKGCatalogosDao.obtenAll(sCatalogo,cMarca);
-            HibernateUtil.commitTrans();
+           // HibernateUtil.commitTrans();
         }
         catch (Exception aException)
         {

@@ -212,7 +212,7 @@ public class CatalogosPKGSistemaDao {
     }
     
     /**
-     * Este método esta encargado de obtener la descripcion de la entidad de la
+     * Este m&eacute;todo esta encargado de obtener la descripcion de la entidad de la
      * carga en base a los parametros enviados.
      * 
      * @param aStrEntidad
@@ -358,8 +358,8 @@ public class CatalogosPKGSistemaDao {
     }   
     
     /**
-     * Método para obtener un objeto CMotivo a partir del
-     * id pasado como parámetro 
+     * M&eacute;todo para obtener un objeto CMotivo a partir del
+     * id pasado como par&aacute;metro 
      * @param aObjCmotivo id del motivo que se busca 
      * @return CMotivo 
      * @throws Exception
@@ -370,8 +370,8 @@ public class CatalogosPKGSistemaDao {
     }
     	
     /**
-     * Método para obtener un objeto SEstado a partir del
-     * id pasado como parámetro 
+     * M&eacute;todo para obtener un objeto SEstado a partir del
+     * id pasado como par&aacute;metro 
      * @param aObjCmotivo id del estado que se busca 
      * @return SEstado 
      * @throws Exception
@@ -382,8 +382,8 @@ public class CatalogosPKGSistemaDao {
     }
     
     /**
-     * Método para obtener un objeto SSeveridad a partir del
-     * id pasado como parámetro 
+     * M&eacute;todo para obtener un objeto SSeveridad a partir del
+     * id pasado como par&aacute;metro 
      * @param aObjCmotivo id de la SSeveridad que se busca 
      * @return SSeveridad 
      * @throws Exception
@@ -490,7 +490,7 @@ public class CatalogosPKGSistemaDao {
     }  
     
     /**
-     * Este método se encarga de buscar el siguiente id del SEQUENCE que corresponda 
+     * Este m&eacute;todo se encarga de buscar el siguiente id del SEQUENCE que corresponda 
      * al tipo de secuencia determinado por el tipo de secuencia (arg1 - aStrTipoSecuencia) 
      * y unidad (arg2 - aStrNombreUnidad)
      * @param aStrTipoSecuencia
@@ -507,7 +507,7 @@ public class CatalogosPKGSistemaDao {
     	try{
     		Map objCacheSecuencias = CachesSecuencias.getCacheSecuencias(aStrTipoSecuencia, iObjSesion);
             String strSecuencia = ((String) objCacheSecuencias.get(aObjCUnidad));
-        	iObjLog.debug("_____>>>>> Se encontró la secuencia: " + strSecuencia);
+        	iObjLog.debug("_____>>>>> Se encontr&oacute; la secuencia: " + strSecuencia);
 	        Connection objCon = iObjSesion.connection();
 	        objSta = objCon.createStatement();
 	        objRs = objSta.executeQuery("select " + strSecuencia + ".nextVal sig from dual");
@@ -597,7 +597,7 @@ public class CatalogosPKGSistemaDao {
     
     
     /**
-     * Este método se encarga de buscar el siguiente id 
+     * Este m&eacute;todo se encarga de buscar el siguiente id 
      * @return Integer 
      * @throws Exception
      */

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- * Clase Bean, creada para enviar la información al frontend encapsulada
+ * Clase Bean, creada para enviar la informaci&oacute;n al frontend encapsulada
  * en un solo objeto, el cual sera utilizado en el caso de uso 
  * Consulta Limites del Codigo.
  */

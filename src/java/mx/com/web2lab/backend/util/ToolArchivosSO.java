@@ -8,8 +8,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * Se le pasa una máscara de nombre de ficheros en formato regex de java
- * y busca, recursivamente o no, todos los ficheros que cumplen dicha máscara.
+ * Se le pasa una m&aacute;scara de nombre de ficheros en formato regex de java
+ * y busca, recursivamente o no, todos los ficheros que cumplen dicha m&aacute;scara.
  * 
  */
 public class ToolArchivosSO {

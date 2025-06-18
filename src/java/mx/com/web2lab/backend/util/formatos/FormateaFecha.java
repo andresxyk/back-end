@@ -20,7 +20,7 @@ import org.apache.commons.logging.LogFactory;
 public class FormateaFecha{
 	
 	 /**
-     * Log de la aplicación
+     * Log de la aplicaci&oacute;n
      */
 	private static Log iObjLog = LogFactory.getLog(FormateaFecha.class);
 	
@@ -229,7 +229,7 @@ public class FormateaFecha{
 		 int intDia = new Integer(strFecha.substring(8,10)).intValue();
 		 int intHora = new Integer(strFecha.substring(11,13)).intValue();
 		 int intMin = new Integer(strFecha.substring(14,16)).intValue();
-		 iObjLog.debug("FechadorDate año:"+intAnio+",mes:"+intMes+",día:"+intDia+",hora:"+intHora+",Min:"+intMin);
+		 iObjLog.debug("FechadorDate año:"+intAnio+",mes:"+intMes+",d&iacute;a:"+intDia+",hora:"+intHora+",Min:"+intMin);
 		 objCalendario.set(intAnio, (intMes-1), intDia, intHora, intMin);
 	 }
 	 return objCalendario;	 

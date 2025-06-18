@@ -24,7 +24,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class SeguridadDao{
 	
-	/** Log de la aplicación */
+	/** Log de la aplicaci&oacute;n */
 	private static Log iObjLog = LogFactory.getLog(SeguridadDao.class);
 	
 	/** Sesion de Hibernate <code>objSesion</code> */
@@ -247,7 +247,7 @@ public class SeguridadDao{
 	}
 	
 	 /**
-	 * Este metodo valida si el usuario tiene autorización
+	 * Este metodo valida si el usuario tiene autorizaci&oacute;n
 	 * de acuerdo a su rol.
 	 * @param String proceso que desea validar
 	 * @return boolean true si pertenece al rol

@@ -120,7 +120,7 @@ public class ServiceLocator
 	{
       Object objref = context.lookup(name);
       if(objref==null){
-      	throw new ServiceLocatorException("Error ServiceLocator / getHome(String " + name + " , Class " + clazz.toString() +") : No se encontró");
+      	throw new ServiceLocatorException("Error ServiceLocator / getHome(String " + name + " , Class " + clazz.toString() +") : No se encontr&oacute;");
       }
       EJBHome home = (EJBHome) PortableRemoteObject.narrow(objref, clazz);
       return home;
@@ -132,7 +132,7 @@ public class ServiceLocator
   }
   
   /*
-  * Metodo que previene la clonación de este singleton. 
+  * Metodo que previene la clonaci&oacute;n de este singleton. 
   * @see java.lang.Object#clone()
   */
   public Object clone()	throws CloneNotSupportedException   {
