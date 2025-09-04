@@ -13,7 +13,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class Consumo {
 	private static Log iObjLog = LogFactory.getLog(Consumo.class);
-	private String targetURL="http://localhost:8192/facturas/complemento-pagos/1";
+	private String targetURL="http://10.20.26.6:8192/facturas/complemento-pagos/1";
 	
 	public void consumirWS(){
 		iObjLog.debug("Entrando Consumo.consumirWS:Entrando... "+targetURL);
