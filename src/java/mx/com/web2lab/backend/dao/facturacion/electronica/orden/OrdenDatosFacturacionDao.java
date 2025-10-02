@@ -80,7 +80,7 @@ public class OrdenDatosFacturacionDao {
 				}else if (cmarca == 22){
 					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS POLAB' " ;
 				}else if (cmarca == 25){
-					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS BIOMEDICA' " ;
+					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and (bOF.ssucursal = 'EMPRESAS BIOMEDICA' or bOF.ssucursal = 'EMPRESAS BR') " ;
 				}else if (cmarca == 26){
 					strQuery = strQuery  + " bOF.ufoliofactura =  " + objfilexmlbean.getSfolio() + " and bOF.ssucursal = 'EMPRESAS PROMEDIC' " ;
 				}else if (cmarca == 9){
