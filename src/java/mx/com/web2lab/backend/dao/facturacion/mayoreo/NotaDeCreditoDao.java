@@ -68,57 +68,79 @@ public class NotaDeCreditoDao {
 	
 	
 	public String getFacturasConvenio(int iCconvenio) throws Exception {
-		iObjLog.debug("Entrando DatosAdicionalesDao.getFacturasConvenio:" + iCconvenio);
-		iObjSesion = HibernateUtil.getSession();
-		Query objQuery = null;
-		String strQuery = "";
-		String strReturn="";
-		NotaCreditoFacturaBean objNotaCreditoFacturaBean=null;
-		List objListaFacturas = new ArrayList();
-		List objListaFacturasConvenio = new ArrayList();
-		TAntiguedadCxc objTFactura= new TAntiguedadCxc();
-		
-		
-    	try{
-            if (iCconvenio > 0) {
-        		strQuery =  " select Tf"+
-        					" from TAntiguedadCxc Tf " +					
-							" where Tf.cconvenio="+  iCconvenio;
-        		
-        		HibernateUtil.beginTrans();
-                objQuery = iObjSesion.createQuery(strQuery);
-                objListaFacturas = objQuery.list();
-        		if (objListaFacturas.isEmpty() == false) {
-        			for (int inti=0;inti<objListaFacturas.size();inti++){
-        				objNotaCreditoFacturaBean = new NotaCreditoFacturaBean();
-        				objTFactura = (TAntiguedadCxc)objListaFacturas.get(inti);
-        				objNotaCreditoFacturaBean.setKfactura(new Integer(objTFactura.getKfactura()));
-        				objNotaCreditoFacturaBean.setSserie(objTFactura.getSserie());
-        				objNotaCreditoFacturaBean.setMpagado(objTFactura.getMpagado());
-        				objNotaCreditoFacturaBean.setMsaldo(objTFactura.getMsaldo());
-        				objNotaCreditoFacturaBean.setMtotalfactura(objTFactura.getMtotalfactura());
-        				objNotaCreditoFacturaBean.setCconvenio(objTFactura.getCconvenio());
-        				objNotaCreditoFacturaBean.setDregistro(objTFactura.getDregistro());
-        				objListaFacturasConvenio.add(objNotaCreditoFacturaBean);	
-        			}
-        			strReturn=this.pintarGridFacturas(objListaFacturasConvenio);
-        			
-        		}else{
-        			strReturn="";
-        		}
-            }  
-            iObjLog.debug("Saliendo DatosAdicionalesDao.getNombreConvenio...  " + strReturn);
-			return strReturn;
-		} catch (Exception aObjExcepcion) { 
-			iObjLog.error("ERROR DatosAdicionalesDao.getNombreConvenio: ", aObjExcepcion);
-			throw aObjExcepcion;
-        } finally{
-    			HibernateUtil.closeSession();
-    			objListaFacturas=null;
-    			objTFactura=null;
-    			
-		}		
+	    iObjLog.debug("Entrando NotaDeCreditoDao.getFacturasConvenio:" + iCconvenio);
+	    iObjSesion = HibernateUtil.getSession();
+	    String strReturn = "";
+	    NotaCreditoFacturaBean objNotaCreditoFacturaBean = null;
+	    List objListaFacturasConvenio = new ArrayList();
+	    java.sql.Connection conn = null;
+	    java.sql.PreparedStatement ps = null;
+	    java.sql.ResultSet rs = null;
+
+	    try {
+	        if (iCconvenio > 0) {
+	            String strQuery =
+	                "SELECT tf.kfactura, " +
+	                " tf.sserie || lpad(CAST(tf.ufoliofactura AS text), 8, '0') AS sserie, " +
+	                " cc.ccliente, " +
+	                " tf.cconvenio, " +
+	                " tf.dregistro, " +
+	                " tf.mtotal AS mtotalfactura, " +
+	                " reportes.func_get_pago_factura(tf.kfactura) AS mpagado, " +
+	                " tf.mtotal - reportes.func_get_pago_factura(tf.kfactura) AS msaldo " +
+	                " FROM t_factura tf " +
+	                " INNER JOIN c_convenio cc ON cc.cconvenio = tf.cconvenio " +
+	                " INNER JOIN c_cliente ccl ON ccl.ccliente = cc.ccliente " +
+	                " INNER JOIN c_estado_registro cer ON tf.cestadoregistro = cer.cestadoregistro " +
+	                " WHERE tf.csucursal IN (1003, 1012, 1013, 1014, 1015, 1017, 1020, 1021, 1023, 1022, 1007, 1024, 1025, 1026) " +
+	                " AND tf.cestadoregistro IN (33, 66, 67) " +
+	                " AND cc.cconvenio = ? " +
+	                " ORDER BY cconvenio, kfactura";
+
+	            HibernateUtil.beginTrans();
+	            conn = iObjSesion.connection();
+	            ps = conn.prepareStatement(strQuery);
+	            ps.setInt(1, iCconvenio);
+	            rs = ps.executeQuery();
+
+	            while (rs.next()) {
+	                objNotaCreditoFacturaBean = new NotaCreditoFacturaBean();
+
+	                objNotaCreditoFacturaBean.setKfactura(new Integer(rs.getInt("kfactura")));
+	                objNotaCreditoFacturaBean.setSserie(rs.getString("sserie"));
+	                objNotaCreditoFacturaBean.setCconvenio((rs.getInt("cconvenio")));
+	                objNotaCreditoFacturaBean.setDregistro(rs.getTimestamp("dregistro"));
+	                objNotaCreditoFacturaBean.setMtotalfactura(rs.getBigDecimal("mtotalfactura"));
+	                objNotaCreditoFacturaBean.setMpagado(rs.getBigDecimal("mpagado"));
+	                objNotaCreditoFacturaBean.setMsaldo(rs.getBigDecimal("msaldo"));
+
+	                objListaFacturasConvenio.add(objNotaCreditoFacturaBean);
+	            }
+
+	            if (!objListaFacturasConvenio.isEmpty()) {
+	                strReturn = this.pintarGridFacturas(objListaFacturasConvenio);
+	            } else {
+	                strReturn = "";
+	            }
+	        }
+
+	        iObjLog.debug("Saliendo NotaDeCreditoDao.getFacturasConvenio...  " + strReturn);
+	        return strReturn;
+
+	    } catch (Exception e) {
+	        iObjLog.error("ERROR NotaDeCreditoDao.getFacturasConvenio: ", e);
+	        throw e;
+
+	    } finally {
+	        try { if (rs != null) rs.close(); } catch (Exception e) {}
+	        try { if (ps != null) ps.close(); } catch (Exception e) {}
+	        try { if (conn != null) conn.close(); } catch (Exception e) {}
+	        HibernateUtil.closeSession();
+	    }
 	}
+
+
+
 	
 	
 	public String getFacturasConvenioAsignacion(int iCconvenio, String strbloques) throws Exception {
